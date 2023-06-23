@@ -14,10 +14,10 @@ export function NativeNavigation() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="home"
+        name="homex"
         component={HomeScreen}
         options={{
-          title: 'Home',
+          title: 'Homex',
         }}
       />
       <Stack.Screen

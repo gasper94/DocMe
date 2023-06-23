@@ -4,10 +4,20 @@ import { View } from 'app/design/view'
 
 import { MotiLink } from 'solito/moti'
 
+const RedBox = () => {
+  return <View className='bg-red-300 w-full'>
+    <Text>Box</Text>
+  </View>
+}
+
 export function HomeScreen() {
   return (
     <View className="flex-1 items-center justify-center p-3">
-      <H1>Welcome to Solito - Outsidey.</H1>
+      <H1>Welcome to Solito - Outsideww.</H1>
+      <Text>Hello</Text>
+      <RedBox />
+      {/* <View className='bg-red-200 h-[32px] w-[32px]'>hey</View> */}
+      
       <View className="max-w-xl">
         <P className="text-center">
           Here is a basic starter to show you how you can navigate from one
