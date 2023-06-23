@@ -120,21 +120,17 @@ const Calendar = () => {
       </View>
       <View className='w-full'>
         <View className='grid grid-cols-7 p-4'>
-       {[...Array(firstDayOfMonth.getDay()).keys()].map((_) => (
-        <View key={_} 
-          className={`flex justify-center flex-1 bg-gray-200 h-4 p-8`}
-          // style={{ flex: 1, backgroundColor: '#ccc', height: 40 }}
-        ></View>
-       ))}
+        {[...Array(firstDayOfMonth.getDay()).keys()].map((_) => (
+          <View key={_} 
+            className={`flex justify-center flex-1 bg-gray-200 h-4 p-8 w-full`}
+          ></View>
+        ))}
        {[...Array(daysInMonth).keys()].map((day) => (
          <View
            key={day + 1}
-           className={`flex justify-center flex-1 bg-white p-8 items-center h-4 ${currentMonth === selectedDate.getMonth() && currentDay === day + 1 ? 'bg-red-100' : null}`}
-          //  style={{ flex: 1, backgroundColor: '#fff', padding: 8, alignItems: 'center', height: 40 }}
+           className={`flex justify-center items-center flex-1 bg-white p-8 h-4 `}
          >
-           {/* <Text>{day + 1} - {`${selectedDate}`}</Text> */}
-            {/* <Text> {`${day + 1} - ${currentDay} : ${currentMonth} - ${selectedDate.getMonth()}`}</Text> */}
-            <Text> {`${day + 1}`}</Text>
+            <Text className={`${currentMonth === selectedDate.getMonth() && currentDay === (day + 1) ? 'bg-red-100' : null}`}> {`${day + 1}`}</Text>
          </View>
        ))}
        </View>
