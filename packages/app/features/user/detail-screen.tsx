@@ -1,13 +1,13 @@
 import { createParam } from 'solito'
 import { TextLink } from 'solito/link'
-// import { Text } from 'app/design/typography'
-// import { View  } from 'app/design/view'
+import { Text } from 'app/design/typography'
+import { View  } from 'app/design/view'
 import { StyleSheet } from 'react-native';
-// import React, { useState } from 'react';
-
-
 import React, { useState } from 'react';
-import { View, Text, Button } from 'react-native';
+
+
+// import React, { useState } from 'react';
+import { Button } from 'react-native';
 
 const { useParam } = createParam<{ id: string }>()
 
@@ -59,10 +59,10 @@ export function UserDetailScreen() {
   )
 }
 
-
-
 const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [currentDay, setCurrentDay] = useState(new Date().getDate());
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
 
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -71,123 +71,74 @@ const Calendar = () => {
 
   const handlePreviousMonth = () => {
     setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth() - 1, 1));
+    // setCurrentDay(new Date());
+    let currentDayx = new Date();
+    if(currentDayx.getDate() !== currentDay && currentDayx.getMonth() !== selectedDate.getMonth()){
+      setCurrentDay(new Date().getDate());
+    }else{
+      setCurrentDay(0);
+    }
   };
 
   const handleNextMonth = () => {
     setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 1));
+
+    let currentDayx = new Date();
+    if(currentDayx.getDate() !== currentDay && currentDayx.getMonth() !== selectedDate.getMonth()){
+      setCurrentDay(new Date().getDate());
+    }else{
+      setCurrentDay(0);
+    }
+    // setCurrentDay(new Date());
   };
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 16, backgroundColor: 'red' }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
-        <Button title="Previous" onPress={handlePreviousMonth} />
-        <Text style={{ fontSize: 24, fontWeight: 'bold', marginHorizontal: 16 }}>
-          {selectedDate.toLocaleString('default', { month: 'long' })} {selectedDate.getFullYear()}
-        </Text>
-        <Button title="Next" onPress={handleNextMonth} />
+    <View className='w-full h-auto rounded bg-red-500 overflow-hidden max-w-5xl'>
+      <View className='bg-blue-100'>
+        <View className='flex flex-row justify-between items-center p-4'>
+         <Text className='text-sm'>
+           {selectedDate.toLocaleString('default', { month: 'long' })} {selectedDate.getFullYear()}
+           {/* {selectedDate.getMonth()} */}
+         </Text>
+         <View className='flex flex-row gap-4'>
+          <Button title="Previous" onPress={handlePreviousMonth} />
+          <Button title="Next" onPress={handleNextMonth} />
+         </View>
+       </View>
       </View>
-      <View style={{ flexDirection: 'row', marginBottom: 8 }}>
-        {daysOfWeek.map((day) => (
-          <View
-            key={day}
-            style={{ flex: 1, backgroundColor: '#ccc', padding: 8, alignItems: 'center' }}
-          >
-            <Text>{day}</Text>
-          </View>
-        ))}
+      <View className='bg-pink-300'>
+        <View className='flex flex-row justify-between items-center p-4'>
+          {daysOfWeek.map((day) => (
+            <View
+              key={day}
+              className='flex flex-1 items-center border-1'
+            >
+              <Text >{day}</Text>
+            </View>
+          ))}
+        </View>
       </View>
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-        {[...Array(firstDayOfMonth.getDay()).keys()].map((_) => (
-          <View key={_} style={{ flex: 1, backgroundColor: '#ccc', height: 40 }}></View>
-        ))}
-        {[...Array(daysInMonth).keys()].map((day) => (
-          <View
-            key={day + 1}
-            style={{ flex: 1, backgroundColor: '#fff', padding: 8, alignItems: 'center', height: 40 }}
-          >
-            <Text>{day + 1}</Text>
-          </View>
-        ))}
+      <View className='w-full'>
+        <View className='grid grid-cols-7 p-4'>
+       {[...Array(firstDayOfMonth.getDay()).keys()].map((_) => (
+        <View key={_} 
+          className={`flex justify-center flex-1 bg-gray-200 h-4 p-8`}
+          // style={{ flex: 1, backgroundColor: '#ccc', height: 40 }}
+        ></View>
+       ))}
+       {[...Array(daysInMonth).keys()].map((day) => (
+         <View
+           key={day + 1}
+           className={`flex justify-center flex-1 bg-white p-8 items-center h-4 ${currentMonth === selectedDate.getMonth() && currentDay === day + 1 ? 'bg-red-100' : null}`}
+          //  style={{ flex: 1, backgroundColor: '#fff', padding: 8, alignItems: 'center', height: 40 }}
+         >
+           {/* <Text>{day + 1} - {`${selectedDate}`}</Text> */}
+            {/* <Text> {`${day + 1} - ${currentDay} : ${currentMonth} - ${selectedDate.getMonth()}`}</Text> */}
+            <Text> {`${day + 1}`}</Text>
+         </View>
+       ))}
+       </View>
       </View>
     </View>
   );
 };
-
-
-// const Calendar = () => {
-//   const [selectedDate, setSelectedDate] = useState(new Date());
-
-//   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-//   const firstDayOfMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
-//   const daysInMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0).getDate();
-
-//   const handlePreviousMonth = () => {
-//     setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth() - 1, 1));
-//   };
-
-//   const handleNextMonth = () => {
-//     setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 1));
-//   };
-
-//   return (
-//     <div className="container mx-auto px-4 py-8">
-//       <div className="text-center mb-4">
-//         <button
-//           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-//           onClick={handlePreviousMonth}
-//         >
-//           <Text>Previous</Text>
-//         </button>
-//         <h2 className="text-2xl font-bold">
-//           <Text>
-//           {selectedDate.toLocaleString('default', { month: 'long' })} {selectedDate.getFullYear()}
-//           </Text>
-//         </h2>
-//         <button
-//           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-//           onClick={handleNextMonth}
-//         >
-//           <Text>Next</Text>
-//         </button>
-//       </div>
-//       <div className="grid grid-cols-7 gap-2">
-//         {daysOfWeek.map((day) => (
-//           <div className="bg-gray-200 py-2 px-4 text-center" key={day}>
-//             <Text>
-
-//             {day}
-//             </Text>
-//           </div>
-//         ))}
-//         {[...Array(firstDayOfMonth.getDay()).keys()].map((_) => (
-//           <div className="bg-gray-200"></div>
-//         ))}
-//         {[...Array(daysInMonth).keys()].map((day) => (
-//           <div className="bg-white py-2 px-4 text-center" key={day + 1}>
-//             <Text>
-
-//             {day + 1}
-//             </Text>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     flexDirection: 'row',
-//     flexWrap: 'wrap',
-//     backgroundColor: '#fff',
-//   },
-//   square: {
-//     width: 20,
-//     height: 20,
-//     backgroundColor: '#ff0000',
-//     margin: 2,
-//   },
-// });
