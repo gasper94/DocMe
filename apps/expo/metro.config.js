@@ -4,7 +4,8 @@
  * @type {import('expo/metro-config')}
  */
 const { getDefaultConfig } = require('expo/metro-config')
-const path = require('path')
+const path = require('path');
+const { isObject } = require('util');
 
 // Find the project and workspace directories
 const projectRoot = __dirname
@@ -23,4 +24,44 @@ config.resolver.nodeModulesPaths = [
 // 3. Force Metro to resolve (sub)dependencies only from the `nodeModulesPaths`
 config.resolver.disableHierarchicalLookup = true
 
+// // 4. Assets
+// config.resolver.sourceExts.push(
+//   // Adds support for `.db` files for SQLite databases
+//   '.jsx', 
+//   '.js', 
+//   '.ts', 
+//   'tsx', 
+//   'cjs', 
+//   'json', 
+//   'native.js', 
+//   'native', 
+//   'ios.jsx', 
+//   'native.jsx', 
+//   'ios.js', 
+//   'native.js', 
+//   'ios.ts', 
+//   'native.ts', 
+//   'native.tsx', 
+//   'ios.cjs', 
+//   'native.cjs', 
+//   'cjs', 
+//   'ios.json', 
+//   'native.json', 
+//   'json'
+// );
+
 module.exports = config
+
+// module.exports = {
+//   transformer: {
+//     getTransformOptions: async () => ({
+//       transform: {
+//         experimentalImportSupport: false,
+//         inlineRequires: false,
+//       },
+//     }),
+//   },
+//   resolver: {
+//     sourceExts: ['.jsx', '.js', '.ts', 'tsx', 'cjs', 'json', 'native.js', '.native', 'ios.jsx', 'native.jsx', '.ios.js', 'native.js', 'ios.ts', 'native.ts', 'native.tsx', '.ios.cjs', 'native.cjs', '.cjs', 'ios.json', 'native.json', '.json'] //add here
+//   },
+// };

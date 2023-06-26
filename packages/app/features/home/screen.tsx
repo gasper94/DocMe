@@ -5,6 +5,9 @@ import { View } from 'app/design/view'
 import { MotiLink } from 'solito/moti'
 
 import Calendar from './Calendar';
+// import { HeroOutline, HeroSolid, HeroSolid20 } from '@nandorojo/heroicons'
+import RightIcon from '../../../assets/Icons/right/Right';
+
 
 const RedBox = () => {
   return <View className='bg-red-300 w-full'>
@@ -16,6 +19,8 @@ export function HomeScreen() {
   return (
     <View className="flex-1 items-center justify-center p-3">
       <Calendar />
+      <RightIcon width={24} height={24} fill="blue" />
+       {/* <HeroOutline.Calendar height="24" width="24" color="#8A8F98" /> */}
       <H1>Welcome to Solito - Outsideww.</H1>
       <Text>Hello</Text>
       <RedBox />

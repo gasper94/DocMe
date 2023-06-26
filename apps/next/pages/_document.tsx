@@ -3,6 +3,14 @@ import { AppRegistry } from 'react-native'
 
 import NextDocument, { Html, Head, Main, NextScript } from 'next/document'
 import type { DocumentContext } from 'next/document'
+// import MaterialIconsFont from 'react-native-vector-icons/Fonts/MaterialIcons.ttf'
+
+// const fontsCSS = `
+//   @font-face {
+//     src: url(${MaterialIconsFont});
+//     font-family: MaterialIcons;
+//   }
+// `
 
 class Document extends NextDocument {
   static async getInitialProps(ctx: DocumentContext) {

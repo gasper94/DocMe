@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
+'use client';
+
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
 
 // import { AntDesign } from '@expo/vector-icons';
 // <AntDesign name="right" size={24} color="black" />
+
+// import ArrowRight from "../../../assets/arrow-right";
+
+// const ArrowRightIcon = dynamic(import("../../../assets/arrow-right.tsx"), { ssr: false })
+// import RightIcon from '../../../assets/Icons/right/Right.tsx';
+import RightIcon from '../../../assets/Icons/right/Right';
 
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -55,7 +63,16 @@ const Calendar = () => {
         </TouchableOpacity>
         <Text style={styles.headerText}>{currentMonth.toLocaleString('default', { month: 'long' })} {currentMonth.getFullYear()}</Text>
         <TouchableOpacity onPress={goToNextMonth}>
-          <Text style={styles.headerText}>Next Month
+          <Text style={styles.headerText}>
+            <RightIcon width={24} height={24} fill="blue" />
+      {/* <RightIcon width={24} height={24} fill="blue" /> */}
+            {/* <AntDesign name="right" size={24} color="black" /> */}
+
+            {/* <HeroOutline  /> */}
+            {/* <ArrowRight height="24" width="24" color="#8A8F98" /> */}
+            
+            {/* <Image style={styles.logo} source={require('../../../assets/arrow-right')} /> */}
+            {/* <HeroOutline.Calendar height="24" width="24" color="#8A8F98" /> */}
           </Text>
         </TouchableOpacity>
       </View>
@@ -67,6 +84,10 @@ const Calendar = () => {
 };
 
 const styles = StyleSheet.create({
+  logo: {
+    height: 128,
+    width: 128,
+  },
   container: {
     display: 'flex',
     flex: 1,

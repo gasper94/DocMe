@@ -165,3 +165,26 @@ See my talk about this topic at Next.js Conf 2021:
 
 <a href="https://www.youtube.com/watch?v=0lnbdRweJtA"><img width="1332" alt="image" src="https://user-images.githubusercontent.com/13172299/157299915-b633e083-f271-48c6-a262-7b7eef765be5.png">
 </a>
+
+
+### ICONS
+
+[https://snack.expo.dev/?platform=web] https://snack.expo.dev/?platform=web
+
+When searching for an icon pack, use an SVG-based icon library with proper tree shaking, not a font-based library.
+
+Recommendation
+Take a folder (or multiple folders) of SVG icons
+
+For each icon, turn it into a component using react-native-svg in its own file.
+
+a. SVGR is a preferred tool for this. You can create a node script that handles this for you.
+
+Export each icon as its own module for proper tree shaking.
+
+Install react-native-svg (and any library which wraps it) and add them to transpilePackages in next.config.js. You'll need to rebuild your Expo Dev Client if you aren't using Expo Go.
+
+You can also find many of these libraries on GitHub/NPM. Here are two open source examples (but there are many others too):
+
+@nandorojo/heroicons
+@nandorojo/iconic
