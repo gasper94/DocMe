@@ -1,4 +1,4 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { HomeScreen } from '../../features/home/screen'
 import { UserDetailScreen } from '../../features/user/detail-screen'
@@ -10,11 +10,16 @@ const Stack = createNativeStackNavigator<{
   }
 }>()
 
+
 export function NativeNavigation() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false, // Hide the navigation bar
+      }}
+    >
       <Stack.Screen
-        name="homex"
+        name="home"
         component={HomeScreen}
         options={{
           title: 'Homex',

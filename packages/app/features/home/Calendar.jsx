@@ -63,7 +63,8 @@ const Calendar = () => {
         </TouchableOpacity>
         <Text style={styles.headerText}>{currentMonth.toLocaleString('default', { month: 'long' })} {currentMonth.getFullYear()}</Text>
         <TouchableOpacity onPress={goToNextMonth}>
-          <Text style={styles.headerText}>
+          {/* <Text style={styles.headerText}> */}
+            {/* Next */}
             <RightIcon width={24} height={24} fill="red" color={'red'} />
       {/* <RightIcon width={24} height={24} fill="blue" /> */}
             {/* <AntDesign name="right" size={24} color="black" /> */}
@@ -73,7 +74,7 @@ const Calendar = () => {
             
             {/* <Image style={styles.logo} source={require('../../../assets/arrow-right')} /> */}
             {/* <HeroOutline.Calendar height="24" width="24" color="#8A8F98" /> */}
-          </Text>
+          {/* </Text> */}
         </TouchableOpacity>
       </View>
       <View style={styles.calendar}>

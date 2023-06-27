@@ -12,9 +12,6 @@ import RightIcon from '../../../assets/Icons/right/Right';
 import XMenu from './Xmenu';
 import React, { useState } from 'react';
 
-import { SafeAreaView } from 'moti';
-import { ScrollView } from 'react-native-gesture-handler';
-
 const RedBox = () => {
   return <View className='bg-red-300 w-full'>
     <Text>Box</Text>
@@ -52,27 +49,19 @@ export function HomeScreen() {
 
   return (
     <View className="flex-1 items-center justify-center p-3">
-      {/* <SafeAreaView>
-      <View className='flex justify-center items-center bg-green-400 w-full'>
-        <Text>Hello</Text>
-      </View>
-      
-      </SafeAreaView> */}
-      <View className='flex w-full'>
-        
-      <SafeAreaView className="fixed top-0 left-0 right-0 flex-1">
-          {/* <View className='bg-red-100 w-full'> */}
-          <View className='px-4 flex-row justify-between items-center bg-red-200'>
-            <Text>Image</Text>
-            <View className='flex-row items-center space-x-2'>
-              <Text>DocMe</Text>
-            </View>
-            <Text>Menu</Text>
-          </View>
-        {/* </View> */}
-      </SafeAreaView>
 
-      </View>
+      {/* <SafeAreaView className="fixed top-0 left-0 right-0 flex-1">
+        <View className="flex-1 relative bg-white">
+          
+            <View className="px-4 flex-row justify-between items-center bg-gray-300">
+              <Text>Image</Text>
+              <View className="flex-row items-center space-x-2">
+              <Text className="text-base font-semibold">New York, NYC</Text>
+              </View>
+              <Text>Bell Icon</Text>
+            </View>
+        </View>
+      </SafeAreaView> */}
       {/* <XMenu size={400} color="white" mode={visible ? 'menu' : 'x'} /> */}
       {/* <View
       style={[styles.container, isHovered && styles.containerHovered]}
@@ -81,16 +70,8 @@ export function HomeScreen() {
     >
       <Text style={styles.text}>Hover Me</Text>
     </View> */}
-    <ScrollView>
-    <View className='flex justify-center items-center flex-col'>
 
-        <Calendar />
-        {/* <Calendar /> */}
-          {/* <Calendar />
-          <Calendar /> */}
-      </View>
-    </ScrollView>
-    
+      <Calendar />
       {/* <View
         style={[styles.container, isHovered && styles.containerHovered]}
         onMouseEnter={handleMouseEnter}
@@ -143,10 +124,44 @@ export function HomeScreen() {
 
       
        {/* <HeroOutline.Calendar height="24" width="24" color="#8A8F98" /> */}
-
+      <H1>Welcome to Solito - Outsidewwy.</H1>
+      <Text>Hello</Text>
+      <RedBox />
       {/* <View className='bg-red-200 h-[32px] w-[32px]'>hey</View> */}
       
-    
+      <View className="max-w-xl">
+        <P className="text-center">
+          Here is a basic starter to show you how you can navigate from one
+          screen to another. This screen uses the same code on Next.js and React
+          Native.
+        </P>
+        <P className="text-center">
+          Solito is made by{' '}
+          <A
+            href="https://twitter.com/fernandotherojo"
+            hrefAttrs={{
+              target: '_blank',
+              rel: 'noreferrer',
+            }}
+          >
+            Fernando Rojo
+          </A>
+          .
+        </P>
+        <P className="text-center">
+          NativeWind is made by{' '}
+          <A
+            href="https://twitter.com/mark__lawlor"
+            hrefAttrs={{
+              target: '_blank',
+              rel: 'noreferrer',
+            }}
+          >
+            Mark Lawlor
+          </A>
+          .
+        </P>
+      </View>
       <View className="h-[32px]" />
       <Row className="space-x-8">
         <TextLink href="/user/fernando">Regular Link</TextLink>
