@@ -23,6 +23,7 @@
   "dependencies": {
     "@nandorojo/heroicons": "^0.0.5",
     "@svgr/cli": "^8.0.1",
+    "expo-image": "^1.2.3",
     "patch-package": "^7.0.0",
     "postinstall-postinstall": "^2.1.0",
     "react-native-svg": "^13.9.0",

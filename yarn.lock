@@ -6101,6 +6101,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-image@npm:^1.2.3":
+  version: 1.3.0
+  resolution: "expo-image@npm:1.3.0"
+  peerDependencies:
+    expo: "*"
+  checksum: ab93f0650abedfe4f8a8741d32b3906a5387149590a52eba287b5eb9e7d55063712bc8d1ede32b2b0a2d5e8b5fd91cea99ca77fcdeffb3ce714f4fd1ec5c07d1
+  languageName: node
+  linkType: hard
+
 "expo-keep-awake@npm:~12.0.1":
   version: 12.0.1
   resolution: "expo-keep-awake@npm:12.0.1"
@@ -11744,6 +11753,7 @@ __metadata:
     "@types/react": ^18.0.17
     "@types/react-native": ^0.69.5
     eslint: ^8.21.0
+    expo-image: ^1.2.3
     patch-package: ^7.0.0
     postinstall-postinstall: ^2.1.0
     prettier: ^2.7.1

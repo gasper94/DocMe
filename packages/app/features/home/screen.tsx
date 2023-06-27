@@ -3,10 +3,11 @@ import { Row } from 'app/design/layout'
 import { View } from 'app/design/view'
 
 import { MotiLink } from 'solito/moti'
+import { SolitoImage } from 'solito/image'
 
 import Calendar from './Calendar';
 import { useEffect, useReducer } from 'react';
-import { StyleSheet, Pressable, TouchableWithoutFeedback, TouchableHighlight } from 'react-native';
+import { Image, StyleSheet, Pressable, TouchableWithoutFeedback, TouchableHighlight } from 'react-native';
 // import { HeroOutline, HeroSolid, HeroSolid20 } from '@nandorojo/heroicons'
 import RightIcon from '../../../assets/Icons/right/Right';
 import XMenu from './Xmenu';
@@ -14,6 +15,9 @@ import React, { useState } from 'react';
 
 import { SafeAreaView } from 'moti';
 import { ScrollView } from 'react-native-gesture-handler';
+
+import AssetExample from "./Asset.jsx"
+import myImage from '../../../assets/images/ulises.jpeg';
 
 const RedBox = () => {
   return <View className='bg-red-300 w-full'>
@@ -67,7 +71,19 @@ export function HomeScreen() {
             <View className='flex-row items-center space-x-2'>
               <Text>DocMe</Text>
             </View>
-            <Text>Menu</Text>
+             {/* <SolitoImage
+                src={require('../../../assets/images/ulises.jpeg')}
+                style={{ borderRadius: 40}}
+                height={50}
+                width={50}
+                alt="A cool image, imported locally."
+              /> */}
+              <SolitoImage
+                src={require('../../../assets/images/ulises.jpeg')}
+                style={{ borderRadius: 40 }}
+                height={50}
+                width={50}
+              />
           </View>
         {/* </View> */}
       </SafeAreaView>
@@ -81,6 +97,9 @@ export function HomeScreen() {
     >
       <Text style={styles.text}>Hover Me</Text>
     </View> */}
+    <View >
+      <Text>Hey</Text>
+    </View>
     <ScrollView>
     <View className='flex justify-center items-center flex-col'>
 
