@@ -5,9 +5,12 @@ import { View } from 'app/design/view'
 import { MotiLink } from 'solito/moti'
 
 import Calendar from './Calendar';
+import { useEffect, useReducer } from 'react';
+import { StyleSheet, Pressable, TouchableWithoutFeedback, TouchableHighlight } from 'react-native';
 // import { HeroOutline, HeroSolid, HeroSolid20 } from '@nandorojo/heroicons'
 import RightIcon from '../../../assets/Icons/right/Right';
-
+import XMenu from './Xmenu';
+import React, { useState } from 'react';
 
 const RedBox = () => {
   return <View className='bg-red-300 w-full'>
@@ -16,10 +19,79 @@ const RedBox = () => {
 }
 
 export function HomeScreen() {
+  const [visible, toggle] = useReducer((s) => !s, true);
+ const [isHovered, setIsHovered] = useState(false);
+
+  const [isPressed, setIsPressed] = useState(false);
+  
+  const handlePressIn = () => {
+    setIsPressed(true);
+  };
+
+  const handlePressOut = () => {
+    setIsPressed(false);
+  };
+
+   const buttonStyle = {
+    backgroundColor: isPressed ? 'blue' : 'red',
+    padding: 10,
+    borderRadius: 5,
+  };
+
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
   return (
     <View className="flex-1 items-center justify-center p-3">
-      <Calendar />
-      <RightIcon width={24} height={24} fill="blue" />
+      {/* <XMenu size={400} color="white" mode={visible ? 'menu' : 'x'} /> */}
+      {/* <View
+      style={[styles.container, isHovered && styles.containerHovered]}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <Text style={styles.text}>Hover Me</Text>
+    </View> */}
+
+      <View
+        style={[styles.container, isHovered && styles.containerHovered]}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <TouchableHighlight
+          onPressIn={handlePressIn}
+          onPressOut={handlePressOut}
+          style={[styles.button, isHovered && styles.buttonHovered]}
+          underlayColor="red"
+        >
+          <Text style={styles.buttonText}>Hover Me2</Text>
+        </TouchableHighlight>
+      </View>
+
+
+      
+        <TouchableWithoutFeedback
+          onPress={() => console.log('Button clicked!')}
+          onPressIn={handlePressIn}
+          onPressOut={handlePressOut}
+        >
+        <View style={buttonStyle}>
+          <Text>Button</Text>
+        </View>
+      </TouchableWithoutFeedback>
+
+      <Pressable onPress={toggle} style={styles.container}>
+        <Text>Press to change Icon color</Text>
+      </Pressable>
+      
+      <RightIcon width={24} height={24} fill={visible ? 'red' : 'blue'} />
+
+      
        {/* <HeroOutline.Calendar height="24" width="24" color="#8A8F98" /> */}
       <H1>Welcome to Solito - Outsideww.</H1>
       <Text>Hello</Text>
@@ -85,3 +157,50 @@ export function HomeScreen() {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  shape: {
+    justifyContent: 'center',
+    height: 550,
+    width: 550,
+    borderRadius: 25,
+    marginRight: 10,
+    backgroundColor: 'white',
+  },
+  container: {
+    height: 'auto',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    backgroundColor: 'blue',
+     borderRadius: 5,
+  },
+  //  container: {
+  //   flex: 1,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  // },
+  button: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: 'blue',
+    borderRadius: 5,
+  },
+  buttonHovered: {
+    backgroundColor: 'red',
+     borderRadius: 5,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  containerHovered: {
+    backgroundColor: 'red',
+    borderRadius: 5,
+  },
+  text: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});

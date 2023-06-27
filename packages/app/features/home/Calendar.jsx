@@ -64,7 +64,7 @@ const Calendar = () => {
         <Text style={styles.headerText}>{currentMonth.toLocaleString('default', { month: 'long' })} {currentMonth.getFullYear()}</Text>
         <TouchableOpacity onPress={goToNextMonth}>
           <Text style={styles.headerText}>
-            <RightIcon width={24} height={24} fill="blue" />
+            <RightIcon width={24} height={24} fill="red" color={'red'} />
       {/* <RightIcon width={24} height={24} fill="blue" /> */}
             {/* <AntDesign name="right" size={24} color="black" /> */}
 
