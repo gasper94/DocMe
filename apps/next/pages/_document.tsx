@@ -29,6 +29,8 @@ class Document extends NextDocument {
         <Head>
           <meta charSet="UTF-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+          <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=XXXXX&libraries=places"
+async defer></script>
         </Head>
         <body>
           <Main />

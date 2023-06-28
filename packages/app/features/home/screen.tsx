@@ -19,6 +19,10 @@ import { ScrollView } from 'react-native-gesture-handler';
 import AssetExample from "./Asset.jsx"
 import myImage from '../../../assets/images/ulises.jpeg';
 
+
+// Components
+import DistanceCalculator from "./DistanceCalculator";
+
 const RedBox = () => {
   return <View className='bg-red-300 w-full'>
     <Text>Box</Text>
@@ -97,6 +101,9 @@ export function HomeScreen() {
     >
       <Text style={styles.text}>Hover Me</Text>
     </View> */}
+    <View>
+      <DistanceCalculator />
+    </View>
     <View >
       <Text>Hey</Text>
     </View>

@@ -11,6 +11,7 @@ import React, { useState } from 'react';
 // const ArrowRightIcon = dynamic(import("../../../assets/arrow-right.tsx"), { ssr: false })
 // import RightIcon from '../../../assets/Icons/right/Right.tsx';
 import RightIcon from '../../../assets/Icons/right/Right';
+import LeftIcon from '../../../assets/Icons/left/Left';
 
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -59,7 +60,8 @@ const Calendar = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={goToPreviousMonth}>
-          <Text style={styles.headerText}>Previous Month</Text>
+          {/* <Text style={styles.headerText}>Previous Month</Text> */}
+          <LeftIcon width={24} height={24} fill="red" color={'red'} />
         </TouchableOpacity>
         <Text style={styles.headerText}>{currentMonth.toLocaleString('default', { month: 'long' })} {currentMonth.getFullYear()}</Text>
         <TouchableOpacity onPress={goToNextMonth}>
