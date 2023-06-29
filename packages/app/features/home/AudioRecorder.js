@@ -1,170 +1,72 @@
-// import React from 'react';
-// import { Button, StyleSheet, Text, View } from 'react-native';
-// import { Audio } from 'expo-av';
-// import * as Sharing from 'expo-sharing';
-
-// export default function AudioRecorder() {
-//   const [recording, setRecording] = React.useState();
-//   const [recordings, setRecordings] = React.useState([]);
-//   const [message, setMessage] = React.useState("");
-
-//   async function startRecording() {
-//     try {
-//       const permission = await Audio.requestPermissionsAsync();
-
-//       if (permission.status === "granted") {
-//         await Audio.setAudioModeAsync({
-//           allowsRecordingIOS: true,
-//           playsInSilentModeIOS: true
-//         });
-        
-//         const { recording } = await Audio.Recording.createAsync(
-//           Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
-//         );
-
-//         setRecording(recording);
-//       } else {
-//         setMessage("Please grant permission to app to access microphone");
-//       }
-//     } catch (err) {
-//       console.error('Failed to start recording', err);
-//     }
-//   }
-
-//   async function stopRecording() {
-//     setRecording(undefined);
-//     await recording.stopAndUnloadAsync();
-
-//     let updatedRecordings = [...recordings];
-//     const { sound, status } = await recording.createNewLoadedSoundAsync();
-//     updatedRecordings.push({
-//       sound: sound,
-//       duration: getDurationFormatted(status.durationMillis),
-//       file: recording.getURI()
-//     });
-
-//     setRecordings(updatedRecordings);
-//   }
-
-//   function getDurationFormatted(millis) {
-//     const minutes = millis / 1000 / 60;
-//     const minutesDisplay = Math.floor(minutes);
-//     const seconds = Math.round((minutes - minutesDisplay) * 60);
-//     const secondsDisplay = seconds < 10 ? `0${seconds}` : seconds;
-//     return `${minutesDisplay}:${secondsDisplay}`;
-//   }
-
-//   function getRecordingLines() {
-//     return recordings.map((recordingLine, index) => {
-//       return (
-//         <View key={index} className="bg-purple-300">
-//           <Text >Recording {index + 1} - {recordingLine.duration}</Text>
-//           <Button className="bg-red-500" onPress={() => recordingLine.sound.replayAsync()} title="Play"></Button>
-//           <Button className='bg-blue-300' onPress={() => Sharing.shareAsync(recordingLine.file)} title="Share"></Button>
-//         </View>
-//       );
-//     });
-//   }
-
-//   return (
-//     <View className='bg-red-300'>
-//       <Button
-//         title={recording ? 'Stop Recording' : 'Start Recording'}
-//         onPress={recording ? stopRecording : startRecording} />
-//       {getRecordingLines()}
-//     </View>
-//   );
-// }
-
-
-
-
-
-
-
-
-
-
-// const styles = StyleSheet.create({
-//   container: {
-//     display: flex,
-//     backgroundColor: 'red',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   row: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   fill: {
-//     flex: 1,
-//     margin: 16
-//   },
-//   button: {
-//     margin: 16
-//   }
-// });
-
-
 // import React, { useState } from 'react';
 // import { Button, Text, View } from 'react-native';
 // import { Audio } from 'expo-av';
 // import * as Sharing from 'expo-sharing';
 // import { StatusBar } from 'expo-status-bar';
 
+// // utils
+// import { startRecording, stopRecording } from 'app/audioRecording/index';
+
 // export default function AudioRecorder() {
 //   const [recording, setRecording] = useState();
 //   const [recordings, setRecordings] = useState([]);
 //   const [message, setMessage] = useState('');
 
-//   const startRecording = async () => {
-//     try {
-//       const permission = await Audio.requestPermissionsAsync();
+//   // const startRecording = async () => {
+//   //   try {
+//   //     const permission = await Audio.requestPermissionsAsync();
 
-//       if (permission.status === 'granted') {
-//         await Audio.setAudioModeAsync({
-//           allowsRecordingIOS: true,
-//           playsInSilentModeIOS: true,
-//         });
+//   //     if (permission.status === 'granted') {
+//   //       await Audio.setAudioModeAsync({
+//   //         allowsRecordingIOS: true,
+//   //         playsInSilentModeIOS: true,
+//   //       });
 
-//         const { recording } = await Audio.Recording.createAsync(
-//           Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
-//         );
+//   //       const { recording } = await Audio.Recording.createAsync(
+//   //         Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
+//   //       );
 
-//         setRecording(recording);
-//       } else {
-//         setMessage('Please grant permission to the app to access the microphone');
-//       }
-//     } catch (err) {
-//       console.error('Failed to start recording', err);
-//     }
-//   };
+//   //       setRecording(recording);
+//   //     } else {
+//   //       setMessage('Please grant permission to the app to access the microphone');
+//   //     }
+//   //   } catch (err) {
+//   //     console.error('Failed to start recording', err);
+//   //   }
+//   // };
 
-//   const stopRecording = async () => {
-//     setRecording(undefined);
-//     await recording.stopAndUnloadAsync();
+//     const handleStartRecording = async () => {
+//       await startRecording(Audio, setRecording);
+//     };
 
-//     const { sound, status } = await recording.createNewLoadedSoundAsync();
-//     const updatedRecordings = [
-//       ...recordings,
-//       {
-//         sound: sound,
-//         duration: getDurationFormatted(status.durationMillis),
-//         file: recording.getURI(),
-//       },
-//     ];
+//   // const stopRecording = async () => {
+//   //   setRecording(undefined);
+//   //   await recording.stopAndUnloadAsync();
 
-//     setRecordings(updatedRecordings);
-//   };
+//   //   const { sound, status } = await recording.createNewLoadedSoundAsync();
+//   //   const updatedRecordings = [
+//   //     ...recordings,
+//   //     {
+//   //       sound: sound,
+//   //       duration: getDurationFormatted(status.durationMillis),
+//   //       file: recording.getURI(),
+//   //     },
+//   //   ];
 
-//   const getDurationFormatted = (millis) => {
-//     const minutes = millis / 1000 / 60;
-//     const minutesDisplay = Math.floor(minutes);
-//     const seconds = Math.round((minutes - minutesDisplay) * 60);
-//     const secondsDisplay = seconds < 10 ? `0${seconds}` : seconds;
-//     return `${minutesDisplay}:${secondsDisplay}`;
-//   };
+//   //   setRecordings(updatedRecordings);
+//   // };
+
+//   const handleStopRecording = async () => {
+//     await stopRecording(setRecording, recording, recordings, setRecordings);
+//   }
+
+//   // const getDurationFormatted = (millis) => {
+//   //   const minutes = millis / 1000 / 60;
+//   //   const minutesDisplay = Math.floor(minutes);
+//   //   const seconds = Math.round((minutes - minutesDisplay) * 60);
+//   //   const secondsDisplay = seconds < 10 ? `0${seconds}` : seconds;
+//   //   return `${minutesDisplay}:${secondsDisplay}`;
+//   // };
 
 //   const getRecordingLines = () => {
 //     return recordings.map((recordingLine, index) => {
@@ -192,7 +94,7 @@
 //     <View style={{ backgroundColor: 'red' }}>
 //       <Button
 //         title={recording ? 'Stop Recording' : 'Start Recording'}
-//         onPress={recording ? stopRecording : startRecording}
+//         onPress={recording ? handleStopRecording : handleStartRecording}
 //       />
 //       {getRecordingLines()}
 //       <StatusBar style="auto" />
@@ -201,16 +103,29 @@
 // }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 // Web logic
 import { Button, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState, useRef, useEffect } from 'react';
 // import * as SpeechRecognition from 'expo-speech-recognition';
 
 // utils
-import {getAudio, formatTime, startRecording , stopRecording} from "../../audioRecording/index";
+import {getAudio, getDurationFormatted, startRecording , stopRecording} from "../../audioRecording/index";
 
 const AudioRecorder = () => {
   const [recording, setRecording] = useState(false);
+  const [recordings, setRecordings] = useState([]);
   const [audioBlob, setAudioBlob] = useState(null);
   const [audioDuration, setAudioDuration] = useState(0);
   const startTimeRef = useRef(null);
@@ -258,10 +173,10 @@ const AudioRecorder = () => {
   // };
 
     const handleStartRecording = async (event) => {
-      await startRecording(event, mediaRecorderRef, setAudio, startTimeRef, isRecording);
+      await startRecording(event, mediaRecorderRef, setAudioBlobc, startTimeRef, isRecording);
     };
 
-    const setAudio = async (blob) => {
+    const setAudioBlobc = async (blob) => {
       setAudioBlob(blob)
     }
 
@@ -270,19 +185,19 @@ const AudioRecorder = () => {
     }
 
     useEffect(() => {
-    let interval;
+      let interval;
 
-    if (recording) {
-      interval = setInterval(() => {
-        const currentTime = (Date.now() - startTimeRef.current) / 1000;
-        setAudioDuration(currentTime);
-      }, 1000);
-    } else {
-      clearInterval(interval);
-    }
+      if (recording) {
+        interval = setInterval(() => {
+          const currentTime = (Date.now() - startTimeRef.current) / 1000;
+          setAudioDuration(currentTime);
+        }, 1000);
+      } else {
+        clearInterval(interval);
+      }
 
-    return () => clearInterval(interval);
-  }, [recording]);
+      return () => clearInterval(interval);
+    }, [recording]);
 
 
   // const handleStopRecording = () => {
@@ -304,7 +219,7 @@ const AudioRecorder = () => {
   // };
 
   const handleStopRecording = async () => {
-    await stopRecording(audioRef, isRecording, mediaRecorderRef);
+    await stopRecording(audioRef, isRecording, mediaRecorderRef, audioBlob, recordings, setRecordings);
   }
 
   // Can this bt handle on the component?
@@ -319,12 +234,43 @@ const AudioRecorder = () => {
     }
   };
 
+  const handlePlayAudioOnClick = (audioObj) => {
+    console.log("about to play audio", audioObj);
+    if (audioObj.blob) {
+      const audioURL = URL.createObjectURL(audioObj.blob);
+      console.log("audioURL: " + audioURL);
+       
+      audioRef.current.src = audioURL;
+      audioRef.current.play();
+    }
+  };
+
   const handleLoadedMetadata = () => {
     if (audioRef.current) {
       const duration = audioRef.current.duration;
       setAudioDuration(duration);
     }
   };
+
+  const getRecordingLines = () => {
+    return recordings.map((recordingLine, index) => {
+      return (
+        <View key={index} style={{ backgroundColor: 'purple' }}>
+          <Text>
+            Recording {index + 1} - {recordingLine.duration}
+          </Text>
+          <button
+            style={{ backgroundColor: 'red' }}
+            onClick={() => handlePlayAudioOnClick(recordingLine)}
+            title="Play"
+          >
+            Play
+          </button>
+        </View>
+      );
+    });
+  };
+
 
   return (
     // <View>
@@ -339,10 +285,10 @@ const AudioRecorder = () => {
         Play Audio
       </button>
 
-      {JSON.stringify(audioBlob)}
       {/* <audio ref={audioRef} controls /> */}
       <audio ref={audioRef} controls onLoadedMetadata={handleLoadedMetadata} />
-      <div>Duration: {formatTime(audioDuration)}</div>
+      <div>Duration: {getDurationFormatted(audioDuration)}</div>
+      {getRecordingLines()}
     </div>
   );
 };
