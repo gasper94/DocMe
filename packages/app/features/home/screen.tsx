@@ -1,3 +1,5 @@
+'use client'
+
 import { A, H1, P, Text, TextLink } from 'app/design/typography'
 import { Row } from 'app/design/layout'
 import { View } from 'app/design/view'
@@ -22,6 +24,7 @@ import myImage from '../../../assets/images/ulises.jpeg';
 
 // Components
 import DistanceCalculator from "./DistanceCalculator";
+import AudioRecorder from './AudioRecorder';
 
 const RedBox = () => {
   return <View className='bg-red-300 w-full'>
@@ -102,6 +105,7 @@ export function HomeScreen() {
       <Text style={styles.text}>Hover Me</Text>
     </View> */}
     <View>
+      <AudioRecorder />
       <DistanceCalculator />
     </View>
     <View >

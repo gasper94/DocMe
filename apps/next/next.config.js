@@ -1,4 +1,4 @@
-const { withExpo } = require('@expo/next-adapter')
+const { withExpo } = require('@expo/next-adapter');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -19,6 +19,6 @@ const nextConfig = {
     'react-native-gesture-handler',
     'react-native-svg',
   ],
-}
+};
 
-module.exports = withExpo(nextConfig)
+module.exports = withExpo(nextConfig);

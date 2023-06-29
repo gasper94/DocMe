@@ -6067,6 +6067,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-av@npm:^13.2.1":
+  version: 13.4.0
+  resolution: "expo-av@npm:13.4.0"
+  peerDependencies:
+    expo: "*"
+  checksum: c92bafda5596fa4c5fe9b85076a633a8f85371362845fdda4b56ddd1f0820bc0529315510d4661e1d9bc4ef2ec4ded464151ca6fc9717a015de2ada15341cfd2
+  languageName: node
+  linkType: hard
+
 "expo-constants@npm:~14.2.0, expo-constants@npm:~14.2.1":
   version: 14.2.1
   resolution: "expo-constants@npm:14.2.1"
@@ -6154,6 +6163,24 @@ __metadata:
     compare-versions: ^3.4.0
     invariant: ^2.2.4
   checksum: 78e82167f73b77f0ae6224027601b4aa3c4cec46e6a2f01eebfd19ac94e63f19e7d03da8e06f67caa0c9323a6df7bb87d4de848349d29a6004741e5b401a00fe
+  languageName: node
+  linkType: hard
+
+"expo-sharing@npm:^11.2.2":
+  version: 11.5.0
+  resolution: "expo-sharing@npm:11.5.0"
+  peerDependencies:
+    expo: "*"
+  checksum: aab2ab61a6e60a642fffec1c8a45a763d802a440a4f8c04785e6d3a1009b0055378d3ae7f1d49d24362d78718c476980a5f0292ec3df7a2a387b44fb3f7b3882
+  languageName: node
+  linkType: hard
+
+"expo-speech@npm:^11.1.1":
+  version: 11.3.0
+  resolution: "expo-speech@npm:11.3.0"
+  peerDependencies:
+    expo: "*"
+  checksum: 5c17a6a46e32b177baa2f4ec5d0fee6eef3fb50f14f55db016bcd9436a208a6fa1a6fa437d1194bc772a6966e5e5db52e44e96fb6df41c90a550c476b0e349ec
   languageName: node
   linkType: hard
 
@@ -10853,6 +10880,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-voice@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "react-native-voice@npm:0.3.0"
+  peerDependencies:
+    react-native: ">=0.40.0"
+  checksum: 3a8824d0afa69b81c5eba1ec003a25df8c55fa8b8f56a5bd489a802f1f1c1d74578bab424acbdbb0d9a5aa2dd05fda5aebfab245652ad8a900665f795e562692
+  languageName: node
+  linkType: hard
+
 "react-native-web@npm:~0.18.11":
   version: 0.18.12
   resolution: "react-native-web@npm:0.18.12"
@@ -11753,13 +11789,17 @@ __metadata:
     "@types/react": ^18.0.17
     "@types/react-native": ^0.69.5
     eslint: ^8.21.0
+    expo-av: ^13.2.1
     expo-image: ^1.2.3
+    expo-sharing: ^11.2.2
+    expo-speech: ^11.1.1
     patch-package: ^7.0.0
     postinstall-postinstall: ^2.1.0
     prettier: ^2.7.1
     prettier-plugin-tailwindcss: ^0.1.13
     react-native-svg: ^13.9.0
     react-native-vector-icons: ^9.2.0
+    react-native-voice: ^0.3.0
     turbo: ^1.4.2
     typescript: ^4.7.4
   languageName: unknown
