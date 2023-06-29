@@ -132,95 +132,30 @@ const AudioRecorder = () => {
   const audioRef = useRef(null);
   const mediaRecorderRef = useRef(null);
 
-
-  // const formatTime = (timeInSeconds) => {
-  //   const pad = (value) => (value < 10 ? `0${value}` : value);
-  //   const hours = Math.floor(timeInSeconds / 3600);
-  //   const minutes = Math.floor((timeInSeconds % 3600) / 60);
-  //   const seconds = Math.floor(timeInSeconds % 60);
-
-  //   return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
-  // };
-
-  // const handleStartRecording = () => {
-  //   console.log("about to start recording");
-  //   navigator.mediaDevices.getUserMedia({ audio: true })
-  //     .then(stream => {
-  //       console.log("stream started", stream);
-  //       const mediaRecorder = new MediaRecorder(stream);
-  //       mediaRecorderRef.current = mediaRecorder;
-  //       const chunks = [];
-
-  //       mediaRecorder.addEventListener('dataavailable', event => {
-  //         chunks.push(event.data);
-  //         console.log('Data available:', event.data);
-  //       });
-
-  //       mediaRecorder.addEventListener('stop', () => {
-  //         const blob = new Blob(chunks, { type: 'audio/wav' });
-
-  //         console.log("blob:", blob);
-  //         setAudioBlob(blob);
-  //       });
-
-  //       mediaRecorder.start(1000);
-  //       startTimeRef.current = Date.now();
-  //       setRecording(true);
-  //     })
-  //     .catch(error => {
-  //       console.error('Error accessing microphone:', error);
-  //     });
-  // };
-
-    const handleStartRecording = async (event) => {
-      await startRecording(event, mediaRecorderRef, setAudioBlobc, startTimeRef, isRecording);
-    };
-
-    const setAudioBlobc = async (blob) => {
-      setAudioBlob(blob)
-    }
-
-    const isRecording = async (flag) => {
-      setRecording(flag);
-    }
-
-    useEffect(() => {
-      let interval;
-
-      if (recording) {
-        interval = setInterval(() => {
-          const currentTime = (Date.now() - startTimeRef.current) / 1000;
-          setAudioDuration(currentTime);
-        }, 1000);
-      } else {
-        clearInterval(interval);
-      }
-
-      return () => clearInterval(interval);
-    }, [recording]);
-
-
-  // const handleStopRecording = () => {
-  //   console.log("Stop recording");
-  //   audioRef.current?.pause();
-  //   setRecording(false);
-  //   mediaRecorderRef.current?.stop();
-
-  //   // const endTime = Date.now();
-  //   // const duration = (endTime - startTimeRef.current) / 1000; // Convert to seconds
-  //   // setAudioDuration(duration);
-  //   // console.log("duration: " + duration);
-
-  //   // Additional cleanup steps if required
-  //   if (mediaRecorderRef.current?.stream) {
-  //     const tracks = mediaRecorderRef.current.stream.getTracks();
-  //     tracks.forEach(track => track.stop());
-  //   }
-  // };
+  const handleStartRecording = async (event) => {
+    await startRecording(event, mediaRecorderRef, setAudioBlob, startTimeRef, setRecording);
+  };
 
   const handleStopRecording = async () => {
-    await stopRecording(audioRef, isRecording, mediaRecorderRef, audioBlob, recordings, setRecordings);
+    await stopRecording(audioRef, setRecording, mediaRecorderRef, audioBlob, recordings, setRecordings);
   }
+  
+  // Might be able to need this. Else remove it later on.
+  useEffect(() => {
+    let interval;
+
+    if (recording) {
+      interval = setInterval(() => {
+        const currentTime = (Date.now() - startTimeRef.current) / 1000;
+        setAudioDuration(currentTime);
+      }, 1000);
+    } else {
+      clearInterval(interval);
+    }
+
+    return () => clearInterval(interval);
+  }, [recording]);
+
 
   // Can this bt handle on the component?
   const handlePlayAudio = () => {
@@ -245,6 +180,7 @@ const AudioRecorder = () => {
     }
   };
 
+  // Websites might need this to play audio in contrast to mobile?
   const handleLoadedMetadata = () => {
     if (audioRef.current) {
       const duration = audioRef.current.duration;
@@ -271,12 +207,7 @@ const AudioRecorder = () => {
     });
   };
 
-
   return (
-    // <View>
-    //   <Text>Hello audio recorder</Text>
-    //   <Button title="Get Audio" onPress={getAudio} />
-    // </View>
     <div>
       <button onClick={recording ? handleStopRecording : handleStartRecording}>
         {recording ? 'Stop Recording' : 'Start Recording'}
@@ -285,7 +216,8 @@ const AudioRecorder = () => {
         Play Audio
       </button>
 
-      {/* <audio ref={audioRef} controls /> */}
+      <div>Recordings: {recordings.length}</div>
+
       <audio ref={audioRef} controls onLoadedMetadata={handleLoadedMetadata} />
       <div>Duration: {getDurationFormatted(audioDuration)}</div>
       {getRecordingLines()}

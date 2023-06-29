@@ -3,9 +3,9 @@ import { MutableRefObject } from "react";
 const startRecording = (
     event: Event, 
     mediaRecorderRef: MutableRefObject<MediaRecorder | null>, 
-    setAudioBlobc, 
+    setAudioBlob, 
     startTimeRef, 
-    isRecording
+    setRecording
 ) => {
     console.log("about to start recording");
 
@@ -34,29 +34,38 @@ const startRecording = (
                 audioURL: audioURL,
                 duration: getDurationFormatted(duration)
             }
-            setAudioBlobc(newObjectBlob);
+            setAudioBlob(newObjectBlob);
         });
 
         mediaRecorder.start(1000);
         startTimeRef.current = Date.now();
-        isRecording(true);
+        setRecording(true);
     })
     .catch(error => {
         console.error('Error accessing microphone:', error);
     });
 };
 
-const stopRecording = (audioRef, isRecording, mediaRecorderRef, audioBlob, recordings, setRecordings) => {
-    console.log("Stop recording");
-    audioRef.current?.pause();
-    isRecording(false);
-    mediaRecorderRef.current?.stop();
+const stopRecording =  async (audioRef, setRecording, mediaRecorderRef, audioBlob, recordings, setRecordings) => {
+    await console.log("Stop recording",{
+        audioRef, 
+        setRecording, 
+        mediaRecorderRef, 
+        audioBlob, 
+        recordings, 
+        setRecordings
+    });
+    await audioRef.current?.pause();
+    await setRecording(false);
+    await mediaRecorderRef.current?.stop();
 
-    console.log("recordingssssssssssssssssssssss: audioBlob", audioBlob);
-    console.log("recordingssssssssssssssssssssss", recordings);
+    // To do. Solve bug here. Looks like audioBlob is not being loaded yet.
+    await console.log("recordingssssssssssssssssssssss: audioBlob", audioBlob);
+    await console.log("recordingssssssssssssssssssssss", recordings);
     if(audioBlob){
-        setRecordings([...recordings, audioBlob]);
-        console.log("recordingssssssssssssssssssssss", recordings);
+        // setRecordings([...recordings, audioBlob]);
+        await setRecordings(prevRecordings => [...prevRecordings, audioBlob]);
+        await console.log("recordingssssssssssssssssssssss", recordings);
     }
     // const endTime = Date.now();
     // const duration = (endTime - startTimeRef.current) / 1000; // Convert to seconds
@@ -65,8 +74,8 @@ const stopRecording = (audioRef, isRecording, mediaRecorderRef, audioBlob, recor
 
     // Additional cleanup steps if required
     if (mediaRecorderRef.current?.stream) {
-        const tracks = mediaRecorderRef.current.stream.getTracks();
-        tracks.forEach(track => track.stop());
+        const tracks = await mediaRecorderRef.current.stream.getTracks();
+        await tracks.forEach(track => track.stop());
     }
 };
 
