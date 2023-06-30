@@ -118,6 +118,7 @@
 // Web logic
 import { Button, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState, useRef, useEffect } from 'react';
+// import { StatusBar } from 'expo-status-bar';
 // import * as SpeechRecognition from 'expo-speech-recognition';
 
 // utils
@@ -133,7 +134,7 @@ const AudioRecorder = () => {
   const mediaRecorderRef = useRef(null);
 
   const handleStartRecording = async (event) => {
-    await startRecording(event, mediaRecorderRef, setAudioBlob, startTimeRef, setRecording);
+    await startRecording(event, mediaRecorderRef, setAudioBlob, startTimeRef, setRecording, recordings, audioBlob, setRecordings);
   };
 
   const handleStopRecording = async () => {
@@ -222,6 +223,14 @@ const AudioRecorder = () => {
       <div>Duration: {getDurationFormatted(audioDuration)}</div>
       {getRecordingLines()}
     </div>
+    // <View style={{ backgroundColor: 'red' }}>
+    //   <Button
+    //     title={recording ? 'Stop Recording' : 'Start Recording'}
+    //     onPress={recording ? handleStopRecording : handleStartRecording}
+    //   />
+    //   {getRecordingLines()}
+    //   <StatusBar style="auto" />
+    // </View>
   );
 };
 

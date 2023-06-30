@@ -1,15 +1,18 @@
 import { MutableRefObject } from "react";
 
-const startRecording = (
+const startRecording = async (
     event: Event, 
     mediaRecorderRef: MutableRefObject<MediaRecorder | null>, 
     setAudioBlob, 
     startTimeRef, 
-    setRecording
+    setRecording,
+    recordings, 
+    audioBlob, 
+    setRecordings
 ) => {
     console.log("about to start recording");
 
-    navigator.mediaDevices.getUserMedia({ audio: true })
+    await navigator.mediaDevices.getUserMedia({ audio: true })
     .then(stream => {
         console.log("stream started", stream);
         const mediaRecorder = new MediaRecorder(stream);
@@ -23,18 +26,7 @@ const startRecording = (
         });
 
         mediaRecorder.addEventListener('stop', () => {
-            const duration = (Date.now() - startTimeRef.current) / 1000; // Convert to seconds
-            const blob = new Blob(chunks, { type: 'audio/wav' });
-
-            console.log("blob:", blob);
-            const audioURL = URL.createObjectURL(blob);
-
-            const newObjectBlob = {
-                blob: blob, 
-                audioURL: audioURL,
-                duration: getDurationFormatted(duration)
-            }
-            setAudioBlob(newObjectBlob);
+            handleAudioBlob(chunks, setAudioBlob, startTimeRef, recordings, audioBlob, setRecordings, mediaRecorderRef);
         });
 
         mediaRecorder.start(1000);
@@ -59,24 +51,6 @@ const stopRecording =  async (audioRef, setRecording, mediaRecorderRef, audioBlo
     await setRecording(false);
     await mediaRecorderRef.current?.stop();
 
-    // To do. Solve bug here. Looks like audioBlob is not being loaded yet.
-    await console.log("recordingssssssssssssssssssssss: audioBlob", audioBlob);
-    await console.log("recordingssssssssssssssssssssss", recordings);
-    if(audioBlob){
-        // setRecordings([...recordings, audioBlob]);
-        await setRecordings(prevRecordings => [...prevRecordings, audioBlob]);
-        await console.log("recordingssssssssssssssssssssss", recordings);
-    }
-    // const endTime = Date.now();
-    // const duration = (endTime - startTimeRef.current) / 1000; // Convert to seconds
-    // setAudioDuration(duration);
-    // console.log("duration: " + duration);
-
-    // Additional cleanup steps if required
-    if (mediaRecorderRef.current?.stream) {
-        const tracks = await mediaRecorderRef.current.stream.getTracks();
-        await tracks.forEach(track => track.stop());
-    }
 };
 
 const getDurationFormatted = (timeInSeconds) => {
@@ -90,5 +64,43 @@ const getDurationFormatted = (timeInSeconds) => {
 const getAudio =  async () => {
     alert('web')
 }
+
+const handleAudioBlob = (chunks, setAudioBlob, startTimeRef, recordings, audioBlob, setRecordings, mediaRecorderRef) => {
+    const duration = (Date.now() - startTimeRef.current) / 1000; // Convert to seconds
+    const blob = new Blob(chunks, { type: 'audio/wav' });
+    const audioURL = URL.createObjectURL(blob);
+
+    const newObjectBlob = {
+        blob: blob,
+        audioURL: audioURL,
+        duration: getDurationFormatted(duration)
+    };
+
+  // To do. Solve bug here. Looks like audioBlob is not being loaded yet.
+    console.log("recordingssssssssssssssssssssss: audioBlob", blob);
+    console.log("recordingssssssssssssssssssssss", recordings);
+    if(newObjectBlob){
+        // setRecordings([...recordings, audioBlob]);
+        setRecordings(prevRecordings => [...prevRecordings, newObjectBlob]);
+        console.log("recordingssssssssssssssssssssss", recordings);
+    }
+    // // const endTime = Date.now();
+    // // const duration = (endTime - startTimeRef.current) / 1000; // Convert to seconds
+    // // setAudioDuration(duration);
+    // // console.log("duration: " + duration);
+
+    // Additional cleanup steps if required
+    if (mediaRecorderRef.current?.stream) {
+        const tracks = mediaRecorderRef.current.stream.getTracks();
+        tracks.forEach(track => track.stop());
+    }
+
+//   const newObjectBlob = {
+//     blob: blob,
+//     audioURL: audioURL,
+//     duration: getDurationFormatted(duration)
+//   };
+//   setAudioBlob(newObjectBlob);
+};
 
 export {getAudio, startRecording, stopRecording, getDurationFormatted};
