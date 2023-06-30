@@ -1,4 +1,10 @@
-const startRecording = async (Audio, startTimeRef, setRecording) => {
+const startRecording = async (
+    Audio,
+    startTimeRef, 
+    setRecording,
+    recordings,  
+    setRecordings
+) => {
      try {
       const permission = await Audio.requestPermissionsAsync();
 

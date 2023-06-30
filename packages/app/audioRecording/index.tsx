@@ -1,13 +1,13 @@
 import { MutableRefObject } from "react";
 
+import {mediaRecorderRefx} from './support';
+
 const startRecording = async (
-    event: Event, 
-    mediaRecorderRef: MutableRefObject<MediaRecorder | null>, 
-    setAudioBlob, 
+    // event: Event,
+    Audio,
     startTimeRef, 
     setRecording,
-    recordings, 
-    audioBlob, 
+    recordings,  
     setRecordings
 ) => {
     // alert("web about to start recording");
@@ -16,7 +16,8 @@ const startRecording = async (
     .then(stream => {
         console.log("stream started", stream);
         const mediaRecorder = new MediaRecorder(stream);
-        mediaRecorderRef.current = mediaRecorder;
+        mediaRecorderRefx.current = mediaRecorder;
+        // mediaRecorderRef.current = mediaRecorder;
         const chunks: BlobPart[] = [];
 
 
@@ -26,7 +27,8 @@ const startRecording = async (
         });
 
         mediaRecorder.addEventListener('stop', () => {
-            handleAudioBlob(chunks, setAudioBlob, startTimeRef, recordings, audioBlob, setRecordings, mediaRecorderRef);
+            console.log("setRecordings:", setRecordings)
+            handleAudioBlob(chunks, startTimeRef, recordings, setRecordings);
         });
 
         mediaRecorder.start(1000);
@@ -38,18 +40,12 @@ const startRecording = async (
     });
 };
 
-const stopRecording =  async (audioRef, setRecording, mediaRecorderRef, audioBlob, recordings, setRecordings) => {
-    await console.log("Stop recording",{
-        audioRef, 
-        setRecording, 
-        mediaRecorderRef, 
-        audioBlob, 
-        recordings, 
-        setRecordings
-    });
-    await audioRef.current?.pause();
+const stopRecording =  async (setRecording, startTimeRef, recording, recordings, setRecordings) => {
+
+    // await audioRef.current?.pause();
     await setRecording(false);
-    await mediaRecorderRef.current?.stop();
+    // await mediaRecorderRef.current?.stop();
+    await mediaRecorderRefx.current?.stop();
 
 };
 
@@ -65,7 +61,7 @@ const getAudio =  async () => {
     alert('web')
 }
 
-const handleAudioBlob = (chunks, setAudioBlob, startTimeRef, recordings, audioBlob, setRecordings, mediaRecorderRef) => {
+const handleAudioBlob = (chunks, startTimeRef, recordings, setRecordings) => {
     const duration = (Date.now() - startTimeRef.current) / 1000; // Convert to seconds
     const blob = new Blob(chunks, { type: 'audio/wav' });
     const audioURL = URL.createObjectURL(blob);
@@ -89,11 +85,18 @@ const handleAudioBlob = (chunks, setAudioBlob, startTimeRef, recordings, audioBl
     // // setAudioDuration(duration);
     // // console.log("duration: " + duration);
 
-    // Additional cleanup steps if required
-    if (mediaRecorderRef.current?.stream) {
-        const tracks = mediaRecorderRef.current.stream.getTracks();
+    // // Additional cleanup steps if required
+    // if (mediaRecorderRef.current?.stream) {
+    //     const tracks = mediaRecorderRef.current.stream.getTracks();
+    //     tracks.forEach(track => track.stop());
+    // }
+
+     // Additional cleanup steps if required
+    if (mediaRecorderRefx.current?.stream) {
+        const tracks = mediaRecorderRefx.current.stream.getTracks();
         tracks.forEach(track => track.stop());
     }
+
 
 //   const newObjectBlob = {
 //     blob: blob,
