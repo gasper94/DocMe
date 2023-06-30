@@ -114,12 +114,12 @@
 
 
 
-
 // Web logic
 import { Button, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState, useRef, useEffect } from 'react';
 // import { StatusBar } from 'expo-status-bar';
 // import * as SpeechRecognition from 'expo-speech-recognition';
+// import Audio from 'react-native-audio';
 
 // utils
 import {getAudio, getDurationFormatted, startRecording , stopRecording} from "../../audioRecording/index";
@@ -176,8 +176,10 @@ const AudioRecorder = () => {
       const audioURL = URL.createObjectURL(audioObj.blob);
       console.log("audioURL: " + audioURL);
        
-      audioRef.current.src = audioURL;
-      audioRef.current.play();
+      const mySound = new Audio(audioURL);
+      mySound.play()
+      // audioRef.current.src = audioURL;
+      // audioRef.current.play();
     }
   };
 
@@ -219,7 +221,7 @@ const AudioRecorder = () => {
 
       <div>Recordings: {recordings.length}</div>
 
-      <audio ref={audioRef} controls onLoadedMetadata={handleLoadedMetadata} />
+      {/* <audio ref={audioRef} controls onLoadedMetadata={handleLoadedMetadata} /> */}
       <div>Duration: {getDurationFormatted(audioDuration)}</div>
       {getRecordingLines()}
     </div>
@@ -231,7 +233,84 @@ const AudioRecorder = () => {
     //   {getRecordingLines()}
     //   <StatusBar style="auto" />
     // </View>
+    // <View>
+    //   <Button onPress={recording ? handleStopRecording : handleStartRecording}>
+    //     {recording ? 'Stop Recording' : 'Start Recording'}
+    //   </Button>
+    //   <Button onPress={handlePlayAudio} disabled={!audioBlob}>
+    //     Play Audio
+    //   </Button>
+
+    //   <Text>Recordings: {recordings.length}</Text>
+
+    //   {/* <Audio ref={audioRef} onLoadedMetadata={handleLoadedMetadata} /> */}
+    //   <Text>Duration: {getDurationFormatted(audioDuration)}</Text>
+    //   {getRecordingLines()}
+    // </View>
   );
 };
 
 export default AudioRecorder;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import * as React from 'react';
+// import { Text, View, StyleSheet, Button } from 'react-native';
+// import { Audio } from 'expo-av';
+
+// export function AudioRecorder() {
+//   const [sound, setSound] = React.useState();
+
+//   async function playSound() {
+//     console.log('Loading Sound');
+//     const { sound } = await Audio.Sound.createAsync( require('./assets/Hello.mp3')
+//     );
+//     setSound(sound);
+
+//     console.log('Playing Sound');
+//     await sound.playAsync();
+//   }
+
+//   React.useEffect(() => {
+//     return sound
+//       ? () => {
+//           console.log('Unloading Sound');
+//           sound.unloadAsync();
+//         }
+//       : undefined;
+//   }, [sound]);
+
+//   return (
+//     <View style={styles.container}>
+//       <Button title="Play Sound" onPress={playSound} />
+//     </View>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     backgroundColor: '#ecf0f1',
+//     padding: 10,
+//   },
+// });
+
+// export default AudioRecorder;

@@ -23,15 +23,15 @@ try {
 
 const stopRecording = async (setRecording, recording, recordings, setRecordings) => {
     setRecording(undefined);
-    await recording.stopAndUnloadAsync();
+    recording.stopAndUnloadAsync();
 
-    const { sound, status } = await recording.createNewLoadedSoundAsync();
+    const { sound, status } = recording.createNewLoadedSoundAsync();
     const updatedRecordings = [
         ...recordings,
         {
-        sound: sound,
-        duration: getDurationFormatted(status.durationMillis),
-        file: recording.getURI(),
+            sound: sound,
+            duration: getDurationFormatted(status.durationMillis),
+            file: recording.getURI(),
         },
     ];
 

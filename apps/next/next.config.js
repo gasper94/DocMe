@@ -18,6 +18,12 @@ const nextConfig = {
     'nativewind',
     'react-native-gesture-handler',
     'react-native-svg',
+    // Here
+    'expo-status-bar',
+    'expo-av',
+    'expo-modules-core',
+    'expo-asset',
+    'expo-sharing'
   ],
 };
 
