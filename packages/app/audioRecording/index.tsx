@@ -103,4 +103,17 @@ const handleAudioBlob = (chunks, setAudioBlob, startTimeRef, recordings, audioBl
 //   setAudioBlob(newObjectBlob);
 };
 
-export {getAudio, startRecording, stopRecording, getDurationFormatted};
+const handlePlayAudioOnClick = (audioObj) => {
+    console.log("about to play audio", audioObj);
+    if (audioObj.blob) {
+      const audioURL = URL.createObjectURL(audioObj.blob);
+      console.log("audioURL: " + audioURL);
+       
+      const mySound = new Audio(audioURL);
+      mySound.play()
+      // audioRef.current.src = audioURL;
+      // audioRef.current.play();
+    }
+  };
+
+export {getAudio, startRecording, stopRecording, getDurationFormatted, handlePlayAudioOnClick};

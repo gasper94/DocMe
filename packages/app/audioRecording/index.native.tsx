@@ -50,4 +50,9 @@ const getAudio = async () => {
     alert('native')
 }
 
+const handlePlayAudioOnClick = (audioObj) => {
+    console.log("about to play audio");    
+};
+
 export {getAudio, startRecording, stopRecording};
+
