@@ -5,7 +5,7 @@ import * as Sharing from 'expo-sharing';
 import { StatusBar } from 'expo-status-bar';
 
 // utils
-import { startRecording, stopRecording } from 'app/audioRecording/index';
+import { getAudio, startRecording, stopRecording, handlePlayAudioOnClick } from 'app/audioRecording/index';
 
 export default function AudioRecorder() {
   const [recording, setRecording] = useState();
@@ -77,13 +77,8 @@ export default function AudioRecorder() {
           </Text>
           <Button
             style={{ backgroundColor: 'red' }}
-            onPress={() => recordingLine.sound.replayAsync()}
+            onPress={() => handlePlayAudioOnClick(recordingLine)}
             title="Play"
-          />
-          <Button
-            style={{ backgroundColor: 'blue' }}
-            onPress={() => Sharing.shareAsync(recordingLine.file)}
-            title="Share"
           />
         </View>
       );

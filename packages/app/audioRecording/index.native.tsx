@@ -1,38 +1,38 @@
 const startRecording = async (Audio, setRecording) => {
-try {
-    const permission = await Audio.requestPermissionsAsync();
+     try {
+      const permission = await Audio.requestPermissionsAsync();
 
-    if (permission.status === 'granted') {
-    await Audio.setAudioModeAsync({
-        allowsRecordingIOS: true,
-        playsInSilentModeIOS: true,
-    });
+      if (permission.status === 'granted') {
+        await Audio.setAudioModeAsync({
+          allowsRecordingIOS: true,
+          playsInSilentModeIOS: true,
+        });
 
-    const { recording } = await Audio.Recording.createAsync(
-        Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
-    );
+        const { recording } = await Audio.Recording.createAsync(
+          Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
+        );
 
-    setRecording(recording);
-    } else {
-    console.error('Please grant permission to the app to access the microphone');
+        setRecording(recording);
+      } else {
+        console.log('Please grant permission to the app to access the microphone');
+      }
+    } catch (err) {
+      console.error('Failed to start recording', err);
     }
-} catch (err) {
-    console.error('Failed to start recording', err);
-}
 };
 
 const stopRecording = async (setRecording, recording, recordings, setRecordings) => {
     setRecording(undefined);
-    recording.stopAndUnloadAsync();
+    await recording.stopAndUnloadAsync();
 
-    const { sound, status } = recording.createNewLoadedSoundAsync();
+    const { sound, status } = await recording.createNewLoadedSoundAsync();
     const updatedRecordings = [
-        ...recordings,
-        {
-            sound: sound,
-            duration: getDurationFormatted(status.durationMillis),
-            file: recording.getURI(),
-        },
+      ...recordings,
+      {
+        sound: sound,
+        duration: getDurationFormatted(status.durationMillis),
+        file: recording.getURI(),
+      },
     ];
 
     setRecordings(updatedRecordings);
@@ -50,9 +50,10 @@ const getAudio = async () => {
     alert('native')
 }
 
-const handlePlayAudioOnClick = (audioObj) => {
-    console.log("about to play audio");    
+const handlePlayAudioOnClick = (recordingLine) => {
+    alert("about to play audio");  
+    recordingLine.sound.replayAsync()  
 };
 
-export {getAudio, startRecording, stopRecording};
+export {getAudio, startRecording, stopRecording, handlePlayAudioOnClick};
 

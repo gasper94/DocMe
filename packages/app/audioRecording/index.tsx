@@ -10,7 +10,7 @@ const startRecording = async (
     audioBlob, 
     setRecordings
 ) => {
-    console.log("about to start recording");
+    alert("web about to start recording");
 
     await navigator.mediaDevices.getUserMedia({ audio: true })
     .then(stream => {
