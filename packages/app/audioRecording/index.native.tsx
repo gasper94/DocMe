@@ -1,4 +1,4 @@
-const startRecording = async (Audio, setRecording) => {
+const startRecording = async (Audio, startTimeRef, setRecording) => {
      try {
       const permission = await Audio.requestPermissionsAsync();
 
@@ -11,6 +11,7 @@ const startRecording = async (Audio, setRecording) => {
         const { recording } = await Audio.Recording.createAsync(
           Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
         );
+        startTimeRef.current = Date.now();
 
         setRecording(recording);
       } else {
@@ -21,16 +22,16 @@ const startRecording = async (Audio, setRecording) => {
     }
 };
 
-const stopRecording = async (setRecording, recording, recordings, setRecordings) => {
+const stopRecording = async (setRecording, startTimeRef, recording, recordings, setRecordings) => {
     setRecording(undefined);
     await recording.stopAndUnloadAsync();
-
+    const duration = (Date.now() - startTimeRef.current) / 1000; // Convert to seconds
     const { sound, status } = await recording.createNewLoadedSoundAsync();
     const updatedRecordings = [
       ...recordings,
       {
         sound: sound,
-        duration: getDurationFormatted(status.durationMillis),
+        duration: getDurationFormatted(duration),
         file: recording.getURI(),
       },
     ];
@@ -38,12 +39,12 @@ const stopRecording = async (setRecording, recording, recordings, setRecordings)
     setRecordings(updatedRecordings);
 };
 
-const getDurationFormatted = (millis) => {
-    const minutes = millis / 1000 / 60;
-    const minutesDisplay = Math.floor(minutes);
-    const seconds = Math.round((minutes - minutesDisplay) * 60);
-    const secondsDisplay = seconds < 10 ? `0${seconds}` : seconds;
-    return `${minutesDisplay}:${secondsDisplay}`;
+const getDurationFormatted = (timeInSeconds) => {
+    const pad = (value) => (value < 10 ? `0${value}` : value);
+    const hours = Math.floor(timeInSeconds / 3600);
+    const minutes = Math.floor((timeInSeconds % 3600) / 60);
+    const seconds = Math.floor(timeInSeconds % 60);
+    return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 };
 
 const getAudio = async () => {
@@ -55,5 +56,5 @@ const handlePlayAudioOnClick = (recordingLine) => {
     recordingLine.sound.replayAsync()  
 };
 
-export {getAudio, startRecording, stopRecording, handlePlayAudioOnClick};
+export {getAudio, getDurationFormatted, startRecording, stopRecording, handlePlayAudioOnClick};
 
