@@ -58,7 +58,6 @@ const getAudio = async () => {
 }
 
 const handlePlayAudioOnClick = (recordingLine) => {
-    alert("about to play audio");  
     recordingLine.sound.replayAsync()  
 };
 

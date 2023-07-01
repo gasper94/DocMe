@@ -24,7 +24,7 @@ import myImage from '../../../assets/images/ulises.jpeg';
 
 // Components
 import DistanceCalculator from "./DistanceCalculator";
-import AudioRecorder from './AudioRecorder';
+import AudioRecorder from '../audioRecorder/AudioRecorder';
 
 const RedBox = () => {
   return <View className='bg-red-300 w-full'>

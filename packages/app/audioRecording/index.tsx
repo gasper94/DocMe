@@ -63,7 +63,7 @@ const getAudio =  async () => {
 
 const handleAudioBlob = (chunks, startTimeRef, recordings, setRecordings) => {
     const duration = (Date.now() - startTimeRef.current) / 1000; // Convert to seconds
-    const blob = new Blob(chunks, { type: 'audio/wav' });
+    const blob = new Blob(chunks, {type: "audio/webm;codecs=opus" });
     const audioURL = URL.createObjectURL(blob);
 
     const newObjectBlob = {
