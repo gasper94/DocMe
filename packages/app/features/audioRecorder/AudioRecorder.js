@@ -14,6 +14,8 @@ export default function AudioRecorder() {
   const [audioDuration, setAudioDuration] = useState(0);
   const startTimeRef = useRef(null);
 
+  // new
+  const [newMessage, setMesssage] = useState(null);
 
   // Might be able to need this. Else remove it later on.
   useEffect(() => {
@@ -112,10 +114,10 @@ export default function AudioRecorder() {
   };
 
     const handleGetTranscript = async (audio) => {
-      alert('handleGetTranscript:');
-      console.log(audio);
-      console.log("audio", audio.blob);
-      console.log(typeof(audio.blob));
+      // alert('handleGetTranscript:');
+      // console.log(audio);
+      // console.log("audio", audio.blob);
+      // console.log(typeof(audio.blob));
 
       // const buffer = await audio.Blob.arrayBuffer()
       // const mp3chunk = encoder.current.encodeBuffer(new Int16Array(buffer))
@@ -139,14 +141,14 @@ export default function AudioRecorder() {
       // Make the API request and process the transcript response as needed
       // Replace this with your actual API request implementation
 
-      console.log("audio:", audio);
+      // console.log("audio:", audio);
       const file = new File([audio.blob], "input.wav", {type: "audio/webm;codecs=opus"});
-      console.log('file:', file);
 
       const formData = new FormData();
       formData.append('file', file);
       formData.append('model', 'whisper-1');
 
+      console.log("formData:", formData);
       try {
         const response = await fetch("https://api.openai.com/v1/audio/transcriptions", {
           method: 'POST',
@@ -156,12 +158,15 @@ export default function AudioRecorder() {
           body: formData
         });
 
+        console.log("response: " + JSON.stringify(response));
+
         if (response.ok) {
           const transcript = await response.json();
-          alert(JSON.stringify(transcript));
+          // alert(JSON.stringify(transcript));
           console.log("Transcript:", transcript);
+          setMesssage(transcript.text);
         } else {
-          alert("Failed to get transcript");
+          console.log("Failed to get transcript");
         }
       } catch (error) {
         console.log("An error occurred:", error);
@@ -176,6 +181,11 @@ export default function AudioRecorder() {
       />
       <Text>Duration: {`${getDurationFormatted(audioDuration)}`}</Text>
       {getRecordingLines()}
+
+      {newMessage ? 
+        <Text>Transcription: {newMessage}</Text>
+
+      :<Text>No Transcript</Text>}
     </View>
   );
 }
