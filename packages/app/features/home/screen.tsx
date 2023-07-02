@@ -25,6 +25,7 @@ import myImage from '../../../assets/images/ulises.jpeg';
 // Components
 import DistanceCalculator from "./DistanceCalculator";
 import AudioRecorder from '../audioRecorder/AudioRecorder';
+import GenerateCV from "../extractData/extractData";
 
 const RedBox = () => {
   return <View className='bg-red-300 w-full'>
@@ -105,6 +106,7 @@ export function HomeScreen() {
       <Text style={styles.text}>Hover Me</Text>
     </View> */}
     <View>
+      <GenerateCV />
       <AudioRecorder />
       <DistanceCalculator />
     </View>

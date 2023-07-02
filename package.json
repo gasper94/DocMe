@@ -27,6 +27,7 @@
     "expo-image": "^1.2.3",
     "expo-sharing": "^11.2.2",
     "expo-speech": "^11.1.1",
+    "openai": "^3.3.0",
     "patch-package": "^7.0.0",
     "postinstall-postinstall": "^2.1.0",
     "react-native-audio": "^4.3.0",
