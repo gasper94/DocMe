@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect} from 'react';
 import { Button, Text, View } from 'react-native';
 import { Audio } from 'expo-av';
+import axios from "axios";
 
 // utils
 import { getAudio, getDurationFormatted, startRecording, stopRecording, handlePlayAudioOnClick } from 'app/audioRecording/index';
@@ -113,35 +114,7 @@ export default function AudioRecorder() {
     });
   };
 
-    const handleGetTranscript = async (audio) => {
-      // alert('handleGetTranscript:');
-      // console.log(audio);
-      // console.log("audio", audio.blob);
-      // console.log(typeof(audio.blob));
-
-      // const buffer = await audio.Blob.arrayBuffer()
-      // const mp3chunk = encoder.current.encodeBuffer(new Int16Array(buffer))
-      // const mp3blob = new Blob([mp3chunk], { type: 'audio/mpeg' })
-      // const file = new File([audio.blob], "input.wav", { type: "audio.wav" });
-      // const file = new File([audio.blob.Blob], "input.wav", { type: "wav" });  
-      // const model = 'whisper-1'; // Specify the model ID
-      // // const prompt = 'Optional prompt text'; // Optional prompt text
-      // const responseFormat = 'json'; // Specify the response format
-
-      // const formData = new FormData();
-      // formData.append('file', './audio.m4a');
-      // formData.append('model', model);
-      // // formData.append('prompt', prompt);
-      // formData.append('response_format', responseFormat);
-      // Perform API request here
-      // const fileUrl = recordings[recordings.length - 1].file; // Get the file URL of the last recording
-      // const audioURL = URL.createObjectURL(audio.blob);
-      // const model = "whisper-1"; // Set the desired model
-
-      // Make the API request and process the transcript response as needed
-      // Replace this with your actual API request implementation
-
-      // console.log("audio:", audio);
+  const handleGetTranscript = async (audio) => {
       const file = new File([audio.blob], "input.wav", {type: "audio/webm;codecs=opus"});
 
       const formData = new FormData();
@@ -149,29 +122,57 @@ export default function AudioRecorder() {
       formData.append('model', 'whisper-1');
 
       console.log("formData:", formData);
+
       try {
-        const response = await fetch("https://api.openai.com/v1/audio/transcriptions", {
-          method: 'POST',
+        const response = await axios.post("http://10.0.0.140:3006/transcript", formData, {
           headers: {
-            "Authorization": "Bearer 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",
-          },
-          body: formData
+          "Authorization": "Bearer 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",
+          }
         });
 
         console.log("response: " + JSON.stringify(response));
 
-        if (response.ok) {
-          const transcript = await response.json();
-          // alert(JSON.stringify(transcript));
+        if (response.status === 200) {
+          const transcript = response.data;
           console.log("Transcript:", transcript);
           setMesssage(transcript.text);
         } else {
           console.log("Failed to get transcript");
         }
-      } catch (error) {
+      }catch(error) {
         console.log("An error occurred:", error);
       }
   };
+
+  // const handleGetTranscriptWeb = async (audio) => {
+  //     const file = new File([audio.blob], "input.wav", {type: "audio/webm;codecs=opus"});
+
+  //     const formData = new FormData();
+  //     formData.append('file', file);
+  //     formData.append('model', 'whisper-1');
+
+  //     console.log("formData:", formData);
+
+  //     try {
+  //       const response = await axios.post("http://10.0.0.140:3006/transcript", formData, {
+  //         headers: {
+  //         "Authorization": "Bearer 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",
+  //         }
+  //       });
+
+  //       console.log("response: " + JSON.stringify(response));
+
+  //       if (response.status === 200) {
+  //         const transcript = response.data;
+  //         console.log("Transcript:", transcript);
+  //         setMesssage(transcript.text);
+  //       } else {
+  //         console.log("Failed to get transcript");
+  //       }
+  //     }catch(error) {
+  //       console.log("An error occurred:", error);
+  //     }
+  // };
 
   return (
     <View style={{ backgroundColor: 'red' }}>
@@ -393,3 +394,30 @@ export default function AudioRecorder() {
 // // });
 
 // // export default AudioRecorder;
+
+
+// {
+//   "duration": "00:00:02", 
+//   "file": "file:///var/mobile/Containers/Data/Application/C915C898-277E-4677-88AC-778B79366D37/Library/Caches/ExponentExperienceData/%2540umartinez%252Fsolito-nativewind/AV/recording-A4318775-8ACA-4CAD-A395-04328E13AF29.caf", 
+//   "sound": {
+//     "_coalesceStatusUpdatesInMillis": 100, 
+//     "_errorCallback": [Function anonymous], 
+//     "_eventEmitter": {
+//       "_eventEmitter": [NativeEventEmitter], 
+//       "_listenerCount": 3, 
+//       "_nativeModule": [Object]
+//       }, 
+//       "_internalErrorCallback": [Function anonymous], 
+//       "_internalMetadataUpdateCallback": [Function anonymous], 
+//       "_internalStatusUpdateCallback": [Function anonymous], 
+//       "_key": 0, 
+//       "_lastStatusUpdate": null, 
+//       "_lastStatusUpdateTime": null, 
+//       "_loaded": true, "_loading": false, 
+//       "_onAudioSampleReceived": null, 
+//       "_onMetadataUpdate": null, 
+//       "_onPlaybackStatusUpdate": null, 
+//       "_subscriptions": [[Object], [Object], [Object]], 
+//       "getStatusAsync": [Function anonymous]
+//     }
+//   }
