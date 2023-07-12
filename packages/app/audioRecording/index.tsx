@@ -1,5 +1,5 @@
 import { MutableRefObject } from "react";
-
+import axios from "axios";
 import {mediaRecorderRefx} from './support';
 
 const startRecording = async (
@@ -119,8 +119,34 @@ const handlePlayAudioOnClick = (audioObj) => {
     }
   };
 
-const handleGetTranscriptWithUri = (uri) => {
-  console.log("web");
+const handleGetTranscriptWithUri = async (audio) => {
+    const file = new File([audio.blob], "input.wav", {type: "audio/webm;codecs=opus"});
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('model', 'whisper-1');
+
+    // console.log("formData:", formData);
+
+    try {
+    const response = await axios.post("http://10.0.0.140:3006/transcript", formData, {
+        headers: {
+        "Authorization": "Bearer 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",
+        }
+    });
+
+    // console.log("response: " + JSON.stringify(response));
+
+    if (response.status === 200) {
+        const transcript = response.data;
+        // console.log("Transcript:", transcript);
+        return transcript.text;
+    } else {
+        console.log("Failed to get transcript");
+    }
+    }catch(error) {
+        console.log("An error occurred:", error);
+    }
 };
 
 export {getAudio, startRecording, stopRecording, getDurationFormatted, handlePlayAudioOnClick, handleGetTranscriptWithUri};

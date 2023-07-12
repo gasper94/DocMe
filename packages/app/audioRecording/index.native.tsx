@@ -55,29 +55,16 @@ const stopRecording = async (setRecording, startTimeRef, recording, recordings, 
     const duration = (Date.now() - startTimeRef.current) / 1000; // Convert to seconds
     const { sound, status } = await recording.createNewLoadedSoundAsync();
 
-    const audioFileUrl = recording.getURI()
+    const updatedRecordings = [
+      ...recordings,
+      {
+        sound: sound,
+        duration: getDurationFormatted(duration),
+        file: recording.getURI(),
+      },
+    ];
 
-    const response: any = await FileSystem.uploadAsync('http://10.0.0.140:3006/transcript', audioFileUrl, {
-      fieldName: 'file',
-      httpMethod: 'POST',
-      uploadType: FileSystem.FileSystemUploadType.MULTIPART,
-      headers: {
-        "Authorization": "Bearer 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",
-      }
-    });
-
-    console.log('response-native: ' + JSON.stringify(response));
-    console.log('response-native: ' + JSON.stringify(response.data));
-    // const updatedRecordings = [
-    //   ...recordings,
-    //   {
-    //     sound: sound,
-    //     duration: getDurationFormatted(duration),
-    //     file: recording.getURI(),
-    //   },
-    // ];
-
-    // setRecordings(updatedRecordings);
+    setRecordings(updatedRecordings);
 };
 
 const getDurationFormatted = (timeInSeconds) => {
@@ -96,24 +83,23 @@ const handlePlayAudioOnClick = (recordingLine) => {
     recordingLine.sound.replayAsync()  
 };
 
-const handleGetTranscriptWithUri = async (uri) => {
-  console.log("file uri: " + uri);
+const handleGetTranscriptWithUri = async (audio) => {
+  // console.log('handleGetTranscriptWithUri', audio.file);
+  const response: any = await FileSystem.uploadAsync('http://10.0.0.140:3006/transcript', audio.file, {
+      fieldName: 'file',
+      httpMethod: 'POST',
+      uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+      headers: {
+        "Authorization": "Bearer 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",
+      }
+    });
 
-  const fileInfo = await FileSystem.getInfoAsync(uri);
-  if (!fileInfo.exists) {
-    throw new Error('Audio file does not exist.');
-  }
+    const parsedData = JSON.parse(response.body);
+    const extractedText = parsedData.text;
 
-  // console.log("fileInfo:", fileInfo);
+    // console.log("extractedText:", extractedText);
 
-  // Convert the file to base64
-  const base64Data = await FileSystem.readAsStringAsync(uri, {
-    encoding: FileSystem.EncodingType.Base64,
-  });
-
-
-  console.log("base64Data:");
-  return base64Data;
+    return extractedText;
 };
 
 export {getAudio, getDurationFormatted, startRecording, stopRecording, handlePlayAudioOnClick, handleGetTranscriptWithUri};
