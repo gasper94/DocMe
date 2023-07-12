@@ -2,9 +2,10 @@ import React, { useState, useRef, useEffect} from 'react';
 import { Button, Text, View } from 'react-native';
 import { Audio } from 'expo-av';
 import axios from "axios";
+// import * as FileSystem from 'expo-file-system';
 
 // utils
-import { getAudio, getDurationFormatted, startRecording, stopRecording, handlePlayAudioOnClick } from 'app/audioRecording/index';
+import { getAudio, getDurationFormatted, startRecording, stopRecording, handlePlayAudioOnClick, handleGetTranscriptWithUri } from 'app/audioRecording/index';
 
 // import audio from "./Audio.m4a";
 
@@ -114,6 +115,44 @@ export default function AudioRecorder() {
     });
   };
 
+  // const handleGetTranscript = async (audio) => {
+    
+  //   console.log('audio:', audio.file);
+  //   // try {
+  //   // const fileData = await fetch(audio.file);
+  //   // const blobData = await fileData.blob();
+  //   // const file = new File([blobData], "input.wav", {type: "audio/webm;codecs=opus"});
+  //   // console.log("Blob data:", blobData);
+
+  //   // const formData = new FormData();
+  //   // formData.append('file', audio.sound);
+  //   //   formData.append('model', 'whisper-1');
+
+  //   //   console.log('file:', file);
+  //   //   console.log("formData:", formData);
+
+  //   //     const response = await axios.post("http://10.0.0.140:3006/transcript", formData, {
+  //   //       headers: {
+  //   //       "Authorization": "Bearer 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",
+  //   //       }
+  //   //     });
+
+  //   //     console.log("response: " + JSON.stringify(response));
+  //   //     console.log("response datax: " + JSON.stringify(response.data));
+
+  //   //     if (response.status === 200) {
+  //   //       const transcript = response.data;
+  //   //       console.log("Transcript:", transcript);
+  //   //       setMesssage(transcript.text);
+  //   //     } else {
+  //   //       console.log("Failed to get transcript");
+  //   //     }
+  //   //   }catch(error) {
+  //   //     console.log("An error occurred:", error);
+  //   //   }
+
+  // };
+
   const handleGetTranscript = async (audio) => {
       const file = new File([audio.blob], "input.wav", {type: "audio/webm;codecs=opus"});
 
@@ -143,36 +182,6 @@ export default function AudioRecorder() {
         console.log("An error occurred:", error);
       }
   };
-
-  // const handleGetTranscriptWeb = async (audio) => {
-  //     const file = new File([audio.blob], "input.wav", {type: "audio/webm;codecs=opus"});
-
-  //     const formData = new FormData();
-  //     formData.append('file', file);
-  //     formData.append('model', 'whisper-1');
-
-  //     console.log("formData:", formData);
-
-  //     try {
-  //       const response = await axios.post("http://10.0.0.140:3006/transcript", formData, {
-  //         headers: {
-  //         "Authorization": "Bearer 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",
-  //         }
-  //       });
-
-  //       console.log("response: " + JSON.stringify(response));
-
-  //       if (response.status === 200) {
-  //         const transcript = response.data;
-  //         console.log("Transcript:", transcript);
-  //         setMesssage(transcript.text);
-  //       } else {
-  //         console.log("Failed to get transcript");
-  //       }
-  //     }catch(error) {
-  //       console.log("An error occurred:", error);
-  //     }
-  // };
 
   return (
     <View style={{ backgroundColor: 'red' }}>

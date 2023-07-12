@@ -119,4 +119,8 @@ const handlePlayAudioOnClick = (audioObj) => {
     }
   };
 
-export {getAudio, startRecording, stopRecording, getDurationFormatted, handlePlayAudioOnClick};
+const handleGetTranscriptWithUri = (uri) => {
+  console.log("web");
+};
+
+export {getAudio, startRecording, stopRecording, getDurationFormatted, handlePlayAudioOnClick, handleGetTranscriptWithUri};
