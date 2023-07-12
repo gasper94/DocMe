@@ -1,14 +1,18 @@
 import React, { useState, useRef, useEffect} from 'react';
 import { Button, Text, View } from 'react-native';
 import { Audio } from 'expo-av';
-// import * as FileSystem from 'expo-file-system';
+import { Configuration, OpenAIApi } from 'openai';
 
 // utils
 import { getAudio, getDurationFormatted, startRecording, stopRecording, handlePlayAudioOnClick, handleGetTranscriptWithUri } from 'app/audioRecording/index';
 
-// import audio from "./Audio.m4a";
-
 export default function AudioRecorder() {
+  const configuration = new Configuration({
+    apiKey: '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',
+  });
+
+  const openai = new OpenAIApi(configuration);
+
   const [recording, setRecording] = useState();
   const [recordings, setRecordings] = useState([]);
   // new
@@ -34,63 +38,15 @@ export default function AudioRecorder() {
     return () => clearInterval(interval);
   }, [recording]);
 
-  // const startRecording = async () => {
-  //   try {
-  //     const permission = await Audio.requestPermissionsAsync();
+  const handleStartRecording = async () => {
+    await console.log("setRecordings", setRecordings);
+    await startRecording(Audio, startTimeRef, setRecording, recordings,  setRecordings);
 
-  //     if (permission.status === 'granted') {
-  //       await Audio.setAudioModeAsync({
-  //         allowsRecordingIOS: true,
-  //         playsInSilentModeIOS: true,
-  //       });
-
-  //       const { recording } = await Audio.Recording.createAsync(
-  //         Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
-  //       );
-
-  //       setRecording(recording);
-  //     } else {
-  //       setMessage('Please grant permission to the app to access the microphone');
-  //     }
-  //   } catch (err) {
-  //     console.error('Failed to start recording', err);
-  //   }
-  // };
-
-    const handleStartRecording = async () => {
-      await console.log("setRecordings", setRecordings);
-      await startRecording(Audio, startTimeRef, setRecording, recordings,  setRecordings);
-
-    };
-
-  // const stopRecording = async () => {
-  //   setRecording(undefined);
-  //   await recording.stopAndUnloadAsync();
-
-  //   const { sound, status } = await recording.createNewLoadedSoundAsync();
-  //   const updatedRecordings = [
-  //     ...recordings,
-  //     {
-  //       sound: sound,
-  //       duration: getDurationFormatted(status.durationMillis),
-  //       file: recording.getURI(),
-  //     },
-  //   ];
-
-  //   setRecordings(updatedRecordings);
-  // };
+  };
 
   const handleStopRecording = async () => {
     await stopRecording(setRecording, startTimeRef, recording, recordings, setRecordings);
   }
-
-  // const getDurationFormatted = (millis) => {
-  //   const minutes = millis / 1000 / 60;
-  //   const minutesDisplay = Math.floor(minutes);
-  //   const seconds = Math.round((minutes - minutesDisplay) * 60);
-  //   const secondsDisplay = seconds < 10 ? `0${seconds}` : seconds;
-  //   return `${minutesDisplay}:${secondsDisplay}`;
-  // };
 
   const getRecordingLines = () => {
     return recordings.map((recordingLine, index) => {
@@ -114,17 +70,51 @@ export default function AudioRecorder() {
     });
   };
 
-  // const handleGetTranscriptMobile = async (audio) => {
-  //   console.log("starting handleGetTranscript");
-  //   const transcript = await handleGetTranscriptWithUri(audio.file);
-  //   // console.log("trasforming transcript:", transcript);
-  //   setMesssage(transcript)
-  // };
+  function splitInput(input, chunkSize) {
+    const chunks = [];
+    let i = 0;
+    while (i < input.length) {
+      chunks.push(input.slice(i, i + chunkSize));
+      i += chunkSize;
+    }
+    return chunks;
+  }
 
   const handleGetTranscript = async (audio) => {
+
+    const promptPrefix = `
+      I'll provide a description please extract the following information:  "origin point A", "destination point B", "number of calories", "mood", and "drank water" . You should return an object like this:  {
+      pointA: "El Salvador",
+      pointB: "San Francisco, USA",
+      calories: 350,
+      mood: happy,
+      drankWater: true,
+      } My sentence: "Today I went from a walk from San Francisco California, USA to El Salvador. I burned 350 calories and drank water. Overall, I feel happy and unstressed." Just return the object as code and don’t say anything.
+    `;
+
     console.log("starting handleGetTranscript");
     const transcript = await handleGetTranscriptWithUri(audio);
-    // console.log("trasforming transcript:", transcript);
+
+    const inputChunks = splitInput(promptPrefix, 3000);
+    let prompt = '';
+    let response = '';
+
+    for (let i = 0; i < inputChunks.length; i++) {
+      const chunk = inputChunks[i];
+      prompt = promptPrefix + chunk + '\nBot: ' + response;
+
+      const result = await openai.createCompletion({
+        model: 'text-davinci-003',
+        prompt,
+        temperature: 0.5,
+        max_tokens: 1024,
+      });
+
+      response += result.data.choices[0].text;
+    }
+
+    console.log('Response:', response);
+
     setMesssage(transcript)
   };
 
