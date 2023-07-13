@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect} from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, Text, View, TextInput} from 'react-native';
 import { Audio } from 'expo-av';
 import { Configuration, OpenAIApi } from 'openai';
+import axios from "axios";
 
 // utils
-import { getAudio, getDurationFormatted, startRecording, stopRecording, handlePlayAudioOnClick, handleGetTranscriptWithUri } from 'app/audioRecording/index';
+import { getAudio, getDurationFormatted, startRecording, stopRecording, handlePlayAudioOnClick, handleGetTranscriptWithUri, handleGetTranscriptObject } from 'app/audioRecording/index';
 
 export default function AudioRecorder() {
   const configuration = new Configuration({
@@ -81,41 +82,24 @@ export default function AudioRecorder() {
   }
 
   const handleGetTranscript = async (audio) => {
-
-    const promptPrefix = `
-      I'll provide a description please extract the following information:  "origin point A", "destination point B", "number of calories", "mood", and "drank water" . You should return an object like this:  {
-      pointA: "El Salvador",
-      pointB: "San Francisco, USA",
-      calories: 350,
-      mood: happy,
-      drankWater: true,
-      } My sentence: "Today I went from a walk from San Francisco California, USA to El Salvador. I burned 350 calories and drank water. Overall, I feel happy and unstressed." Just return the object as code and don’t say anything.
-    `;
-
     console.log("starting handleGetTranscript");
     const transcript = await handleGetTranscriptWithUri(audio);
 
-    const inputChunks = splitInput(promptPrefix, 3000);
-    let prompt = '';
-    let response = '';
+    // const promptPrefix = ` 
+    //   Today I went from a walk from San Francisco California, USA to El Salvador. 
+    //   I burned 350 calories and drank water. 
+    //   Overall, I feel happy and unstressed.
+    // `;
 
-    for (let i = 0; i < inputChunks.length; i++) {
-      const chunk = inputChunks[i];
-      prompt = promptPrefix + chunk + '\nBot: ' + response;
+    const objTranscript = await handleGetTranscriptObject(transcript);
+  
+    await console.log('string:', objTranscript);
+    await console.log("PointA: ", objTranscript.pointA);
+    await console.log("PointB: ", objTranscript.pointB);
+    await console.log("Calories: ", objTranscript.calories);
+    await console.log("mood: ", objTranscript.drankWater);
 
-      const result = await openai.createCompletion({
-        model: 'text-davinci-003',
-        prompt,
-        temperature: 0.5,
-        max_tokens: 1024,
-      });
-
-      response += result.data.choices[0].text;
-    }
-
-    console.log('Response:', response);
-
-    setMesssage(transcript)
+    await setMesssage(objTranscript);
   };
 
   return (
@@ -128,8 +112,34 @@ export default function AudioRecorder() {
       {getRecordingLines()}
 
       {newMessage ? 
-        <Text>Transcription: {newMessage}</Text>
-
+        <View>
+          <Text>Transcription: {newMessage.pointA}</Text>
+          <View>
+            <Text>Point A</Text>
+            <TextInput
+              placeholder="Point A"
+              value={newMessage.pointA}
+              onChangeText={() => alert(newMessage.pointA)}
+            />
+          </View>
+           <View>
+          <Text>Point B</Text>
+          <TextInput
+            placeholder="Point B"
+            value={newMessage.pointB}
+            onChangeText={() => alert(newMessage.pointB)}
+          />
+           </View>
+             <View>
+          <Text>Point Calories:</Text>
+          <TextInput
+            placeholder="Calories"
+            value={`${newMessage.calories}`}
+            onChangeText={() => alert(newMessage.calories)}
+          />
+          </View>
+          <Text>Drank Wanter: {newMessage.drankWater? 'true': 'false'}</Text>
+        </View>
       :<Text>No Transcript</Text>}
     </View>
   );

@@ -1,4 +1,5 @@
 import * as FileSystem from 'expo-file-system';
+import axios from "axios";
 // import RNFetchBlob from 'react-native-fetch-blob';
 // import RNFetchBlob from 'rn-fetch-blob';
 
@@ -102,5 +103,31 @@ const handleGetTranscriptWithUri = async (audio) => {
     return extractedText;
 };
 
-export {getAudio, getDurationFormatted, startRecording, stopRecording, handlePlayAudioOnClick, handleGetTranscriptWithUri};
+const handleGetTranscriptObject = async (transcript) => {
+
+    console.log("transcript:", transcript);
+    // calll my endpoint
+    try {
+        const data = JSON.stringify({
+            "promptText": transcript
+        });
+
+        const config:any = {
+            method: 'post',
+            url: 'http://10.0.0.140:3006/test',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+
+        const response = await axios(config);
+        // console.log(JSON.stringify(response.data));
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export {getAudio, getDurationFormatted, startRecording, stopRecording, handlePlayAudioOnClick, handleGetTranscriptWithUri, handleGetTranscriptObject};
 

@@ -129,24 +129,50 @@ const handleGetTranscriptWithUri = async (audio) => {
     // console.log("formData:", formData);
 
     try {
-    const response = await axios.post("http://10.0.0.140:3006/transcript", formData, {
-        headers: {
-        "Authorization": "Bearer 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",
+        const response = await axios.post("http://10.0.0.140:3006/transcript", formData, {
+            headers: {
+            "Authorization": "Bearer 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",
+            }
+        });
+
+        // console.log("response: " + JSON.stringify(response));
+
+        if (response.status === 200) {
+            const transcript = response.data;
+            // console.log("Transcript:", transcript);
+            return transcript.text;
+        } else {
+            console.log("Failed to get transcript");
         }
-    });
-
-    // console.log("response: " + JSON.stringify(response));
-
-    if (response.status === 200) {
-        const transcript = response.data;
-        // console.log("Transcript:", transcript);
-        return transcript.text;
-    } else {
-        console.log("Failed to get transcript");
-    }
     }catch(error) {
         console.log("An error occurred:", error);
     }
 };
 
-export {getAudio, startRecording, stopRecording, getDurationFormatted, handlePlayAudioOnClick, handleGetTranscriptWithUri};
+const handleGetTranscriptObject = async (transcript) => {
+
+    console.log("transcript:", transcript);
+    // calll my endpoint
+    try {
+        const data = JSON.stringify({
+            "promptText": transcript
+        });
+
+        const config:any = {
+            method: 'post',
+            url: 'http://localhost:3006/test',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+
+        const response = await axios(config);
+        // console.log(JSON.stringify(response.data));
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export {getAudio, startRecording, stopRecording, getDurationFormatted, handlePlayAudioOnClick, handleGetTranscriptWithUri, handleGetTranscriptObject};
