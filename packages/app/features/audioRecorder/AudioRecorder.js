@@ -123,14 +123,31 @@ export default function AudioRecorder() {
             />
           </View>
            <View>
+          
           <Text>Point B</Text>
           <TextInput
             placeholder="Point B"
-            value={newMessage.pointB}
+            value={newMessage.pointB ? newMessage.pointB : ''}
             onChangeText={() => alert(newMessage.pointB)}
           />
-           </View>
-             <View>
+          </View>
+          <View>
+          <Text>Mood</Text>
+          {newMessage.mood.length > 0 ?
+            <>
+              {newMessage.mood.map((item, index) => (
+                <TextInput
+                  index={index}
+                  placeholder="Mood"
+                  value={item}
+                  onChangeText={() => alert(item)}
+                />
+              ))}
+            </>
+          : null}
+          
+          </View>
+          <View>
           <Text>Point Calories:</Text>
           <TextInput
             placeholder="Calories"
