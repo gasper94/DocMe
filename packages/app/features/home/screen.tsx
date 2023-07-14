@@ -9,7 +9,7 @@ import { SolitoImage } from 'solito/image'
 
 import Calendar from './Calendar';
 import { useEffect, useReducer } from 'react';
-import { Image, StyleSheet, Pressable, TouchableWithoutFeedback, TouchableHighlight } from 'react-native';
+import { Image, StyleSheet, Pressable, TouchableWithoutFeedback, TouchableHighlight, Button } from 'react-native';
 // import { HeroOutline, HeroSolid, HeroSolid20 } from '@nandorojo/heroicons'
 import RightIcon from '../../../assets/Icons/right/Right';
 import XMenu from './Xmenu';
@@ -26,6 +26,7 @@ import myImage from '../../../assets/images/ulises.jpeg';
 import DistanceCalculator from "./DistanceCalculator";
 import AudioRecorder from '../audioRecorder/AudioRecorder';
 import GenerateCV from "../extractData/extractData";
+import LongPressButton from './components/RecordingButton/RecordingButton'
 
 const RedBox = () => {
   return <View className='bg-red-300 w-full'>
