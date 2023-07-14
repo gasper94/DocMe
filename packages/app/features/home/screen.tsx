@@ -2,14 +2,14 @@
 
 import { A, H1, P, Text, TextLink } from 'app/design/typography'
 import { Row } from 'app/design/layout'
-import { View } from 'app/design/view'
+import { View, Button } from 'app/design/view'
 
 import { MotiLink } from 'solito/moti'
 import { SolitoImage } from 'solito/image'
 
 import Calendar from './Calendar';
 import { useEffect, useReducer } from 'react';
-import { Image, StyleSheet, Pressable, TouchableWithoutFeedback, TouchableHighlight, Button } from 'react-native';
+import { Image, StyleSheet, Pressable, TouchableWithoutFeedback, TouchableHighlight } from 'react-native';
 // import { HeroOutline, HeroSolid, HeroSolid20 } from '@nandorojo/heroicons'
 import RightIcon from '../../../assets/Icons/right/Right';
 import XMenu from './Xmenu';
@@ -27,6 +27,7 @@ import DistanceCalculator from "./DistanceCalculator";
 import AudioRecorder from '../audioRecorder/AudioRecorder';
 import GenerateCV from "../extractData/extractData";
 import LongPressButton from './components/RecordingButton/RecordingButton'
+import { NavigationScreen } from '../components/NavigationBar/NavigationBar'
 
 const RedBox = () => {
   return <View className='bg-red-300 w-full'>
@@ -72,55 +73,23 @@ export function HomeScreen() {
       
       </SafeAreaView> */}
       <View className='flex w-full'>
-        
-      <SafeAreaView className="fixed top-0 left-0 right-0 flex-1">
-          {/* <View className='bg-red-100 w-full'> */}
-          <View className='px-4 flex-row justify-between items-center bg-red-200'>
-            <Text>Image</Text>
-            <View className='flex-row items-center space-x-2'>
-              <Text>DocMe</Text>
-            </View>
-             {/* <SolitoImage
-                src={require('../../../assets/images/ulises.jpeg')}
-                style={{ borderRadius: 40}}
-                height={50}
-                width={50}
-                alt="A cool image, imported locally."
-              /> */}
-              <SolitoImage
-                src={require('../../../assets/images/ulises.jpeg')}
-                style={{ borderRadius: 40 }}
-                height={50}
-                width={50}
-              />
-          </View>
-        {/* </View> */}
-      </SafeAreaView>
-
+        <NavigationScreen />
       </View>
-      {/* <XMenu size={400} color="white" mode={visible ? 'menu' : 'x'} /> */}
       {/* <View
-      style={[styles.container, isHovered && styles.containerHovered]}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      <Text style={styles.text}>Hover Me</Text>
-    </View> */}
-    <View>
+        style={[styles.container, isHovered && styles.containerHovered]}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <Text style={styles.text}>Hover Me</Text>
+      </View> */}
+    {/* <View>
       <GenerateCV />
       <AudioRecorder />
       <DistanceCalculator />
-    </View>
-    <View >
-      <Text>Hey</Text>
-    </View>
+    </View> */}
     <ScrollView>
-    <View className='flex justify-center items-center flex-col'>
-
+      <View className='flex justify-center items-center flex-col'>
         <Calendar />
-        {/* <Calendar /> */}
-          {/* <Calendar />
-          <Calendar /> */}
       </View>
     </ScrollView>
     
@@ -179,8 +148,6 @@ export function HomeScreen() {
 
       {/* <View className='bg-red-200 h-[32px] w-[32px]'>hey</View> */}
       
-    
-      <View className="h-[32px]" />
       <Row className="space-x-8">
         <TextLink href="/user/fernando">Regular Link</TextLink>
         <MotiLink
@@ -200,6 +167,25 @@ export function HomeScreen() {
         >
           <Text selectable={false} className="text-base font-bold">
             Moti Link
+          </Text>
+        </MotiLink>
+        <MotiLink
+          href="/activity/fernando"
+          animate={({ hovered, pressed }) => {
+            'worklet'
+
+            return {
+              scale: pressed ? 0.95 : hovered ? 1.1 : 1,
+              rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
+            }
+          }}
+          transition={{
+            type: 'timing',
+            duration: 150,
+          }}
+        >
+          <Text selectable={false} className="text-base font-bold">
+            Add Activity
           </Text>
         </MotiLink>
       </Row>
