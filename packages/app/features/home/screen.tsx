@@ -19,8 +19,6 @@ import { SafeAreaView } from 'moti';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import AssetExample from "./Asset.jsx"
-import myImage from '../../../assets/images/ulises.jpeg';
-
 
 // Components
 import DistanceCalculator from "./DistanceCalculator";
@@ -53,6 +51,7 @@ export function HomeScreen() {
     backgroundColor: isPressed ? 'blue' : 'red',
     padding: 10,
     borderRadius: 5,
+    cursor: 'pointer'
   };
 
 
@@ -66,27 +65,16 @@ export function HomeScreen() {
 
   return (
     <View className="flex-1 items-center justify-center p-3">
-      {/* <SafeAreaView>
-      <View className='flex justify-center items-center bg-green-400 w-full'>
-        <Text>Hello</Text>
-      </View>
-      
-      </SafeAreaView> */}
+
       <View className='flex w-full'>
         <NavigationScreen />
       </View>
-      {/* <View
-        style={[styles.container, isHovered && styles.containerHovered]}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        <Text style={styles.text}>Hover Me</Text>
-      </View> */}
-    {/* <View>
-      <GenerateCV />
+
+    <View>
+      <GenerateCV editedContent={undefined} />
       <AudioRecorder />
       <DistanceCalculator />
-    </View> */}
+    </View>
     <ScrollView>
       <View className='flex justify-center items-center flex-col'>
         <Calendar />
@@ -108,26 +96,8 @@ export function HomeScreen() {
         </TouchableHighlight>
       </View> */}
 
-
-      {/* Navigation */}
-      {/* <SafeAreaView className="flex-1"> */}
-        {/* <View className="px-4 flex-row justify-between items-center bg-gray-300">
-          <Text>Image</Text>
-          <View className="flex-row items-center space-x-2">
-          <Text className="text-base font-semibold">New York, NYC</Text>
-          </View>
-          <Text>Bell Icon</Text>
-        </View> */}
-
-
-        {/* <View className='gird grid-rows-4 grid-flow-col gap-4'>
-           <Text>Hello</Text>
-        </View> */}
-      {/* </SafeAreaView> */}
       
-
-
-        {/* <TouchableWithoutFeedback
+        <TouchableWithoutFeedback
           onPress={() => console.log('Button clicked!')}
           onPressIn={handlePressIn}
           onPressOut={handlePressOut}
@@ -135,18 +105,7 @@ export function HomeScreen() {
         <View style={buttonStyle}>
           <Text>Button</Text>
         </View>
-      </TouchableWithoutFeedback> */}
-
-       {/* <Pressable onPress={toggle} style={styles.container}>
-        <Text>Press to change Icon color</Text>
-      </Pressable>
-       */}
-      {/* <RightIcon width={24} height={24} fill={visible ? 'red' : 'blue'} />  */}
-
-      
-       {/* <HeroOutline.Calendar height="24" width="24" color="#8A8F98" /> */}
-
-      {/* <View className='bg-red-200 h-[32px] w-[32px]'>hey</View> */}
+      </TouchableWithoutFeedback>
       
       <Row className="space-x-8">
         <TextLink href="/user/fernando">Regular Link</TextLink>
@@ -159,12 +118,11 @@ export function HomeScreen() {
               scale: pressed ? 0.95 : hovered ? 1.1 : 1,
               rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
             }
-          }}
+          } }
           transition={{
             type: 'timing',
             duration: 150,
-          }}
-        >
+          }} style={undefined} onLayout={undefined}        >
           <Text selectable={false} className="text-base font-bold">
             Moti Link
           </Text>
@@ -178,12 +136,11 @@ export function HomeScreen() {
               scale: pressed ? 0.95 : hovered ? 1.1 : 1,
               rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
             }
-          }}
+          } }
           transition={{
             type: 'timing',
             duration: 150,
-          }}
-        >
+          }} style={undefined} onLayout={undefined}        >
           <Text selectable={false} className="text-base font-bold">
             Add Activity
           </Text>
