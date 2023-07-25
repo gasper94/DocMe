@@ -2,7 +2,9 @@
 
 # Solito + NativeWind Example Monorepo 🕴
 
-# Prototype Images + Demo #
+## Prototype Images + Demo ##
+
+### Prototype - Demo (Audio transcription feature to automate Log Entry ###
 
 DocuMe is a revolutionary cross-platform health application designed to empower non-technical users to effortlessly maintain their health records and track their well-being. Available on Web, Android, and iOS, HealthTrack offers a user-friendly interface that makes it remarkably easy to input and organize medical data, ensuring that all vital health information is conveniently accessible in one secure place.
 
