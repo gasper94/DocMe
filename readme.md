@@ -4,9 +4,9 @@
 
 # Prototype Images + Demo #
 
-https://github.com/gasper94/DocMe/assets/18272791/35fb542a-9e00-419a-95c9-13ef26f8b27a
-
 DocuMe is a revolutionary cross-platform health application designed to empower non-technical users to effortlessly maintain their health records and track their well-being. Available on Web, Android, and iOS, HealthTrack offers a user-friendly interface that makes it remarkably easy to input and organize medical data, ensuring that all vital health information is conveniently accessible in one secure place.
+
+https://github.com/gasper94/DocMe/assets/18272791/35fb542a-9e00-419a-95c9-13ef26f8b27a
 
 Key Features:
 
