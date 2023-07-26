@@ -1,4 +1,37 @@
+
+
 # Solito + NativeWind Example Monorepo 🕴
+
+## Prototype Images + Demo ##
+
+### Prototype - Demo (Audio transcription feature to automate Log Entry ###
+
+DocuMe is a revolutionary cross-platform health application designed to empower non-technical users to effortlessly maintain their health records and track their well-being. Available on Web, Android, and iOS, HealthTrack offers a user-friendly interface that makes it remarkably easy to input and organize medical data, ensuring that all vital health information is conveniently accessible in one secure place.
+
+https://github.com/gasper94/DocMe/assets/18272791/35fb542a-9e00-419a-95c9-13ef26f8b27a
+
+![desktop](https://github.com/gasper94/DocMe/assets/18272791/03e99117-c009-4c7e-8e88-70ba5cffcf12)
+![desktop](https://github.com/gasper94/DocMe/assets/18272791/059bb63d-cfad-4c55-b6d9-5ab53b2c4f1d)
+
+Key Features:
+
+Streamlined Data Input: HealthTrack prioritizes simplicity, allowing users to quickly input health-related information such as dental records, exercise routines, doctor appointments, and mental health observations without any technical expertise required. The intuitive user interface guides users through the process, making data entry a breeze.
+
+All-in-One Health Profile: HealthTrack eliminates the need for multiple health-related apps by consolidating all essential health data into a unified profile. From dental checkups and exercise logs to upcoming doctor appointments and mood journals, users can conveniently access and manage their health information from any device.
+
+Cross-Platform Accessibility: With support for Web, Android, and iOS platforms, HealthTrack ensures seamless synchronization of health records across devices. Users can input data on one platform and instantly access it on any other, ensuring they never miss important updates.
+
+Reminders and Notifications: HealthTrack features customizable reminders and notifications for upcoming doctor appointments, recommended dental checkups, medication schedules, and exercise routines. This feature helps users stay on track with their health goals and never miss important healthcare commitments.
+
+Data Security and Privacy: HealthTrack places a high emphasis on data security and privacy. All health records and personal information are encrypted to ensure confidentiality, and robust security measures protect against unauthorized access.
+
+Comprehensive Data Visualization: HealthTrack offers interactive graphs and charts that provide insightful visualizations of health data over time. Users can monitor trends, identify patterns, and make informed decisions to enhance their overall well-being.
+
+User Support and Assistance: The app's support feature provides users with assistance whenever needed. Non-technical users can easily reach out to a friendly customer support team to resolve queries or seek guidance on utilizing the app's features effectively.
+
+HealthTrack revolutionizes health profile management, catering specifically to non-technical users. By prioritizing ease of data input and cross-platform accessibility, the app ensures that everyone can effortlessly take charge of their health, making informed decisions for a healthier and happier life. Say goodbye to fragmented health data and welcome the simplicity and convenience of HealthTrack into your daily health routine.
+
+
 
 ```sh
 npx create-solito-app@latest my-solito-app -t with-tailwind
