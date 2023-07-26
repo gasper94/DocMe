@@ -52,7 +52,7 @@ export function StylessButton({handleOnPress, children}) {
 const styles = StyleSheet.create({
     buttonContent: {
         color: '#3677E0',
-        fontFamily: 'Inter',
+        // fontFamily: 'Inter',
         fontSize: 18,
         fontStyle: 'normal',
         lineHeight: 28,

@@ -9,7 +9,7 @@ import { getAudio, getDurationFormatted, startRecording, stopRecording, handlePl
 
 export default function AudioRecorder() {
   const configuration = new Configuration({
-    apiKey: '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',
+    apiKey: process.env.OPEN_AI,
   });
 
   const openai = new OpenAIApi(configuration);

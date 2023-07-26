@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "274eae79-d26f-4851-aa12-47284ca93895"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "com.umartinez.solitowithtailwind"
+    }
+  }
+}

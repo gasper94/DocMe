@@ -5,6 +5,9 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { useState } from 'react';
 import { Image, StyleSheet, Pressable, TouchableWithoutFeedback, TouchableHighlight } from 'react-native';
 
+// Assets
+// import Microphone from "../../../assets/Icons/mic/Mic";
+
 export function Button(props) {
 
     const [isPressed, setIsPressed] = useState(false);
@@ -18,10 +21,15 @@ export function Button(props) {
     };
 
     const buttonStyle = {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: isPressed ? 'blue' : 'red',
-        padding: 10,
-        borderRadius: 5,
-        cursor: 'pointer'
+        minHeight: 100,
+        minWidth: 100,
+        borderRadius: 999999,
+        cursor: 'pointer',
+        color: 'white',
     };
 
   return (
@@ -31,10 +39,19 @@ export function Button(props) {
         onPressOut={handlePressOut}
     >
         <View style={buttonStyle}>
-            <Text>{props.children}</Text>
+            {/* <Microphone fill="white" width={32}/> */}
+            <Text style={styles.buttonContent}>{props.children}</Text>
         </View>
     </TouchableWithoutFeedback>
   )
-
-  
 }
+
+const styles = StyleSheet.create({
+    buttonContent: {
+        color: 'white',
+        // fontFamily: 'Inter',
+        fontSize: 18,
+        fontStyle: 'normal',
+        lineHeight: 28,
+    }
+});

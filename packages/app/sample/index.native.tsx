@@ -7,7 +7,7 @@ const getRandom = async (pointA, pointB) => {
   console.log("calculateDistance:", pointA, pointB);
   
   if (pointA && pointB) {
-    const apiKey = 'AIzaSyA1f3z5AMyYu7ImdMxq21YYR3QSjAngGeE';
+    const apiKey = process.env.GOOGLE_API;
     const PointANew = replaceSpacesWithPlus(pointA);
     const PointBNew = replaceSpacesWithPlus(pointB);
     console.log("calculateDistance:", pointA, pointB);
