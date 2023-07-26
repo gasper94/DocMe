@@ -9,6 +9,7 @@
 DocuMe is a revolutionary cross-platform health application designed to empower non-technical users to effortlessly maintain their health records and track their well-being. Available on Web, Android, and iOS, HealthTrack offers a user-friendly interface that makes it remarkably easy to input and organize medical data, ensuring that all vital health information is conveniently accessible in one secure place.
 
 [![Video](https://youtube.com/shorts/yHmSruefv3s?feature=share)]
+<video src='https://youtube.com/shorts/yHmSruefv3s?feature=share' width=180/>
 ![Mobile 1](./Readme-assets/Mobile_1.png)
 ![Mobile 2](./Readme-assets/Mobile_2.png)
 ![Mobile 3](./Readme-assets/Mobile_3.png)
