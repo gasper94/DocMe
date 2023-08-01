@@ -82,14 +82,8 @@ export default function AudioRecorder() {
   }
 
   const handleGetTranscript = async (audio) => {
-    console.log("starting handleGetTranscript");
+    console.log("starting handleGetTranscript", audio);
     const transcript = await handleGetTranscriptWithUri(audio);
-
-    // const promptPrefix = ` 
-    //   Today I went from a walk from San Francisco California, USA to El Salvador. 
-    //   I burned 350 calories and drank water. 
-    //   Overall, I feel happy and unstressed.
-    // `;
 
     const objTranscript = await handleGetTranscriptObject(transcript);
   

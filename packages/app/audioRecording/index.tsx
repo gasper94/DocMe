@@ -126,20 +126,20 @@ const handleGetTranscriptWithUri = async (audio) => {
     formData.append('file', file);
     formData.append('model', 'whisper-1');
 
-    // console.log("formData:", formData);
+    console.log("formData:", formData);
 
     try {
-        const response = await axios.post("http://10.0.0.140:3006/transcript", formData, {
+        const response = await axios.post("http://localhost:3006/transcript", formData, {
             headers: {
-            "Authorization": "Bearer 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",
+            "Authorization": `Bearer ${process.env.OPEN_AI}`,
             }
         });
 
-        // console.log("response: " + JSON.stringify(response));
+        console.log("response: " + JSON.stringify(response));
 
         if (response.status === 200) {
             const transcript = response.data;
-            // console.log("Transcript:", transcript);
+            console.log("Transcript:", transcript);
             return transcript.text;
         } else {
             console.log("Failed to get transcript");

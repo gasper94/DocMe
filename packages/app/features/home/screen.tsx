@@ -6,7 +6,7 @@ import { View, Button } from 'app/design/view'
 
 import { MotiLink } from 'solito/moti'
 import { SolitoImage } from 'solito/image'
-
+import { TextInput } from 'react-native';
 import Calendar from './Calendar';
 import { useEffect, useReducer } from 'react';
 import { Image, StyleSheet, Pressable, TouchableWithoutFeedback, TouchableHighlight } from 'react-native';
@@ -71,6 +71,8 @@ export function HomeScreen() {
       </View>
 
     <View>
+      <Text>Hello</Text>
+      <TextInput placeholder={"Enter your email"} />
       <GenerateCV editedContent={undefined} />
       <AudioRecorder />
       <DistanceCalculator />

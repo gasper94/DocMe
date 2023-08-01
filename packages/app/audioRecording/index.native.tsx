@@ -85,20 +85,22 @@ const handlePlayAudioOnClick = (recordingLine) => {
 };
 
 const handleGetTranscriptWithUri = async (audio) => {
-  // console.log('handleGetTranscriptWithUri', audio.file);
-  const response: any = await FileSystem.uploadAsync('http://10.0.0.140:3006/transcript', audio.file, {
+  console.log('handleGetTranscriptWithUri', audio);
+  const response: any = await FileSystem.uploadAsync('http://10.0.0.141:3006/transcript', audio.file, {
       fieldName: 'file',
       httpMethod: 'POST',
       uploadType: FileSystem.FileSystemUploadType.MULTIPART,
       headers: {
-        "Authorization": "Bearer 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",
+        "Authorization": `Bearer ${process.env.OPEN_AI}`,
       }
     });
+
+    console.log("response:", response);
 
     const parsedData = JSON.parse(response.body);
     const extractedText = parsedData.text;
 
-    // console.log("extractedText:", extractedText);
+    console.log("extractedText:", extractedText);
 
     return extractedText;
 };
@@ -114,7 +116,7 @@ const handleGetTranscriptObject = async (transcript) => {
 
         const config:any = {
             method: 'post',
-            url: 'http://10.0.0.140:3006/test',
+            url: 'http://10.0.0.141:3006/test',
             headers: {
                 'Content-Type': 'application/json'
             },

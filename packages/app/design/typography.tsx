@@ -1,7 +1,9 @@
 import { ComponentProps, forwardRef } from 'react'
-import { Text as NativeText, Platform, Linking, TextStyle } from 'react-native'
+import { Text as NativeText, Platform, Linking, TextStyle, TextInput as NativeTextInput } from 'react-native'
 import { styled, StyledProps } from 'nativewind'
 import { TextLink as SolitoTextLink } from 'solito/link'
+
+export const TextInput = styled(NativeTextInput, 'text-blue-500')
 
 export const Text = styled(NativeText)
 
