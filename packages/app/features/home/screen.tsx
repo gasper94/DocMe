@@ -139,7 +139,7 @@ export function HomeScreen() {
           transition={{
             type: 'timing',
             duration: 150,
-          }} style={undefined} onLayout={undefined}        >
+          }} style={undefined} onLayout={undefined}>
           <Text selectable={false} className="text-base font-bold">
             Add Activity
           </Text>
