@@ -1,3 +1,4 @@
+import { DisplayItem } from 'app/testingInput';
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
@@ -74,15 +75,12 @@ const MultiStepForm = () => {
   return (
     <View style={styles.container}>
       {step === 1 && (
-        <View>
-            <LongPressButton />
-          {/* <Text>Step 1</Text>
-          <TextInput
-            placeholder="Name"
-            value={name}
-            onChangeText={setName}
-            style={styles.input}
-          /> */}
+        <View style={{ display: 'flex', backgroundColor: 'pink', height: '100%'}}>
+          {/* <View>
+            <Text>Image section</Text>
+          </View> */}
+          <Text>IMAGE</Text>
+          <DisplayItem />
           <Button title="Next" onPress={nextStep} />
         </View>
       )}
@@ -121,9 +119,10 @@ const MultiStepForm = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    // flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // paddingTop: 52,
   },
   input: {
     width: 200,
