@@ -9,6 +9,10 @@ import Input from 'app/components/Input/input';
 import { DisplayItem } from 'app/testingInput/index';
 import COLORS from "../../design/const";
 
+
+// Components
+import AudioRecorder from '../audioRecorder/AudioRecorder';
+
 const { useParam } = createParam<{ id: string }>();
 const GOOGLE_API_KEY = process.env.GOOGLE_API;
 
@@ -75,14 +79,16 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
             <Text style={{ color: COLORS.black, fontSize: 40, fontWeight: 'bold' }}>Register</Text>
             <Text style={{ color: COLORS.grey, fontSize: 18, marginVertical: 10 }}>Enter Your Details to Register</Text>
 
-            <DisplayItem label={"Start (point A)"}/>
-            <DisplayItem label={"Start (point B)"}/>
+            <View style={{marginTop: 20}}>
+              <DisplayItem label={"Start (point A)"}/>
+              <DisplayItem label={"Start (point B)"}/>
+            </View>
           </>
         }
 
         ListFooterComponent={
           <>
-            <TouchableOpacity style={styles.button} onPress={() => alert("hello")}>
+            <TouchableOpacity style={styles.button} onPress={() => alert("Ready to save form")}>
               <Text style={styles.buttonText}>Submit Activity</Text>
             </TouchableOpacity>
           </>
