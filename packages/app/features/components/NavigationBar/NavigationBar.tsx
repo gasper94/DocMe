@@ -29,7 +29,7 @@ export function NavigationScreen() {
             duration: 150,
           }} style={undefined} onLayout={undefined}        >
           <Text selectable={false} className="text-base font-bold">
-            go back
+            DocuMe
           </Text>
         </MotiLink>
         

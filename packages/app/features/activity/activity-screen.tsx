@@ -1,3 +1,6 @@
+
+
+
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View, StyleSheet, FlatList } from 'react-native';
 import { createParam } from 'solito';
@@ -7,10 +10,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import { StylessButton } from 'app/components/StylessButton/StylessButton';
 import Input from 'app/components/Input/input';
 import { DisplayItem } from 'app/testingInput/index';
-import COLORS from "../../design/const";
-
-
-// Components
+import COLORS from '../../design/const';
 import AudioRecorder from '../audioRecorder/AudioRecorder';
 
 const { useParam } = createParam<{ id: string }>();
@@ -20,32 +20,31 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
   const [email, setEmail] = useState('');
   const [exampleOne, setExampleOne] = useState(false);
   const [id] = useParam('id');
+  const [currentStep, setCurrentStep] = useState(1); // Start with the first step
+
+  const handleNextStep = () => {
+    setCurrentStep((prevStep) => prevStep + 1);
+  };
+
+  const handlePreviousStep = () => {
+    setCurrentStep((prevStep) => prevStep - 1);
+  };
 
   const data = [
-    // {
-    //   placeholder: "Enter start place (point A)",
-    //   iconName: "icon",
-    //   label: "Start (point A)",
-    // },
-    // {
-    //   placeholder: "Enter end place (point B)",
-    //   iconName: "icon",
-    //   label: "Finish (point B)",
-    // },
     {
-      placeholder: "Enter calories burned",
-      iconName: "icon",
-      label: "Calories Burned",
+      placeholder: 'Enter calories burned',
+      iconName: 'icon',
+      label: 'Calories Burned',
     },
     {
-      placeholder: "Did you drink water?",
-      iconName: "icon",
-      label: "Drank water",
+      placeholder: 'Did you drink water?',
+      iconName: 'icon',
+      label: 'Drank water',
     },
     {
-      placeholder: "How are you feeling?",
-      iconName: "icon",
-      label: "Mood",
+      placeholder: 'How are you feeling?',
+      iconName: 'icon',
+      label: 'Mood',
     },
   ];
 
@@ -61,9 +60,28 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
 
   return (
     <View style={{ backgroundColor: 'white', height: '100%' }}>
-      <View className='flex w-full'>
+      <View className="flex w-full">
         <NavigationScreen />
       </View>
+
+      {currentStep === 1 && (
+        <View style={{
+          paddingTop: 10,
+          paddingHorizontal: 20,
+        }}>
+          <Text style={{ color: COLORS.black, fontSize: 40, fontWeight: 'bold' }}>Audio Recording</Text>
+          <AudioRecorder />
+          <TouchableOpacity style={styles.button} onPress={handleNextStep}>
+            <Text style={styles.buttonText}>Next</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
+      {currentStep === 2 && (
+          <View style={{ backgroundColor: 'white', height: '100%' }}>
+      {/* <View className='flex w-full'>
+        <NavigationScreen />
+      </View> */}
   
       <FlatList
         keyboardShouldPersistTaps='always'
@@ -88,12 +106,17 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
 
         ListFooterComponent={
           <>
+            <TouchableOpacity style={styles.button} onPress={handlePreviousStep}>
+              <Text style={styles.buttonText}>Previous</Text>
+            </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => alert("Ready to save form")}>
               <Text style={styles.buttonText}>Submit Activity</Text>
             </TouchableOpacity>
           </>
         }
       />
+    </View>
+      )}
     </View>
   );
 }
@@ -105,6 +128,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'center',
+    marginVertical: 10,
   },
   buttonText: {
     color: 'white',

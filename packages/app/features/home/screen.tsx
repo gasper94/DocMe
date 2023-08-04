@@ -70,14 +70,11 @@ export function HomeScreen() {
         <NavigationScreen />
       </View>
 
-    <View>
-      <Text>Hello</Text>
-      <TextInput placeholder={"Enter your email"} />
-      <GenerateCV editedContent={undefined} />
+    {/* <View>
       <AudioRecorder />
       <DistanceCalculator />
-    </View>
-    <ScrollView>
+    </View> */}
+    <ScrollView style={{paddingTop: 20}}>
       <View className='flex justify-center items-center flex-col'>
         <Calendar />
       </View>
@@ -98,8 +95,8 @@ export function HomeScreen() {
         </TouchableHighlight>
       </View> */}
 
-      
-        <TouchableWithoutFeedback
+        {/* This bellow is a touchable button */}
+        {/* <TouchableWithoutFeedback
           onPress={() => console.log('Button clicked!')}
           onPressIn={handlePressIn}
           onPressOut={handlePressOut}
@@ -107,7 +104,7 @@ export function HomeScreen() {
         <View style={buttonStyle}>
           <Text>Button</Text>
         </View>
-      </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback> */}
       
       <Row className="space-x-8">
         {/* <TextLink href="/user/fernando">Regular Link</TextLink>
