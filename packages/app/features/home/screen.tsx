@@ -110,7 +110,7 @@ export function HomeScreen() {
       </TouchableWithoutFeedback>
       
       <Row className="space-x-8">
-        <TextLink href="/user/fernando">Regular Link</TextLink>
+        {/* <TextLink href="/user/fernando">Regular Link</TextLink>
         <MotiLink
           href="/user/fernando"
           animate={({ hovered, pressed }) => {
@@ -128,7 +128,7 @@ export function HomeScreen() {
           <Text selectable={false} className="text-base font-bold">
             Moti Link
           </Text>
-        </MotiLink>
+        </MotiLink> */}
         <MotiLink
           href="/activity/fernando"
           animate={({ hovered, pressed }) => {

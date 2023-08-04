@@ -1,17 +1,19 @@
 import { createParam } from 'solito'
 import { A, H1, P, Text, TextLink } from 'app/design/typography'
-import { View  } from 'app/design/view'
+// import { View  } from 'app/design/view'
 import { NavigationScreen } from '../components/NavigationBar/NavigationBar'
 import { ScrollView } from 'react-native-gesture-handler';
 import Calendar from '../home/Calendar'
-import { Button, StyleSheet, TextInput } from 'react-native';
+import { Button, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import { useState } from 'react';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 // Components
 import AudioRecorder from '../audioRecorder/AudioRecorder';
 import { Button as RecordingButton} from "../../components/Button/index";
 import { StylessButton } from 'app/components/StylessButton/StylessButton';
 import Input from 'app/components/Input/input';
+import { DisplayItem } from 'app/testingInput/index';
 
 // assets
 import ExclamationCircle from "../../../assets/Icons/exclamation/exclamation"
@@ -19,6 +21,8 @@ import { SafeAreaView } from 'moti';
 
 // COLORS
 import COLORS from "../../design/const";
+
+const GOOGLE_API_KEY = process.env.GOOGLE_API;
 
 const { useParam } = createParam<{ id: string }>()
 
@@ -32,33 +36,92 @@ export function ActivityScreen(
   const [id] = useParam('id')
 
 
+  // const Testing = (e) => {
+  //   console.log("item:", e);
+  // }
+
 
   return (
     <SafeAreaView
       style={{backgroundColor: 'white', flex: 1}}  
     >
+      <View className='flex w-full'>
+        <NavigationScreen />
+      </View>
+
+
+      
+
       <ScrollView
         contentContainerStyle={{
-          paddingTop: 50,
+          paddingTop: 10,
           paddingHorizontal: 20,
         }}
       >
+        
+      {/* <ScrollView horizontal={false} style={{flex: 1, width: '100%', height: '100%'}}>
+        <ScrollView horizontal={true} style={{flex: 1, width: '100%', height: '100%'}}> */}
+          <DisplayItem />
+        {/* </ScrollView>
+      </ScrollView> */}
+
+
         <Text style={{color: COLORS.black, fontSize: 40, fontWeight: 'bold'}}>Register</Text>
         <Text style={{color: COLORS.grey, fontSize: 18, marginVertical: 10}}>Enter Your Details to Register</Text>
         <View style={{marginVertical: 20}}>
-          
+
             <Input 
-              placeholder="Enter your email address"
-              iconName="icon" 
-              label="Email"
+              placeholder="Enter start place (point A)"
+              iconName="icon"
+              label="Start (point A)" 
+              error={undefined} 
               // error={"Input Email"}
+              password={undefined}
             />
+            <Input 
+              placeholder="Enter end place (point B)"
+              iconName="icon"
+              label="Finish (point B)" 
+              error={undefined} 
+              // error={"Input Email"}
+              password={undefined}
+            />
+
+            <Input 
+              placeholder="Enter calories burned"
+              iconName="icon"
+              label="Calories Burned" 
+              error={undefined} 
+              // error={"Input Email"}
+              password={undefined}
+            />
+
+            <Input 
+              placeholder="Did you drink water?"
+              iconName="icon"
+              label="Drank water" 
+              error={undefined} 
+              // error={"Input Email"}
+              password={undefined}
+            />
+
+            <Input 
+              placeholder="How are you feeling?"
+              iconName="icon"
+              label="Mood" 
+              error={undefined} 
+              // error={"Input Email"}
+              password={undefined}
+            />
+
+            <TouchableOpacity style={stylex.button} onPress={() => alert("hello")}>
+              <Text style={stylex.buttonText}>Submit Activity</Text>
+            </TouchableOpacity>
+
+            
         </View>
       </ScrollView>
     </SafeAreaView>
-
-    
-
 
     // <View style={styles.outer}>
     //   <View >
@@ -100,12 +163,59 @@ export function ActivityScreen(
     //     </View>
     //   </View>
     // </View>
+
+      // {/* Google Auto Complete */}
+            // <View style={{flex: 1, paddingTop: 72, paddingBottom: 72,  height: '100%', backgroundColor: 'red'}}>
+            //   <GooglePlacesAutocomplete
+            //       placeholder='Search'
+            //       onPress={Testing}
+            //       query={{
+            //         key: GOOGLE_API_KEY,
+            //         language: 'en',
+            //       }}
+            //       onFail={error => console.log('ERROR:', error)}
+            //     minLength={2}
+            //     fetchDetails={true}
+            //     styles={{
+            //         textInputContainer: {
+            //           backgroundColor: 'red',
+            //         },
+            //         textInput: {
+            //           height: 38,
+            //           color: '#5d5d5d',
+            //           fontSize: 16,
+            //         },
+            //         predefinedPlacesDescription: {
+            //           color: '#1faadb',
+            //           height: 100,
+            //         },
+            //     }}
+            //   />
+            // </View>
   )
 
   
 }
 
+const stylex = StyleSheet.create({
+  button: {
+    backgroundColor: COLORS.blue,
+    padding: 10,
+    borderRadius: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});
+
 const styles = StyleSheet.create({
+  submitActivity: {
+    backgroundColor: 'red',
+  },
   container: {
     backgroundColor: 'COLORS.white',
     flex: 1,

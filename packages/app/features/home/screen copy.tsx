@@ -164,8 +164,8 @@ export function HomeScreen() {
       </View>
       <View className="h-[32px]" />
       <Row className="space-x-8">
-        <TextLink href="/user/fernando">Regular Link</TextLink>
-        <MotiLink
+        {/* <TextLink href="/user/fernando">Regular Link</TextLink> */}
+        {/* <MotiLink
           href="/user/fernando"
           animate={({ hovered, pressed }) => {
             'worklet'
@@ -183,7 +183,7 @@ export function HomeScreen() {
           <Text selectable={false} className="text-base font-bold">
             Moti Link
           </Text>
-        </MotiLink>
+        </MotiLink> */}
       </Row>
     </View>
   )
