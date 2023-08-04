@@ -18,16 +18,16 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
   const [id] = useParam('id');
 
   const data = [
-    {
-      placeholder: "Enter start place (point A)",
-      iconName: "icon",
-      label: "Start (point A)",
-    },
-    {
-      placeholder: "Enter end place (point B)",
-      iconName: "icon",
-      label: "Finish (point B)",
-    },
+    // {
+    //   placeholder: "Enter start place (point A)",
+    //   iconName: "icon",
+    //   label: "Start (point A)",
+    // },
+    // {
+    //   placeholder: "Enter end place (point B)",
+    //   iconName: "icon",
+    //   label: "Finish (point B)",
+    // },
     {
       placeholder: "Enter calories burned",
       iconName: "icon",
@@ -56,7 +56,7 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
   );
 
   return (
-    <SafeAreaView style={{ backgroundColor: 'white' }}>
+    <View style={{ backgroundColor: 'white', height: '100%' }}>
       <View className='flex w-full'>
         <NavigationScreen />
       </View>
@@ -72,11 +72,14 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
         keyExtractor={(item, index) => index.toString()}
         ListHeaderComponent={
           <>
-            <DisplayItem />
             <Text style={{ color: COLORS.black, fontSize: 40, fontWeight: 'bold' }}>Register</Text>
             <Text style={{ color: COLORS.grey, fontSize: 18, marginVertical: 10 }}>Enter Your Details to Register</Text>
+
+            <DisplayItem label={"Start (point A)"}/>
+            <DisplayItem label={"Start (point B)"}/>
           </>
         }
+
         ListFooterComponent={
           <>
             <TouchableOpacity style={styles.button} onPress={() => alert("hello")}>
@@ -85,7 +88,7 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
           </>
         }
       />
-    </SafeAreaView>
+    </View>
   );
 }
 
