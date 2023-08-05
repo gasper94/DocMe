@@ -5,6 +5,7 @@ import ExclamationCircle from "../../../assets/Icons/exclamation/exclamation";
 
 const Input = ({
     label,
+    value,
     iconName,
     error, 
     password,
@@ -13,7 +14,7 @@ const Input = ({
 }) => {
 
     const [isFocused, setIsFocused] = useState(false);
-    const [pointA, setPointA] = useState('');
+    const [pointA, setPointA] = useState(value);
 
     const handleChangeText = (newPointA) => {
         setPointA(newPointA);
@@ -28,9 +29,9 @@ const Input = ({
                     placeholderTextColor={error ? "red" : COLORS.grey}
                     style={{ height: '100%', color: COLORS.darkblue, flex: 1 }}
                     autoCorrect={false}
-                    placeholder="Enter place of origin"
+                    placeholder={props.placeholder}
                     onChangeText={handleChangeText}
-                    value={pointA}
+                    value={pointA ? `${pointA}` : null}
                     onFocus={() => {
                         onFocus();
                         setIsFocused(true);

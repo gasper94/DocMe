@@ -7,7 +7,7 @@ import axios from "axios";
 // utils
 import { getAudio, getDurationFormatted, startRecording, stopRecording, handlePlayAudioOnClick, handleGetTranscriptWithUri, handleGetTranscriptObject } from 'app/audioRecording/index';
 
-export default function AudioRecorder() {
+export default function AudioRecorder({setTranscript, setTranscriptObject}) {
   const configuration = new Configuration({
     apiKey: process.env.OPEN_AI,
   });
@@ -22,6 +22,7 @@ export default function AudioRecorder() {
 
   // new
   const [newMessage, setMesssage] = useState(null);
+  // const [transcript, setTranscript] = useState(null);
 
   // Might be able to need this. Else remove it later on.
   useEffect(() => {
@@ -47,9 +48,20 @@ export default function AudioRecorder() {
 
   const handleStopRecording = async () => {
     await stopRecording(setRecording, startTimeRef, recording, recordings, setRecordings);
+
+    // await 
+    // await handleGetTranscript(recordings[0]);r
   }
 
+  useEffect(() => {
+    // console.log("recordings handle:", recordings[0]);
+    if(recordings[0]){
+      handleGetTranscript(recordings[0])
+    }
+  },[recordings])
+
   const getRecordingLines = () => {
+    console.log("recordings:", recordings);
     return recordings.map((recordingLine, index) => {
       return (
         <View key={index} style={{ backgroundColor: 'purple' }}>
@@ -85,15 +97,17 @@ export default function AudioRecorder() {
     console.log("starting handleGetTranscript", audio);
     const transcript = await handleGetTranscriptWithUri(audio);
 
+    console.log("Transcript:", transcript);
+    setTranscript(transcript);
     const objTranscript = await handleGetTranscriptObject(transcript);
-  
-    await console.log('string:', objTranscript);
-    await console.log("PointA: ", objTranscript.pointA);
-    await console.log("PointB: ", objTranscript.pointB);
-    await console.log("Calories: ", objTranscript.calories);
-    await console.log("mood: ", objTranscript.drankWater);
+    await setTranscriptObject(objTranscript);
+    // await console.log('string:', objTranscript);
+    // await console.log("PointA: ", objTranscript.pointA);
+    // await console.log("PointB: ", objTranscript.pointB);
+    // await console.log("Calories: ", objTranscript.calories);
+    // await console.log("mood: ", objTranscript.drankWater);
 
-    await setMesssage(objTranscript);
+    // await setMesssage(objTranscript);
   };
 
   return (
@@ -104,6 +118,12 @@ export default function AudioRecorder() {
       />
       <Text>Duration: {`${getDurationFormatted(audioDuration)}`}</Text>
       {getRecordingLines()}
+
+      {/* {transcript ?
+        <View>
+          <Text>Transcript: {transcript}</Text>
+        </View>
+      :null} */}
 
       {newMessage ? 
         <View>

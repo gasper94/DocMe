@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Text, TouchableOpacity, View, StyleSheet, FlatList } from 'react-native';
 import { createParam } from 'solito';
@@ -13,6 +13,12 @@ import AudioRecorder from '../audioRecorder/AudioRecorder';
 import { A, H1 } from 'app/design/typography';
 import { ExclamationCircle } from '@nandorojo/heroicons/24/outline';
 
+interface Transcript {
+  calories?: number;
+  // Add other properties related to the transcript if needed
+  // For example: pointA: string, pointB: string, drankWater: boolean, etc.
+}
+
 const { useParam } = createParam<{ id: string }>();
 const GOOGLE_API_KEY = process.env.GOOGLE_API;
 
@@ -22,8 +28,33 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
   const [id] = useParam('id');
   const [currentStep, setCurrentStep] = useState(1); // Start with the first step
 
+
+  const [calories, setCalories] = useState<Number | null>(null);
+
+  // Audio Recording Transcript
+  const [transcript, setTranscript] = useState(null);
+  const [transcriptObject, setTranscriptObject] = useState<Transcript | null>(null);
+
+  useEffect(() => {
+    if(transcriptObject){
+      console.log("Activity-screen:", transcriptObject);
+      console.log("Activity-screen:", transcriptObject.calories);
+    }
+
+    if (transcriptObject && transcriptObject.calories) {
+      setCalories(transcriptObject.calories);
+    }
+
+    // await console.log("PointA: ", transcriptObject.pointA);
+    // await console.log("PointB: ", transcriptObject.pointB);
+    // await console.log("mood: ", transcriptObject.drankWater);
+
+  },[transcriptObject]);
+
   const handleNextStep = () => {
     setCurrentStep((prevStep) => prevStep + 1);
+
+    console.log("transcriptObject:", transcriptObject);
   };
 
   const handlePreviousStep = () => {
@@ -31,11 +62,11 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
   };
 
   const data = [
-    {
-      placeholder: 'Enter calories burned',
-      iconName: 'icon',
-      label: 'Calories Burned',
-    },
+    // {
+    //   placeholder: 'Enter calories burned',
+    //   iconName: 'icon',
+    //   label: 'Calories Burned',
+    // },
     {
       placeholder: 'Did you drink water?',
       iconName: 'icon',
@@ -71,6 +102,16 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
               <ExclamationCircle/>
               <Text className='mt-0.5'>Record yourself reading the following text outloud.</Text>
             </View>
+
+            {transcript ?
+              <View>
+                <A className='text-xl mb-1 mt-4'>Your Script</A>
+                <Text className='w-96 text-base text-left'>
+                  {transcript}
+                </Text>
+              </View>
+            :
+            <>
             <View>
               <A className='text-xl mb-1 mt-4'>Script</A>
               <Text className='w-96 text-base text-left'>
@@ -86,15 +127,20 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
                 I burned <Text style={{ fontWeight: 'bold',  textDecorationLine: 'underline' }}>350 calories</Text> and <Text style={{ fontWeight: 'bold',  textDecorationLine: 'underline' }}>drank water</Text>. Overall, I feel <Text style={{ fontWeight: 'bold',  textDecorationLine: 'underline' }}>happy and relax</Text>.
               </Text>
             </View>
-            <AudioRecorder />
-            <TouchableOpacity style={styles.button} onPress={handleNextStep}>
-            <Text style={styles.buttonText}>Next</Text>
-          </TouchableOpacity>
+            </>
+            }
+            <AudioRecorder setTranscript={setTranscript} setTranscriptObject={setTranscriptObject}/>
+              {transcript ?
+                <TouchableOpacity style={styles.button} onPress={handleNextStep}>
+                    <Text style={styles.buttonText}>Next</Text>
+                </TouchableOpacity>
+              :null}
             </View>
       )}
 
       {currentStep === 2 && (
         <View style={{ backgroundColor: 'white', height: '100%' }}>
+
           <FlatList
             keyboardShouldPersistTaps='always'
             contentContainerStyle={{
@@ -112,6 +158,14 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
                 <View style={{marginTop: 20}}>
                   <DisplayItem label={"Start (point A)"}/>
                   <DisplayItem label={"Start (point B)"}/>
+                  <Input
+                    placeholder={'Enter Calories'}
+                    iconName={'icon'}
+                    label={"Calories burned"}
+                    value={calories}
+                    error={undefined}
+                    password={undefined}
+                  />
                 </View>
               </>
             }
