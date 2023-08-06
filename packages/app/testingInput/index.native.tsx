@@ -9,7 +9,7 @@ import COLORS from "../design/const";
 // assets
 import ExclamationCircle from "../../assets/Icons/exclamation/exclamation";
 
-const GOOGLE_API_KEY = 'AIzaSyALUdHoGqVd9BekEisWxhmF_aUdblfaG4Y';
+const GOOGLE_API_KEY = process.env.GOOGLE_API;
 
 const DisplayItem = ({error, label, currentLocation}) => {
 
