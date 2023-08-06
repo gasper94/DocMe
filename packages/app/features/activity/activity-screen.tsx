@@ -28,7 +28,8 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
   const [id] = useParam('id');
   const [currentStep, setCurrentStep] = useState(1); // Start with the first step
 
-
+  const [pointAFlag, setPointAFlag] = useState(false);
+  const [pointBFlag, setPointBFlag] = useState(false);
   const [calories, setCalories] = useState<Number | null>(null);
 
   // Audio Recording Transcript
@@ -156,8 +157,8 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
                 <Text style={{ color: COLORS.grey, fontSize: 18, marginVertical: 10 }}>Enter Your Details to Register</Text>
 
                 <View style={{marginTop: 20}}>
-                  <DisplayItem label={"Start (point A)"}/>
-                  <DisplayItem label={"Start (point B)"}/>
+                  <DisplayItem label={"Start (point A)"} currentLocation={'San Francisco, CA'}/>
+                  <DisplayItem label={"Start (point B)"} />
                   <Input
                     placeholder={'Enter Calories'}
                     iconName={'icon'}

@@ -1,6 +1,7 @@
-import {useState} from "react"
-import {Text, View, StyleSheet, SafeAreaView} from "react-native"
+import {useState, useEffect, useRef} from "react"
+import {Text, View, StyleSheet, SafeAreaView , Button} from "react-native"
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { GooglePlacesAutocompleteRef } from 'react-native-google-places-autocomplete';
 
 // COLORS
 import COLORS from "../design/const";
@@ -8,9 +9,9 @@ import COLORS from "../design/const";
 // assets
 import ExclamationCircle from "../../assets/Icons/exclamation/exclamation";
 
-const GOOGLE_API_KEY = process.env.GOOGLE_API;
+const GOOGLE_API_KEY = 'AIzaSyALUdHoGqVd9BekEisWxhmF_aUdblfaG4Y';
 
-const DisplayItem = ({error, label}) => {
+const DisplayItem = ({error, label, currentLocation}) => {
 
     const [isFocused, setIsFocused] = useState(false);
     const [location, setLocation] = useState();
@@ -21,10 +22,27 @@ const DisplayItem = ({error, label}) => {
         setLocation(location.description);
     }
 
+    const ref = useRef<GooglePlacesAutocompleteRef | null>(null);
+
+    useEffect(() => {
+        setTimeout(() => {
+            ref?.current?.setAdressTextAndQuery(currentLocation);
+        }, 1000);
+    }, []);
+
+    // const handleInputData = () => {
+    //    setTimeout(() => {
+    //         ref?.current?.setAdressTextAndQuery('San Francisco, CA');
+    //     }, 1000);
+    // }
+
+
     return(
         <View>
+            {/* <Button title='Input Data' onPress={handleInputData}/> */}
             <Text style={styles.label}>{label}</Text>
             <GooglePlacesAutocomplete
+                ref={ref}
                 placeholder='Search location'
                 onPress={handleLocationPress}
                 query={{
@@ -35,7 +53,7 @@ const DisplayItem = ({error, label}) => {
                     placeholderTextColor: COLORS.grey,
                 }}
                 onFail={error => console.log('ERROR:', error)}
-                minLength={2}
+                minLength={0}
                 fetchDetails={true}
                 styles={{
                     
