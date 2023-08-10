@@ -34,7 +34,7 @@ export function NavigationScreen() {
         </MotiLink>
         
         <View className='flex-row items-center space-x-2'>
-            <Text>DocMe</Text>
+            <Text>DocuMe</Text>
         </View>
             <SolitoImage
             alt="user-image"

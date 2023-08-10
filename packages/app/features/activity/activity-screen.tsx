@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Text, TouchableOpacity, View, StyleSheet, FlatList } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet, FlatList, Button } from 'react-native';
 import { createParam } from 'solito';
 import { SafeAreaView, ScrollView } from 'moti';
 import { NavigationScreen } from '../components/NavigationBar/NavigationBar';
@@ -15,6 +15,10 @@ import { ExclamationCircle } from '@nandorojo/heroicons/24/outline';
 
 interface Transcript {
   calories?: number;
+  pointA?: string;
+  pointB?: string;
+  mood?: string[];
+  drankWater?: boolean;
   // Add other properties related to the transcript if needed
   // For example: pointA: string, pointB: string, drankWater: boolean, etc.
 }
@@ -31,6 +35,10 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
   const [pointAFlag, setPointAFlag] = useState(false);
   const [pointBFlag, setPointBFlag] = useState(false);
   const [calories, setCalories] = useState<Number | null>(null);
+  const [pointA, setPointA] = useState<String | null>(null);
+  const [pointB, setPointB] = useState<String | null>(null);
+  const [mood, setMood] = useState<String[] | null>(null);
+  const [drankWater, setDrankwater] = useState<boolean | null>(null);
 
   // Audio Recording Transcript
   const [transcript, setTranscript] = useState(null);
@@ -44,6 +52,22 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
 
     if (transcriptObject && transcriptObject.calories) {
       setCalories(transcriptObject.calories);
+    }
+
+    if (transcriptObject && transcriptObject.pointA) {
+      setPointA(transcriptObject.pointA);
+    }
+
+    if (transcriptObject && transcriptObject.pointB) {
+      setPointB(transcriptObject.pointB);
+    }
+
+    if (transcriptObject && transcriptObject.mood) {
+      setMood(transcriptObject.mood);
+    }
+
+    if (transcriptObject && transcriptObject.drankWater) {
+      setDrankwater(transcriptObject.drankWater);
     }
 
     // await console.log("PointA: ", transcriptObject.pointA);
@@ -68,16 +92,16 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
     //   iconName: 'icon',
     //   label: 'Calories Burned',
     // },
-    {
-      placeholder: 'Did you drink water?',
-      iconName: 'icon',
-      label: 'Drank water',
-    },
-    {
-      placeholder: 'How are you feeling?',
-      iconName: 'icon',
-      label: 'Mood',
-    },
+    // {
+    //   placeholder: 'Did you drink water?',
+    //   iconName: 'icon',
+    //   label: 'Drank water',
+    // },
+    // {
+    //   placeholder: 'How are you feeling?',
+    //   iconName: 'icon',
+    //   label: 'Mood',
+    // },
   ];
 
   const renderItem = ({ item }) => (
@@ -157,8 +181,8 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
                 <Text style={{ color: COLORS.grey, fontSize: 18, marginVertical: 10 }}>Enter Your Details to Register</Text>
 
                 <View style={{marginTop: 20}}>
-                  <DisplayItem label={"Start (point A)"} currentLocation={'San Francisco, CA'}/>
-                  <DisplayItem label={"Start (point B)"} />
+                  <DisplayItem label={"Start (point A)"} currentLocation={pointA}/>
+                  <DisplayItem label={"Start (point B)"} currentLocation={pointB}/>
                   <Input
                     placeholder={'Enter Calories'}
                     iconName={'icon'}
@@ -167,6 +191,47 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
                     error={undefined}
                     password={undefined}
                   />
+                  <Text>{`Calories: ${calories}`}</Text>
+                  <View style={{display: 'flex', flexDirection: 'row', }}>
+                    <View style={{display: 'flex', justifyContent: 'center', flex: 1,}}>
+                      <Input
+                        placeholder={'Enter Mood'}
+                        iconName={'icon'}
+                        label={"Mood"}
+                        value={null}
+                        error={undefined}
+                        password={undefined}
+                      />
+                    </View>
+                    <View style={{display: 'flex', justifyContent: 'center', width: '25%', paddingTop: 16}}>
+                      {/* <Button title='Hello there!' /> */}
+                      <TouchableOpacity style={styles.buttonx} onPress={() => alert("Ready to save form")}>
+                        <Text style={styles.buttonText}>add</Text>
+                      </TouchableOpacity>
+                    </View>
+                    
+                  </View>
+                  <View style={{display: 'flex', flexDirection: 'column'}}>
+                    <Text>Mood:</Text>
+                    {mood && mood.length > 1 ? (
+                      mood.map((item, index) => (
+                        <View >
+                          <Text key={index}>{item}</Text>
+                        </View>
+                      ))
+                    ) : (
+                      <Text>Empty</Text>
+                    )}
+                  </View>
+                  <Input
+                    placeholder={'Did you drink water?'}
+                    iconName={'icon'}
+                    label={"Did you drink water?"}
+                    value={drankWater}
+                    error={undefined}
+                    password={undefined}
+                  />
+                  <Text>{`Drank Water: ${drankWater}`}</Text>
                 </View>
               </>
             }
@@ -202,6 +267,15 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  buttonx: {
+    backgroundColor: COLORS.blue,
+    padding: 2,
+    borderRadius: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 36,
+    marginLeft: 12,
   },
 });
 
