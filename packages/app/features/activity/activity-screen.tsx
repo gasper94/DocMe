@@ -11,7 +11,7 @@ import { DisplayItem } from 'app/testingInput/index';
 import COLORS from '../../design/const';
 import AudioRecorder from '../audioRecorder/AudioRecorder';
 import { A, H1 } from 'app/design/typography';
-import { ExclamationCircle } from '@nandorojo/heroicons/24/outline';
+import { ExclamationCircle, XMark } from '@nandorojo/heroicons/24/outline';
 
 interface Transcript {
   calories?: number;
@@ -43,6 +43,13 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
   // Audio Recording Transcript
   const [transcript, setTranscript] = useState(null);
   const [transcriptObject, setTranscriptObject] = useState<Transcript | null>(null);
+
+  // Checkbox
+  const [checked, setChecked] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setChecked(!checked);
+  };
 
   useEffect(() => {
     if(transcriptObject){
@@ -191,8 +198,15 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
                     error={undefined}
                     password={undefined}
                   />
-                  <Text>{`Calories: ${calories}`}</Text>
-                  <View style={{display: 'flex', flexDirection: 'row', }}>
+                  <Text>{`Calories: ${calories}`}</Text><Input
+                    placeholder={'Enter Calories'}
+                    iconName={'icon'}
+                    label={"Calories burned"}
+                    value={calories}
+                    error={undefined}
+                    password={undefined}
+                  />
+                  <View style={{display: 'flex', flexDirection: 'row', height: 100 }}>
                     <View style={{display: 'flex', justifyContent: 'center', flex: 1,}}>
                       <Input
                         placeholder={'Enter Mood'}
@@ -211,27 +225,40 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
                     </View>
                     
                   </View>
-                  <View style={{display: 'flex', flexDirection: 'column'}}>
-                    <Text>Mood:</Text>
-                    {mood && mood.length > 1 ? (
+
+                  <Text>Mood:</Text>
+                  <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                    {mood && mood.length > 0 ? (
                       mood.map((item, index) => (
-                        <View >
-                          <Text key={index}>{item}</Text>
-                        </View>
+                        <>
+                          <TouchableOpacity
+                            key={index}
+                            style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: 'blue', borderRadius: 4 }}
+                            onPress={() => alert("Ready to save form")}
+                          >
+                            <Text style={{ padding: 8, color: 'white' }}>{item}</Text>
+                            <XMark color='white'/>
+                          </TouchableOpacity>
+                        </>
                       ))
                     ) : (
-                      <Text>Empty</Text>
+                      <Text style={{ backgroundColor: 'blue', height: 10, width: 10 }}>Empty</Text>
                     )}
                   </View>
-                  <Input
-                    placeholder={'Did you drink water?'}
-                    iconName={'icon'}
-                    label={"Did you drink water?"}
-                    value={drankWater}
-                    error={undefined}
-                    password={undefined}
-                  />
-                  <Text>{`Drank Water: ${drankWater}`}</Text>
+
+                  <Text style={{color: COLORS.grey, marginTop: 24, marginBottom: 12, fontSize: 16}}>Did you drink water?</Text>
+                  <TouchableOpacity style={styles.container} onPress={handleCheckboxChange}>
+                    <View style={[styles.checkbox, drankWater && styles.checked]}>
+                      {drankWater && <Text style={styles.checkmark}>✓</Text>}
+                    </View>
+                    <Text style={styles.label}>I drank some!</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.container} onPress={handleCheckboxChange}>
+                    <View style={[styles.checkbox, !drankWater ? styles.checked : null]}>
+                      {!drankWater ? <Text style={styles.checkmark}>✓</Text>:null}
+                    </View>
+                    <Text style={styles.label}>I didn't drink</Text>
+                  </TouchableOpacity>
                 </View>
               </>
             }
@@ -255,6 +282,31 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
 }
 
 const styles = StyleSheet.create({
+container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  checkbox: {
+    width: 20,
+    height: 20,
+    borderWidth: 2,
+    borderColor: '#000',
+    marginRight: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  checked: {
+    backgroundColor: COLORS.blue,
+    borderColor:  COLORS.blue,
+  },
+  checkmark: {
+    color: '#fff',
+    fontSize: 12,
+  },
+  label: {
+    fontSize: 18,
+  },
   button: {
     backgroundColor: COLORS.blue,
     padding: 10,
@@ -274,8 +326,9 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 36,
     marginLeft: 12,
+    height: '65%',
+    width: 80,
   },
 });
 
