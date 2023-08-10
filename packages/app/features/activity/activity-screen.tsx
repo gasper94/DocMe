@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Text, TouchableOpacity, View, StyleSheet, FlatList, Button } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet, FlatList, Button, TextInput } from 'react-native';
 import { createParam } from 'solito';
 import { SafeAreaView, ScrollView } from 'moti';
 import { NavigationScreen } from '../components/NavigationBar/NavigationBar';
@@ -44,12 +44,37 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
   const [transcript, setTranscript] = useState(null);
   const [transcriptObject, setTranscriptObject] = useState<Transcript | null>(null);
 
+  // Mood
+  const [moodInput, setMoodInput] = useState('');
+  const [isFocused, setIsFocused] = useState(false);
+
   // Checkbox
   const [checked, setChecked] = useState(false);
 
   const handleCheckboxChange = () => {
-    setChecked(!checked);
+    setDrankwater(!drankWater);
   };
+
+  const handleRemoveMoodItem = (itemMood) => {
+    if(mood){
+      let NewCollection = mood.filter(item => item !== itemMood);
+      setMood(NewCollection);
+    }
+  }
+  const handleInputChange = (text) => {
+    setMoodInput(text);
+  }
+
+  const onPressHandleInsertingMood = (currentMood) => {
+    if(mood){
+      let newObject = [...mood, currentMood];
+      setMood(newObject);
+    }else{
+      setMood([currentMood]);
+    }
+
+    setMoodInput('');
+  }
 
   useEffect(() => {
     if(transcriptObject){
@@ -113,6 +138,7 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
 
   const renderItem = ({ item }) => (
     <Input
+      value='d'
       placeholder={item.placeholder}
       iconName={item.iconName}
       label={item.label}
@@ -198,28 +224,31 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
                     error={undefined}
                     password={undefined}
                   />
-                  <Text>{`Calories: ${calories}`}</Text><Input
-                    placeholder={'Enter Calories'}
-                    iconName={'icon'}
-                    label={"Calories burned"}
-                    value={calories}
-                    error={undefined}
-                    password={undefined}
-                  />
                   <View style={{display: 'flex', flexDirection: 'row', height: 100 }}>
                     <View style={{display: 'flex', justifyContent: 'center', flex: 1,}}>
-                      <Input
-                        placeholder={'Enter Mood'}
-                        iconName={'icon'}
-                        label={"Mood"}
-                        value={null}
-                        error={undefined}
-                        password={undefined}
-                      />
+                      <Text style={styles.label}>Mood</Text>
+                      <View style={[styles.inputContainer, { borderColor: false ? COLORS.red : isFocused ? COLORS.darkblue : COLORS.light }]}>
+                          <ExclamationCircle style={{ fontSize: 22, marginRight: 10, marginLeft: 10 }} />
+                          <TextInput
+                              placeholderTextColor={false ? "red" : COLORS.grey}
+                              style={{ height: '100%', color: COLORS.darkblue, flex: 1 }}
+                              autoCorrect={false}
+                              placeholder={"Enter your Mood"}
+                              onChangeText={handleInputChange}
+                              value={moodInput}
+                              onFocus={() => {
+                                  setIsFocused(true);
+                              }}
+                              onBlur={() => {
+                                  setIsFocused(false);
+                              }}
+                              {...props}
+                          />
+                      </View>
                     </View>
                     <View style={{display: 'flex', justifyContent: 'center', width: '25%', paddingTop: 16}}>
                       {/* <Button title='Hello there!' /> */}
-                      <TouchableOpacity style={styles.buttonx} onPress={() => alert("Ready to save form")}>
+                      <TouchableOpacity style={styles.buttonx} onPress={() => onPressHandleInsertingMood(moodInput)}>
                         <Text style={styles.buttonText}>add</Text>
                       </TouchableOpacity>
                     </View>
@@ -228,13 +257,13 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
 
                   <Text>Mood:</Text>
                   <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-                    {mood && mood.length > 0 ? (
+                    {mood ? (
                       mood.map((item, index) => (
                         <>
                           <TouchableOpacity
                             key={index}
                             style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: 'blue', borderRadius: 4 }}
-                            onPress={() => alert("Ready to save form")}
+                            onPress={() => handleRemoveMoodItem(item)}
                           >
                             <Text style={{ padding: 8, color: 'white' }}>{item}</Text>
                             <XMark color='white'/>
@@ -282,6 +311,13 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
 }
 
 const styles = StyleSheet.create({
+    inputContainer: {
+        height: 55,
+        backgroundColor: COLORS.light,
+        flexDirection: 'row',
+        borderWidth: 0.5,
+        alignItems: 'center',
+    },
 container: {
     flexDirection: 'row',
     alignItems: 'center',
