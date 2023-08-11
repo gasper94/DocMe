@@ -246,7 +246,7 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
                           />
                       </View>
                     </View>
-                    <View style={{display: 'flex', justifyContent: 'center', width: '25%', paddingTop: 16}}>
+                    <View style={{display: 'flex', justifyContent: 'center', width: '25%', paddingTop: 19}}>
                       {/* <Button title='Hello there!' /> */}
                       <TouchableOpacity style={styles.buttonx} onPress={() => onPressHandleInsertingMood(moodInput)}>
                         <Text style={styles.buttonText}>add</Text>
@@ -297,7 +297,7 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
                 <TouchableOpacity style={styles.button} onPress={handlePreviousStep}>
                   <Text style={styles.buttonText}>Previous</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => alert("Ready to save form")}>
+                <TouchableOpacity style={styles.buttony} onPress={() => alert("Ready to save form")}>
                   <Text style={styles.buttonText}>Submit Activity</Text>
                 </TouchableOpacity>
               </>
@@ -346,6 +346,15 @@ container: {
   button: {
     backgroundColor: COLORS.blue,
     padding: 10,
+    borderRadius: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 10,
+  },
+  buttony: {
+    backgroundColor: COLORS.blue,
+    padding: 10,
+    marginBottom: 250,
     borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'center',

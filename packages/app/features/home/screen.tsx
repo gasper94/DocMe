@@ -27,15 +27,40 @@ import GenerateCV from "../extractData/extractData";
 import LongPressButton from './components/RecordingButton/RecordingButton'
 import { NavigationScreen } from '../components/NavigationBar/NavigationBar'
 
+// State Management
+import { useSelector} from 'react-redux'
+
 const RedBox = () => {
   return <View className='bg-red-300 w-full'>
     <Text>Box</Text>
   </View>
 }
 
+// Define RootState if not already defined in your project
+interface RootState {
+  activity: {
+    activity: Activity[];
+    // ... other properties in your cart state
+  };
+}
+
+interface Activity {
+  // Define properties of your Product type
+  // For example: id, name, price, etc.
+    pointA: string;
+    pointB: string;
+    burnedCalories: number;
+    drankWater: boolean;
+}
+
 export function HomeScreen() {
+
+  // State Management
+  const activity = useSelector((state: RootState) => state.activity.activity);
+
+  
   const [visible, toggle] = useReducer((s) => !s, true);
- const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const [isPressed, setIsPressed] = useState(false);
   
@@ -78,6 +103,7 @@ export function HomeScreen() {
       <View className='flex justify-center items-center flex-col'>
         <Calendar />
       </View>
+      <Text>{activity.length}</Text>
     </ScrollView>
     
       {/* <View
