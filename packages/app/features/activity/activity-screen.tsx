@@ -259,7 +259,6 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
                   <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
                     {mood ? (
                       mood.map((item, index) => (
-                        <>
                           <TouchableOpacity
                             key={index}
                             style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: 'blue', borderRadius: 4 }}
@@ -268,7 +267,6 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
                             <Text style={{ padding: 8, color: 'white' }}>{item}</Text>
                             <XMark color='white'/>
                           </TouchableOpacity>
-                        </>
                       ))
                     ) : (
                       <Text style={{ backgroundColor: 'blue', height: 10, width: 10 }}>Empty</Text>

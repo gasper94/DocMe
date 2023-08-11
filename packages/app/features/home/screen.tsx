@@ -88,7 +88,8 @@ export function HomeScreen() {
       <View className='flex justify-center items-center flex-col'>
         <Calendar />
       </View>
-      <Text>{activity.length}</Text>
+      {/* <Text>{activity.length}</Text> */}
+      {/* <Text>{`Key: ${key}`}</Text> */}
     </ScrollView>
     
       {/* <View
