@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import { useRouter } from 'solito/router'
 import { Text, TouchableOpacity, View, StyleSheet, FlatList, Button, TextInput } from 'react-native';
 import { createParam } from 'solito';
 import { SafeAreaView, ScrollView } from 'moti';
@@ -31,6 +31,9 @@ const { useParam } = createParam<{ id: string }>();
 const GOOGLE_API_KEY = process.env.GOOGLE_API;
 
 export function ActivityScreen(onFocus = () => {}, ...props) {
+
+  // Routing
+  const { push, replace, back, parseNextPath } = useRouter()
   
   // State Management
   const dispatch = useDispatch();
@@ -86,8 +89,8 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
 
   const onHandleSubmitForm = (items) => {
     console.log(items);
-    alert(JSON.stringify('form:' + items));
     dispatch(addPhysicalActivity(items))
+    push('/');
   }
 
   useEffect(() => {
