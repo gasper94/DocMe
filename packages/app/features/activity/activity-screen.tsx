@@ -13,6 +13,10 @@ import AudioRecorder from '../audioRecorder/AudioRecorder';
 import { A, H1 } from 'app/design/typography';
 import { ExclamationCircle, XMark } from '@nandorojo/heroicons/24/outline';
 
+// State Management
+import {useDispatch} from 'react-redux';
+import { addPhysicalActivity } from '../../../store/physicalActivitySlice';
+
 interface Transcript {
   calories?: number;
   pointA?: string;
@@ -27,6 +31,10 @@ const { useParam } = createParam<{ id: string }>();
 const GOOGLE_API_KEY = process.env.GOOGLE_API;
 
 export function ActivityScreen(onFocus = () => {}, ...props) {
+  
+  // State Management
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState('');
   const [exampleOne, setExampleOne] = useState(false);
   const [id] = useParam('id');
@@ -74,6 +82,12 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
     }
 
     setMoodInput('');
+  }
+
+  const onHandleSubmitForm = (items) => {
+    console.log(items);
+    alert(JSON.stringify('form:' + items));
+    dispatch(addPhysicalActivity(items))
   }
 
   useEffect(() => {
@@ -295,7 +309,7 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
                 <TouchableOpacity style={styles.button} onPress={handlePreviousStep}>
                   <Text style={styles.buttonText}>Previous</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.buttony} onPress={() => alert("Ready to save form")}>
+                <TouchableOpacity style={styles.buttony} onPress={() => onHandleSubmitForm({pointA, pointB, calories, mood, drankWater})}>
                   <Text style={styles.buttonText}>Submit Activity</Text>
                 </TouchableOpacity>
               </>

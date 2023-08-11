@@ -88,10 +88,9 @@ export function HomeScreen() {
       <View className='flex justify-center items-center flex-col'>
         <Calendar />
       </View>
-      {/* <Text>{activity.length}</Text> */}
       {/* <Text>{`Key: ${key}`}</Text> */}
     </ScrollView>
-    
+      <Text>{activity.length}</Text>
       {/* <View
         style={[styles.container, isHovered && styles.containerHovered]}
         onMouseEnter={handleMouseEnter}
