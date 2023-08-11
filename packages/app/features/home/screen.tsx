@@ -27,6 +27,9 @@ import GenerateCV from "../extractData/extractData";
 import LongPressButton from './components/RecordingButton/RecordingButton'
 import { NavigationScreen } from '../components/NavigationBar/NavigationBar'
 
+// Interfaces
+import {RootState} from "../../../store/store";
+
 // State Management
 import { useSelector} from 'react-redux'
 
@@ -36,29 +39,11 @@ const RedBox = () => {
   </View>
 }
 
-// Define RootState if not already defined in your project
-interface RootState {
-  activity: {
-    activity: Activity[];
-    // ... other properties in your cart state
-  };
-}
-
-interface Activity {
-  // Define properties of your Product type
-  // For example: id, name, price, etc.
-    pointA: string;
-    pointB: string;
-    burnedCalories: number;
-    drankWater: boolean;
-}
-
 export function HomeScreen() {
 
   // State Management
-  const activity = useSelector((state: RootState) => state.activity.activity);
+  const activity = useSelector((state: RootState) => state.activities.activity);
 
-  
   const [visible, toggle] = useReducer((s) => !s, true);
   const [isHovered, setIsHovered] = useState(false);
 

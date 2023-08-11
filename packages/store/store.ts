@@ -1,8 +1,15 @@
-import { configureStore} from '@reduxjs/toolkit'
+import { configureStore, combineReducers} from '@reduxjs/toolkit'
 
 // Reducer
-import physicalActivitySlice from './physicalActivitySlice';
+import physicalActivityReducer from './physicalActivitySlice';
+
+const rootReducer = combineReducers({
+    activities: physicalActivityReducer,
+    // Add other slices here
+});
 
 export const store = configureStore({
-    reducer: {activity: physicalActivitySlice}
+    reducer: rootReducer
 })
+
+export type RootState = ReturnType<typeof rootReducer>;
