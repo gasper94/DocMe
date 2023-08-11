@@ -5,10 +5,10 @@
 ## Prototype Images + Demo ##
 
 #Second Iteration
-[https://youtube.com/shorts/yHmSruefv3s?feature=share]
+[https://youtu.be/BU8nhbpDSf4]
 
 #First Iteration
-[https://youtu.be/BU8nhbpDSf4]
+[https://youtube.com/shorts/yHmSruefv3s?feature=share]
 
 ### Prototype - Demo (Audio transcription feature to automate Log Entry ###
 
