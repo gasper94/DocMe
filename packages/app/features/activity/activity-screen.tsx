@@ -16,6 +16,7 @@ import { ExclamationCircle, XMark } from '@nandorojo/heroicons/24/outline';
 // State Management
 import {useDispatch} from 'react-redux';
 import { addPhysicalActivity } from '../../../store/physicalActivitySlice';
+import RecordingAnimation from './RecordingAnimation';
 
 interface Transcript {
   calories?: number;
@@ -233,8 +234,9 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
               </Text>
             </View>
         </View>
-        <View style={{height: 100, backgroundColor: 'pink'}}>
-          <Text style={styles.middleText}>Audio Visualizer</Text>
+        <View style={{height: 100, backgroundColor: 'white'}}>
+          <RecordingAnimation />
+          {/* <Text style={styles.middleText}>Audio Visualizer</Text> */}
         </View>
       </View>
       <View style={styles.bottomMenu}>
