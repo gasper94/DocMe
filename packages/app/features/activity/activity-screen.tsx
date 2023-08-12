@@ -165,230 +165,144 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
   );
 
   return (
-    <View style={{ backgroundColor: 'white', height: '100%' }}>
-      <View className="flex w-full">
-        <NavigationScreen />
-      </View>
+    // <View style={{ backgroundColor: 'white', height: '100%' }}>
+    //   <View className="flex w-full">
+    //     <NavigationScreen />
+    //   </View>
         
-      {currentStep === 1 && (
-            <View className="flex justify-center items-center flew-row w-full h-auto bg-red-200 mt-12">
-            <H1 className='mb-12'>Log Physical Activity</H1>
-            <View className="flex flex-row  p-2 bg-gray-400 w-96 border-round h-auto p-4">
-              <ExclamationCircle/>
-              <Text className='mt-0.5'>Record yourself reading the following text outloud.</Text>
-            </View>
+    //   <View style={{backgroundColor: 'red', height: '100%'}}>
+    //     <View style={{flex: 1, backgroundColor: 'blue'}}>
+    //       <Text>1</Text>
+    //     </View>
+    //     <View style={{flex: 1, backgroundColor: 'pink'}}>
+    //       <Text>2</Text>
+    //     </View>
+    //     <View style={{backgroundColor: 'yellow', height: 150}}>
+    //       <Text>Options</Text>
+    //     </View>
+    //     <View style={{backgroundColor: 'red', height: 200}}>
+    //       <View style={{display: 'flex', flexDirection: 'row', width: '100%', backgroundColor: 'pink', padding: 12, gap: 2, height: 100}}>
+    //         <View style={{flex: 1, backgroundColor: 'yellow', justifyContent: 'center', alignItems: 'center'}}>
+    //           <Text>Options 1</Text>
+    //         </View>
+    //         <View style={{flex: 1, backgroundColor: 'yellow',justifyContent: 'center', alignItems: 'center'}}>
+    //           <Text>Options 1</Text>
+    //         </View>
+    //         <View style={{flex: 1, backgroundColor: 'yellow',justifyContent: 'center', alignItems: 'center'}}>
+    //           <Text>Options 1</Text>
+    //         </View>
+    //       </View>
+    //     </View>
+    //   </View>
 
-            {transcript ?
-              <View>
-                <A className='text-xl mb-1 mt-4'>Your Script</A>
-                <Text className='w-96 text-base text-left'>
-                  {transcript}
-                </Text>
-              </View>
-            :
-            <>
-            <View>
-              <A className='text-xl mb-1 mt-4'>Script</A>
-              <Text className='w-96 text-base text-left'>
+    // </View>
+    <SafeAreaView style={styles.safeArea}>
+    <View style={styles.container}>
+      {/* <View style={styles.navigation}>
+        <TouchableOpacity style={styles.navigationItem}>
+          <Text style={styles.navigationText}>Left</Text>
+        </TouchableOpacity>
+        <View style={styles.navigationMiddle}>
+          <Text style={styles.navigationText}>Middle</Text>
+        </View>
+        <TouchableOpacity style={styles.navigationItem}>
+          <Text style={styles.navigationText}>Right</Text>
+        </TouchableOpacity>
+      </View> */}
+      <View style={styles.middle}>
+        <View style={{flex: 1, backgroundColor: 'white', padding: 40}}>
+          <View style={{display: 'flex', flexDirection: 'column', gap: 6}}>
+            <Text style={{color: COLORS.grey, fontSize: 18, fontWeight: 800}}>Read the following script out loud,</Text>
+            <Text style={{color: COLORS.grey, fontSize: 17, fontWeight: 600}}>replacing the key points with your own personal experience:</Text>
+          </View>
+
+          <View style={{ flex: 1}}>
+              <A className='text-xl mb-1 mt-12'>Script</A>
+              <Text className='w-auto text-base text-left'>
                 Today, I went for a walk from <Text style={{ fontWeight: 'bold' }}>[Point  A]</Text> to <Text style={{ fontWeight: 'bold' }}>[Point  B]</Text>.
                 I burned <Text style={{ fontWeight: 'bold' }}>[Number of Calories]</Text> Calories and <Text style={{ fontWeight: 'bold' }}>[drank water]</Text>. Overall, I feel <Text style={{ fontWeight: 'bold' }}>[How you feel]</Text>.
               </Text>
             </View>
-
-            <View className='mt-8 mb-8'>
-              <A className='text-xl mb-1'>Example</A>
-              <Text className='w-96 text-base text-left'>
-                Today, I went for a walk from <Text style={{ fontWeight: 'bold', textDecorationLine: 'underline' }}>San Francisco California USA</Text> to <Text style={{ fontWeight: 'bold',  textDecorationLine: 'underline' }}>El Salvador</Text>.
+          </View>
+        <View style={{flex: 1, backgroundColor: 'white', padding: 40}}>
+          <View className='mt-8 mb-8'>
+              <A className='text-xl mb-1'>Your Audio</A>
+              <Text className='w-auto text-base text-left'>
+                Today, I went for a walk from <Text style={{ fontWeight: 'bold', textDecorationLine: 'underline' }}>Gellert Park</Text> to <Text style={{ fontWeight: 'bold',  textDecorationLine: 'underline' }}>AMC Movie Theather</Text>.
                 I burned <Text style={{ fontWeight: 'bold',  textDecorationLine: 'underline' }}>350 calories</Text> and <Text style={{ fontWeight: 'bold',  textDecorationLine: 'underline' }}>drank water</Text>. Overall, I feel <Text style={{ fontWeight: 'bold',  textDecorationLine: 'underline' }}>happy and relax</Text>.
               </Text>
             </View>
-            </>
-            }
-            <AudioRecorder setTranscript={setTranscript} setTranscriptObject={setTranscriptObject}/>
-              {transcript ?
-                <TouchableOpacity style={styles.button} onPress={handleNextStep}>
-                    <Text style={styles.buttonText}>Next</Text>
-                </TouchableOpacity>
-              :null}
-            </View>
-      )}
-
-      {currentStep === 2 && (
-        <View style={{ backgroundColor: 'white', height: '100%' }}>
-
-          <FlatList
-            keyboardShouldPersistTaps='always'
-            contentContainerStyle={{
-              paddingTop: 10,
-              paddingHorizontal: 20,
-            }}
-            data={data}
-            renderItem={renderItem}
-            keyExtractor={(item, index) => index.toString()}
-            ListHeaderComponent={
-              <>
-                <Text style={{ color: COLORS.black, fontSize: 40, fontWeight: 'bold' }}>Register</Text>
-                <Text style={{ color: COLORS.grey, fontSize: 18, marginVertical: 10 }}>Enter Your Details to Register</Text>
-
-                <View style={{marginTop: 20}}>
-                  <DisplayItem label={"Start (point A)"} currentLocation={pointA}/>
-                  <DisplayItem label={"Start (point B)"} currentLocation={pointB}/>
-                  <Input
-                    placeholder={'Enter Calories'}
-                    iconName={'icon'}
-                    label={"Calories burned"}
-                    value={calories}
-                    error={undefined}
-                    password={undefined}
-                  />
-                  <View style={{display: 'flex', flexDirection: 'row', height: 100 }}>
-                    <View style={{display: 'flex', justifyContent: 'center', flex: 1,}}>
-                      <Text style={styles.label}>Mood</Text>
-                      <View style={[styles.inputContainer, { borderColor: false ? COLORS.red : isFocused ? COLORS.darkblue : COLORS.light }]}>
-                          <ExclamationCircle style={{ fontSize: 22, marginRight: 10, marginLeft: 10 }} />
-                          <TextInput
-                              placeholderTextColor={false ? "red" : COLORS.grey}
-                              style={{ height: '100%', color: COLORS.darkblue, flex: 1 }}
-                              autoCorrect={false}
-                              placeholder={"Enter your Mood"}
-                              onChangeText={handleInputChange}
-                              value={moodInput}
-                              onFocus={() => {
-                                  setIsFocused(true);
-                              }}
-                              onBlur={() => {
-                                  setIsFocused(false);
-                              }}
-                              {...props}
-                          />
-                      </View>
-                    </View>
-                    <View style={{display: 'flex', justifyContent: 'center', width: '25%', paddingTop: 19}}>
-                      {/* <Button title='Hello there!' /> */}
-                      <TouchableOpacity style={styles.buttonx} onPress={() => onPressHandleInsertingMood(moodInput)}>
-                        <Text style={styles.buttonText}>add</Text>
-                      </TouchableOpacity>
-                    </View>
-                    
-                  </View>
-
-                  <Text>Mood:</Text>
-                  <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-                    {mood ? (
-                      mood.map((item, index) => (
-                          <TouchableOpacity
-                            key={index}
-                            style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: 'blue', borderRadius: 4 }}
-                            onPress={() => handleRemoveMoodItem(item)}
-                          >
-                            <Text style={{ padding: 8, color: 'white' }}>{item}</Text>
-                            <XMark color='white'/>
-                          </TouchableOpacity>
-                      ))
-                    ) : (
-                      <Text style={{ backgroundColor: 'blue', height: 10, width: 10 }}>Empty</Text>
-                    )}
-                  </View>
-
-                  <Text style={{color: COLORS.grey, marginTop: 24, marginBottom: 12, fontSize: 16}}>Did you drink water?</Text>
-                  <TouchableOpacity style={styles.container} onPress={handleCheckboxChange}>
-                    <View style={[styles.checkbox, drankWater && styles.checked]}>
-                      {drankWater && <Text style={styles.checkmark}>✓</Text>}
-                    </View>
-                    <Text style={styles.label}>I drank some!</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.container} onPress={handleCheckboxChange}>
-                    <View style={[styles.checkbox, !drankWater ? styles.checked : null]}>
-                      {!drankWater ? <Text style={styles.checkmark}>✓</Text>:null}
-                    </View>
-                    <Text style={styles.label}>I didn't drink</Text>
-                  </TouchableOpacity>
-                </View>
-              </>
-            }
-
-            ListFooterComponent={
-              <>
-                <TouchableOpacity style={styles.button} onPress={handlePreviousStep}>
-                  <Text style={styles.buttonText}>Previous</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.buttony} onPress={() => onHandleSubmitForm({pointA, pointB, calories, mood, drankWater})}>
-                  <Text style={styles.buttonText}>Submit Activity</Text>
-                </TouchableOpacity>
-              </>
-            }
-          />
         </View>
-      )}
-
+        <View style={{height: 100, backgroundColor: 'pink'}}>
+          <Text style={styles.middleText}>Audio Visualizer</Text>
+        </View>
+      </View>
+      <View style={styles.bottomMenu}>
+        <TouchableOpacity style={styles.menuItem}>
+          <Text style={styles.menuText}>Option 1</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.menuItem}>
+          <Text style={styles.menuText}>Option 2</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.menuItem}>
+          <Text style={styles.menuText}>Option 3</Text>
+        </TouchableOpacity>
+      </View>
     </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-    inputContainer: {
-        height: 55,
-        backgroundColor: COLORS.light,
-        flexDirection: 'row',
-        borderWidth: 0.5,
-        alignItems: 'center',
-    },
-container: {
+    safeArea: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  navigation: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10,
+    paddingVertical: 25,
+    paddingHorizontal: 20,
+    backgroundColor: '#007bff',
   },
-  checkbox: {
-    width: 20,
-    height: 20,
-    borderWidth: 2,
-    borderColor: '#000',
-    marginRight: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  checked: {
-    backgroundColor: COLORS.blue,
-    borderColor:  COLORS.blue,
-  },
-  checkmark: {
-    color: '#fff',
-    fontSize: 12,
-  },
-  label: {
-    fontSize: 18,
-  },
-  button: {
-    backgroundColor: COLORS.blue,
-    padding: 10,
-    borderRadius: 4,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 10,
-  },
-  buttony: {
-    backgroundColor: COLORS.blue,
-    padding: 10,
-    marginBottom: 250,
-    borderRadius: 4,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 10,
-  },
-  buttonText: {
+  navigationItem: {},
+  navigationMiddle: {},
+  navigationText: {
     color: 'white',
-    fontSize: 16,
     fontWeight: 'bold',
   },
-  buttonx: {
-    backgroundColor: COLORS.blue,
-    padding: 2,
-    borderRadius: 4,
+  middle: {
+    flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    backgroundColor: 'red',
+    width: '100%',
+  },
+  middleText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  bottomMenu: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginLeft: 12,
-    height: '65%',
-    width: 80,
+    paddingVertical: 10,
+    // backgroundColor: '#f0f0f0',
+  },
+  menuItem: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    backgroundColor: '#007bff',
+  },
+  menuText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
 
