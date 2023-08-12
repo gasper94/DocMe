@@ -14,7 +14,7 @@ const RecordingAnimation = () => {
         scaleValue.stopAnimation();
         scaleValue.setValue(1);
         animateCircle();
-      }, 2000);
+      }, 1000);
     } else {
       clearInterval(animationInterval);
       scaleValue.stopAnimation();
@@ -57,14 +57,19 @@ const RecordingAnimation = () => {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-         <TouchableOpacity
+      <TouchableOpacity
         onPressIn={startRecording}
         onPressOut={stopRecording}
         style={{ marginTop: 20 }}
       >
-        <Text style={{ fontSize: 18 }}>{isRecording ? 'Recording...' : 'Start Recording'}</Text>
+        <Animated.View style={[{ width: 100, height: 100, borderRadius: 50, backgroundColor: 'red' }, animatedStyle]}>
+            {isRecording ?
+            <Text style={{ color: 'white', textAlign: 'center', marginTop: 40 }}>Recording</Text>
+            :
+            <Text style={{ color: 'white', textAlign: 'center', marginTop: 40 }}>Record</Text>
+            }
+        </Animated.View>
       </TouchableOpacity>
-      <Animated.View style={[{ width: 100, height: 100, borderRadius: 50, backgroundColor: 'red' }, animatedStyle]} />
     </View>
   );
 };

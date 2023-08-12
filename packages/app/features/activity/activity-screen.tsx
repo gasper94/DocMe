@@ -11,7 +11,7 @@ import { DisplayItem } from 'app/testingInput/index';
 import COLORS from '../../design/const';
 import AudioRecorder from '../audioRecorder/AudioRecorder';
 import { A, H1 } from 'app/design/typography';
-import { ExclamationCircle, XMark } from '@nandorojo/heroicons/24/outline';
+import { ExclamationCircle, XMark, ArrowLeft, ArrowRight } from '@nandorojo/heroicons/24/outline';
 
 // State Management
 import {useDispatch} from 'react-redux';
@@ -51,6 +51,8 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
   const [pointB, setPointB] = useState<String | null>(null);
   const [mood, setMood] = useState<String[] | null>(null);
   const [drankWater, setDrankwater] = useState<boolean | null>(null);
+
+  const [showExample, setShowExample] = useState(true);
 
   // Audio Recording Transcript
   const [transcript, setTranscript] = useState(null);
@@ -165,6 +167,17 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
     />
   );
 
+  const onHandleShowExample = (item: String) => {
+    if(item === 'script'){
+      setShowExample(true);
+    }
+
+    if(item === 'example'){
+      setShowExample(false);
+    }
+    
+  }
+
   return (
     // <View style={{ backgroundColor: 'white', height: '100%' }}>
     //   <View className="flex w-full">
@@ -199,56 +212,95 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
     // </View>
     <SafeAreaView style={styles.safeArea}>
     <View style={styles.container}>
-      {/* <View style={styles.navigation}>
-        <TouchableOpacity style={styles.navigationItem}>
-          <Text style={styles.navigationText}>Left</Text>
+      <View style={styles.navigation}>
+        <TouchableOpacity style={styles.navigationItem} onPress={() => push("/")}>
+          <ArrowLeft color={'blue'}/>
+          {/* <Text style={styles.navigationText}>Left</Text> */}
         </TouchableOpacity>
         <View style={styles.navigationMiddle}>
-          <Text style={styles.navigationText}>Middle</Text>
+          <Text style={styles.navigationText}>Log Physical Activity</Text>
         </View>
         <TouchableOpacity style={styles.navigationItem}>
-          <Text style={styles.navigationText}>Right</Text>
+          <Text style={styles.navigationText}>Skip</Text>
         </TouchableOpacity>
-      </View> */}
+      </View>
       <View style={styles.middle}>
-        <View style={{flex: 1, backgroundColor: 'white', padding: 40}}>
+        <View style={{flex: 1, backgroundColor: 'white', padding: 40, minHeight: 120}}>
           <View style={{display: 'flex', flexDirection: 'column', gap: 6}}>
             <Text style={{color: COLORS.grey, fontSize: 18, fontWeight: 800}}>Read the following script out loud,</Text>
             <Text style={{color: COLORS.grey, fontSize: 17, fontWeight: 600}}>replacing the key points with your own personal experience:</Text>
           </View>
 
-          <View style={{ flex: 1}}>
-              <A className='text-xl mb-1 mt-12'>Script</A>
-              <Text className='w-auto text-base text-left'>
-                Today, I went for a walk from <Text style={{ fontWeight: 'bold' }}>[Point  A]</Text> to <Text style={{ fontWeight: 'bold' }}>[Point  B]</Text>.
-                I burned <Text style={{ fontWeight: 'bold' }}>[Number of Calories]</Text> Calories and <Text style={{ fontWeight: 'bold' }}>[drank water]</Text>. Overall, I feel <Text style={{ fontWeight: 'bold' }}>[How you feel]</Text>.
-              </Text>
-            </View>
-          </View>
-        <View style={{flex: 1, backgroundColor: 'white', padding: 40}}>
-          <View className='mt-8 mb-8'>
-              <A className='text-xl mb-1'>Your Audio</A>
+          <View style={{ flex: 1, minHeight: 90}}>
+              <View style={{display: 'flex', flexDirection: 'row', marginTop: 40}}>
+                {/* <A className='text-xl mb-1 mt-12' style={{backgroundColor: 'blue', paddingHorizontal: 12, paddingVertical: 2, color: 'white', borderRadius: 8}}>
+                Script
+                </A>*/}
+
+                {showExample ?
+                  <TouchableOpacity style={{backgroundColor: 'blue', paddingVertical: 6, paddingHorizontal: 12, borderRadius: 4}} onPress={() => onHandleShowExample('script')}>
+                    <Text style={styles.menuText}>Script</Text>
+                  </TouchableOpacity>
+                :
+                  <TouchableOpacity style={{paddingVertical: 6, paddingHorizontal: 6}} onPress={() => onHandleShowExample('script')}>
+                    <Text style={styles.menuTextOption}>Script</Text>
+                  </TouchableOpacity>
+                }
+               
+                <A className='text-xl'> / </A> 
+
+                {!showExample ?
+                  <TouchableOpacity style={{backgroundColor: 'blue', paddingVertical: 6, paddingHorizontal: 12, borderRadius: 4}} onPress={() => onHandleShowExample('example')}>
+                    <Text style={styles.menuText}>Example</Text>
+                  </TouchableOpacity>
+                :
+                  <TouchableOpacity style={{paddingVertical: 6, paddingHorizontal: 6}} onPress={() => onHandleShowExample('example')}>
+                    <Text style={styles.menuTextOption}>Example</Text>
+                  </TouchableOpacity>
+                }
+              </View>
+              
+              {showExample ?
+                <Text className='w-auto text-base text-left'>
+                  Today, I went for a walk from <Text style={{ fontWeight: 'bold' }}>[Point  A]</Text> to <Text style={{ fontWeight: 'bold' }}>[Point  B]</Text>.
+                  I burned <Text style={{ fontWeight: 'bold' }}>[Number of Calories]</Text> Calories and <Text style={{ fontWeight: 'bold' }}>[drank water]</Text>. Overall, I feel <Text style={{ fontWeight: 'bold' }}>[How you feel]</Text>.
+                </Text>
+              :
               <Text className='w-auto text-base text-left'>
                 Today, I went for a walk from <Text style={{ fontWeight: 'bold', textDecorationLine: 'underline' }}>Gellert Park</Text> to <Text style={{ fontWeight: 'bold',  textDecorationLine: 'underline' }}>AMC Movie Theather</Text>.
                 I burned <Text style={{ fontWeight: 'bold',  textDecorationLine: 'underline' }}>350 calories</Text> and <Text style={{ fontWeight: 'bold',  textDecorationLine: 'underline' }}>drank water</Text>. Overall, I feel <Text style={{ fontWeight: 'bold',  textDecorationLine: 'underline' }}>happy and relax</Text>.
               </Text>
+              }
+            </View>
+          </View>
+        <View style={{flex: 1, backgroundColor: 'white', padding: 40}}>
+          <View className='mt-8 mb-8'>
+              <A className='text-xl mb-1'>Your transcript</A>
+              <View  style={{display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#E5E4E2', borderRadius: 3, height: '100%', padding: 12}}>
+                {showExample ?
+                  <Text>recorder ready!</Text>
+                :
+                  <Text className='w-auto text-sm text-left'>
+                    {`Today, I went for a walk from San Francisco, CA to El Salvador. I burned 350 calories and drank water. Overall, I feel happy, sad and relaxed.`}
+                  </Text>
+                }
+                
+              </View>
             </View>
         </View>
-        <View style={{height: 100, backgroundColor: 'white'}}>
-          <RecordingAnimation />
-          {/* <Text style={styles.middleText}>Audio Visualizer</Text> */}
+        <View style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'auto', backgroundColor: 'white'}}>
+          <Text style={styles.middleText}>00:00:00</Text>
         </View>
       </View>
-      <View style={styles.bottomMenu}>
-        <TouchableOpacity style={styles.menuItem}>
-          <Text style={styles.menuText}>Option 1</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem}>
+      <View style={{minHeight: 150, display: 'flex', flexDirection: 'row'}}>
+        {/* <Text>Hello there!</Text> */}
+        <RecordingAnimation />
+        {/* <TouchableOpacity style={styles.menuItem}>
           <Text style={styles.menuText}>Option 2</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem}>
+        </TouchableOpacity> */}
+        {/* <TouchableOpacity style={styles.menuItem}>
           <Text style={styles.menuText}>Option 3</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
     </SafeAreaView>
@@ -270,12 +322,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 25,
     paddingHorizontal: 20,
-    backgroundColor: '#007bff',
+    // backgroundColor: '#007bff',
   },
   navigationItem: {},
   navigationMiddle: {},
   navigationText: {
-    color: 'white',
+    color: 'blue',
     fontWeight: 'bold',
   },
   middle: {
@@ -290,11 +342,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   bottomMenu: {
+    display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 10,
-    // backgroundColor: '#f0f0f0',
+    // paddingVertical: 10,
+    backgroundColor: '#f0f0f0',
   },
   menuItem: {
     paddingHorizontal: 20,
@@ -304,6 +357,10 @@ const styles = StyleSheet.create({
   },
   menuText: {
     color: 'white',
+    fontWeight: 'bold',
+  },
+  menuTextOption: {
+    color: 'blue',
     fontWeight: 'bold',
   },
 });
