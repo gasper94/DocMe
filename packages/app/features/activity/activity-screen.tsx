@@ -17,6 +17,7 @@ import { ExclamationCircle, XMark, ArrowLeft, ArrowRight } from '@nandorojo/hero
 import {useDispatch} from 'react-redux';
 import { addPhysicalActivity } from '../../../store/physicalActivitySlice';
 import RecordingAnimation from './RecordingAnimation';
+import SingleAudioRecorder from '../singleAudioRecorder/SingleAudioRecorder';
 
 interface Transcript {
   calories?: number;
@@ -277,12 +278,12 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
           <View className='mt-8 mb-8'>
               <A className='text-xl mb-1'>Your transcript</A>
               <View  style={{display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#E5E4E2', borderRadius: 3, height: '100%', padding: 12}}>
-                {showExample ?
-                  <Text>recorder ready!</Text>
-                :
+                {transcript ?
                   <Text className='w-auto text-sm text-left'>
-                    {`Today, I went for a walk from San Francisco, CA to El Salvador. I burned 350 calories and drank water. Overall, I feel happy, sad and relaxed.`}
+                    {`${transcript}`}
                   </Text>
+                :
+                  <Text>recorder ready!</Text>
                 }
                 
               </View>
@@ -292,9 +293,10 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
           <Text style={styles.middleText}>00:00:00</Text>
         </View>
       </View>
-      <View style={{minHeight: 150, display: 'flex', flexDirection: 'row'}}>
+      <View style={{minHeight: 50, display: 'flex', flexDirection: 'row'}}>
         {/* <Text>Hello there!</Text> */}
-        <RecordingAnimation />
+        <SingleAudioRecorder setTranscript={setTranscript} setTranscriptObject={setTranscriptObject} />
+        {/* <RecordingAnimation /> */}
         {/* <TouchableOpacity style={styles.menuItem}>
           <Text style={styles.menuText}>Option 2</Text>
         </TouchableOpacity> */}

@@ -76,7 +76,7 @@ const handleAudioBlob = (chunks, startTimeRef, recordings, setRecordings) => {
     console.log("recordingssssssssssssssssssssss", recordings);
     if(newObjectBlob){
         // setRecordings([...recordings, audioBlob]);
-        setRecordings(prevRecordings => [...prevRecordings, newObjectBlob]);
+        setRecordings(prevRecordings => [newObjectBlob]);
         console.log("recordingssssssssssssssssssssss", recordings);
     }
     // // const endTime = Date.now();
