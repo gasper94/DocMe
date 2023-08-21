@@ -229,7 +229,7 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
           <Text style={styles.navigationText}>Log Physical Activity</Text>
         </View>
         <TouchableOpacity style={styles.navigationItem}>
-          <Text style={styles.navigationText}>Skip</Text>
+          <Text style={styles.navigationText} onPress={() => push("/form/xxx")}>Skip</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.middle}>
