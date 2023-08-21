@@ -7,7 +7,7 @@ import axios from "axios";
 // utils
 import { getAudio, getDurationFormatted, startRecording, stopRecording, handlePlayAudioOnClick, handleGetTranscriptWithUri, handleGetTranscriptObject } from 'app/singleAudioRecording/index';
 
-export default function SingleAudioRecorder({setTranscript, setTranscriptObject}) {
+export default function SingleAudioRecorder({setTranscript, setTranscriptObject, startTimeRef, audioDuration, setAudioDuration}) {
   const configuration = new Configuration({
     apiKey: process.env.OPEN_AI,
   });
@@ -17,8 +17,8 @@ export default function SingleAudioRecorder({setTranscript, setTranscriptObject}
   const [recording, setRecording] = useState();
   const [recordings, setRecordings] = useState([]);
   // new
-  const [audioDuration, setAudioDuration] = useState(0);
-  const startTimeRef = useRef(null);
+  // const [audioDuration, setAudioDuration] = useState(0);
+  // const startTimeRef = useRef(null);
 
   // new
   const [newMessage, setMesssage] = useState(null);
@@ -111,13 +111,14 @@ export default function SingleAudioRecorder({setTranscript, setTranscriptObject}
   };
 
   return (
-    <View style={{ backgroundColor: 'red' }}>
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'red' }}>
+      {/* <RecordingAnimation /> */}
       <Button
         title={recording ? 'Stop Recording' : 'Start Recording'}
         onPress={recording ? handleStopRecording : handleStartRecording}
       />
       <Text>Duration: {`${getDurationFormatted(audioDuration)}`}</Text>
-      {getRecordingLines()}
+      {/* {getRecordingLines()} */}
 
       {/* {transcript ?
         <View>
@@ -125,7 +126,7 @@ export default function SingleAudioRecorder({setTranscript, setTranscriptObject}
         </View>
       :null} */}
 
-      {newMessage ? 
+      {/* {newMessage ? 
         <View>
           <Text>Transcription: {newMessage.pointA}</Text>
           <View>
@@ -171,7 +172,7 @@ export default function SingleAudioRecorder({setTranscript, setTranscriptObject}
           </View>
           <Text>Drank Wanter: {newMessage.drankWater? 'true': 'false'}</Text>
         </View>
-      :<Text>No Transcript</Text>}
+      :null} */}
     </View>
   );
 }

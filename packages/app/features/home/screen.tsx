@@ -33,6 +33,8 @@ import {RootState} from "../../../store/store";
 // State Management
 import { useSelector} from 'react-redux'
 
+import { useRouter } from 'solito/router';
+
 const RedBox = () => {
   return <View className='bg-red-300 w-full'>
     <Text>Box</Text>
@@ -40,6 +42,8 @@ const RedBox = () => {
 }
 
 export function HomeScreen() {
+
+  const router = useRouter()
 
   // State Management
   const activity = useSelector((state: RootState) => state.activities.activity);
@@ -71,6 +75,10 @@ export function HomeScreen() {
 
   const handleMouseLeave = () => {
     setIsHovered(false);
+  };
+
+  const handleFormPress = () => {
+    router.push('/form/x')
   };
 
   return (
@@ -118,9 +126,8 @@ export function HomeScreen() {
       </TouchableWithoutFeedback> */}
       
       <Row className="space-x-8">
-        {/* <TextLink href="/user/fernando">Regular Link</TextLink>
         <MotiLink
-          href="/user/fernando"
+          href="/user/xxx"
           animate={({ hovered, pressed }) => {
             'worklet'
 
@@ -134,11 +141,12 @@ export function HomeScreen() {
             duration: 150,
           }} style={undefined} onLayout={undefined}        >
           <Text selectable={false} className="text-base font-bold">
-            Moti Link
+            User
           </Text>
-        </MotiLink> */}
+        </MotiLink>
+        
         <MotiLink
-          href="/activity/fernando"
+          href="/activity/xxx"
           animate={({ hovered, pressed }) => {
             'worklet'
 
@@ -155,6 +163,8 @@ export function HomeScreen() {
             Add Activity
           </Text>
         </MotiLink>
+
+        <Button onPress={handleFormPress} title='go to form' />
       </Row>
     </View>
   )

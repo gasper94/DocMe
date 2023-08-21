@@ -12,7 +12,7 @@ import { Button } from 'react-native';
 // Components
 import MultiStepForm from '../MultiStepForm/MultiStepForm';
 
-const { useParam } = createParam<{ id: string }>()
+// const { useParam } = createParam<{ id: string }>()
 
 // const SquareGrid = () => {
 //   const gridSize = 15;
@@ -46,19 +46,11 @@ const { useParam } = createParam<{ id: string }>()
 // };
 
 export function UserDetailScreen() {
-  const [id] = useParam('id')
+  // const [id] = useParam('id')
 
   return (
     <View className="flex-1 items-center justify-center bg-blue-200">
-      {/* <Text className="mb-4 text-center font-bold">{`User ID: ${id}`}</Text> */}
-      {/* {SquareGrid()} */}
-      {/* <View className='h-4 w-4 bg-red-700'></View> */}
-      <View className='h-32 mb-4'>
-        <MultiStepForm />
-      </View>
-      {/* <View className='bg-pink-500'>
-        <Text>Purple</Text>
-      </View> */}
+      <Text>UserPage</Text>
       <TextLink href="/">👈 Go Home</TextLink>
     </View>
   )

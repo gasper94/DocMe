@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'solito/router'
 import { Text, TouchableOpacity, View, StyleSheet, FlatList, Button, TextInput } from 'react-native';
 import { createParam } from 'solito';
@@ -18,6 +18,7 @@ import {useDispatch} from 'react-redux';
 import { addPhysicalActivity } from '../../../store/physicalActivitySlice';
 import RecordingAnimation from './RecordingAnimation';
 import SingleAudioRecorder from '../singleAudioRecorder/SingleAudioRecorder';
+import { getDurationFormatted } from 'app/singleAudioRecording/index';
 
 interface Transcript {
   calories?: number;
@@ -58,6 +59,10 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
   // Audio Recording Transcript
   const [transcript, setTranscript] = useState(null);
   const [transcriptObject, setTranscriptObject] = useState<Transcript | null>(null);
+
+  // Audio Duration
+  const [audioDuration, setAudioDuration] = useState(0);
+  const startTimeRef = useRef(null);
 
   // Mood
   const [moodInput, setMoodInput] = useState('');
@@ -129,11 +134,13 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
 
   },[transcriptObject]);
 
-  const handleNextStep = () => {
-    setCurrentStep((prevStep) => prevStep + 1);
+  const handleNextStep = async () => {
 
-    console.log("transcriptObject:", transcriptObject);
+    await console.log("transcriptObject:", transcriptObject);
+    await onHandleSubmitForm(transcriptObject);
   };
+
+  
 
   const handlePreviousStep = () => {
     setCurrentStep((prevStep) => prevStep - 1);
@@ -290,12 +297,18 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
             </View>
         </View>
         <View style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'auto', backgroundColor: 'white'}}>
-          <Text style={styles.middleText}>00:00:00</Text>
+          <Text style={styles.middleText}>{`${getDurationFormatted(audioDuration)}`}</Text>
         </View>
       </View>
       <View style={{minHeight: 50, display: 'flex', flexDirection: 'row'}}>
         {/* <Text>Hello there!</Text> */}
-        <SingleAudioRecorder setTranscript={setTranscript} setTranscriptObject={setTranscriptObject} />
+        <SingleAudioRecorder setTranscript={setTranscript} setTranscriptObject={setTranscriptObject} startTimeRef={startTimeRef} audioDuration={audioDuration} setAudioDuration={setAudioDuration}/>
+        
+        {transcript ?
+          <TouchableOpacity style={styles.button} onPress={handleNextStep}>
+              <Text style={styles.buttonText}>Next</Text>
+          </TouchableOpacity>
+        :null}
         {/* <RecordingAnimation /> */}
         {/* <TouchableOpacity style={styles.menuItem}>
           <Text style={styles.menuText}>Option 2</Text>
@@ -310,6 +323,19 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
 }
 
 const styles = StyleSheet.create({
+    button: {
+    backgroundColor: COLORS.blue,
+    padding: 10,
+    borderRadius: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 10,
+  },
+    buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
     safeArea: {
     flex: 1,
     backgroundColor: 'white',

@@ -1,17 +1,15 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { HomeScreen } from '../../features/home/screen'
-import { UserDetailScreen } from '../../features/user/detail-screen'
-import { ActivityScreen } from '../../features/activity/activity-screen';
+import { UserDetailScreen } from '../../features/user/screen'
+import { ActivityScreen } from '../../features/activity/screen';
+import { ActivityFormScreen } from "../../features/form/screen";
 
 const Stack = createNativeStackNavigator<{
   home: undefined
-  'user-detail': {
-    id: string
-  }
-  'user-activity': {
-    id: string
-  }
+  'user-detail': undefined
+  'user-activity': undefined
+  'user-form': undefined
 }>()
 
 
@@ -41,6 +39,13 @@ export function NativeNavigation() {
         component={ActivityScreen}
         options={{
           title: 'Activity',
+        }}
+      />
+      <Stack.Screen
+        name="user-form"
+        component={ActivityFormScreen}
+        options={{
+          title: 'Form',
         }}
       />
     </Stack.Navigator>
