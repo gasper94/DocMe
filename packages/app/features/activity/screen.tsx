@@ -103,7 +103,6 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
 
   const onHandleSubmitForm = (items) => {
     console.log(items);
-    dispatch(addPhysicalActivity(items))
     dispatch(addProcessingActivity(items))
     push('/form/xxx');
   }

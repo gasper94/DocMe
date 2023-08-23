@@ -48,8 +48,8 @@ export function ActivityFormScreen(onFocus = () => {}, ...props) {
   const [pointAFlag, setPointAFlag] = useState(false);
   const [pointBFlag, setPointBFlag] = useState(false);
   const [calories, setCalories] = useState<Number | null>(processingActivity.burnedCalories ? processingActivity.burnedCalories : null);
-  const [pointA, setPointA] = useState<String | null>(processingActivity.pointA ? processingActivity.pointA : ' ');
-  const [pointB, setPointB] = useState<String | null>(processingActivity.pointB ? processingActivity.pointB : ' ');
+  const [pointA, setPointA] = useState<String | null>(processingActivity.pointA ? processingActivity.pointA : '');
+  const [pointB, setPointB] = useState<String | null>(processingActivity.pointB ? processingActivity.pointB : '');
   const [mood, setMood] = useState<String[] | null>(processingActivity.mood ? processingActivity.mood : null);
   const [drankWater, setDrankwater] = useState<boolean | null>(processingActivity.drankWater);
 
@@ -291,7 +291,7 @@ export function ActivityFormScreen(onFocus = () => {}, ...props) {
                 <TouchableOpacity style={styles.button} onPress={handlePreviousStep}>
                   <Text style={styles.buttonText}>Previous</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.buttony} onPress={() => onHandleSubmitForm({pointA, pointB, calories, mood, drankWater})}>
+                <TouchableOpacity style={styles.buttony} onPress={() => onHandleSubmitForm({pointA, pointB, burnedCalories: calories, mood, drankWater})}>
                   <Text style={styles.buttonText}>Submit Activity</Text>
                 </TouchableOpacity>
               </>

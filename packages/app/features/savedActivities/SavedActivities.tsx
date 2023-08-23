@@ -1,24 +1,148 @@
-import { createParam } from 'solito'
-import { TextLink } from 'solito/link'
+// Router
+import { useRouter } from 'solito/router'
+
+// View
 import { Text } from 'app/design/typography'
 import { View  } from 'app/design/view'
-import { StyleSheet } from 'react-native';
-import React, { useState } from 'react';
-
+import { SafeAreaView, ScrollView} from 'moti';
+import { TouchableOpacity, StyleSheet } from 'react-native';
+import { ArrowLeft } from '@nandorojo/heroicons/24/outline';
 
 // State Management
 import { useSelector} from 'react-redux'
 import {RootState} from "../../../store/store";
 
+// Styling
+import COLORS from '../../design/const';
+
 export function SavedActivities() {
 
+    // Routing
+    const { push, replace, back, parseNextPath } = useRouter()
+    
     const activity = useSelector((state: RootState) => state.activities.activity);
 
-  return (
-    <View className="flex-1 items-center justify-center bg-blue-200">
-        <Text>{JSON.stringify(activity)}</Text>
-        <Text>Saved Activities</Text>
-        <TextLink href="/">👈 Go Home</TextLink>
-    </View>
-  )
+    return (
+        <SafeAreaView style={styles.safeArea}>
+            <View style={styles.container}>
+            <View style={styles.navigation}>
+                <TouchableOpacity style={styles.navigationItem} onPress={() => push("/")}>
+                <ArrowLeft color={'blue'}/>
+                </TouchableOpacity>
+                <View style={styles.navigationMiddle}>
+                <Text style={styles.navigationText}>Saved Physical Activities</Text>
+                </View>
+                <View></View>
+            </View>
+            {/* <View>
+                <Text>{`${JSON.stringify(activity)}`}</Text>
+            </View> */}
+            <ScrollView contentContainerStyle={styles.containerx}>
+                {activity.map((activity, index) => (
+                    <View style={styles.card} key={index}>
+                    <Text style={styles.cardText}>
+                        Calories: {activity.burnedCalories ? activity.burnedCalories : 0}
+                    </Text>
+                    <Text style={styles.cardText}>
+                        From: {activity.pointA} - To: {activity.pointB}
+                    </Text>
+                    <Text style={styles.cardText}>
+                        Mood: {activity.mood.join(', ')}
+                    </Text>
+                    <Text style={styles.cardText}>
+                        Drank Water: {activity.drankWater ? 'Yes' : 'No'}
+                    </Text>
+                    </View>
+                ))}
+            </ScrollView>
+            </View>
+        </SafeAreaView>
+    )
 }
+
+const styles = StyleSheet.create({
+    button: {
+    backgroundColor: COLORS.blue,
+    padding: 10,
+    borderRadius: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 10,
+  },
+    buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+    safeArea: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  navigation: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 25,
+    paddingHorizontal: 20,
+    // backgroundColor: '#007bff',
+  },
+  navigationItem: {},
+  navigationMiddle: {},
+  navigationText: {
+    color: 'blue',
+    fontWeight: 'bold',
+  },
+  middle: {
+    flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    backgroundColor: 'red',
+    width: '100%',
+  },
+  middleText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  bottomMenu: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    // paddingVertical: 10,
+    backgroundColor: '#f0f0f0',
+  },
+  menuItem: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    backgroundColor: '#007bff',
+  },
+  menuText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  menuTextOption: {
+    color: 'blue',
+    fontWeight: 'bold',
+  },
+  containerx: {
+    paddingVertical: 16,
+    paddingHorizontal: 12,
+  },
+  card: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 16,
+    elevation: 2,
+  },
+  cardText: {
+    fontSize: 16,
+    marginBottom: 8,
+  },
+});
+
