@@ -51,7 +51,7 @@ export function ActivityFormScreen(onFocus = () => {}, ...props) {
   const [pointA, setPointA] = useState<String | null>(processingActivity.pointA ? processingActivity.pointA : null);
   const [pointB, setPointB] = useState<String | null>(processingActivity.pointB ? processingActivity.pointB : null);
   const [mood, setMood] = useState<String[] | null>(processingActivity.mood ? processingActivity.mood : null);
-  const [drankWater, setDrankwater] = useState<boolean | null>(null);
+  const [drankWater, setDrankwater] = useState<boolean | null>(processingActivity.drankWater);
 
   // useEffect(() => {
   //   console.log("processing:", processingActivity.pointA);
@@ -99,7 +99,13 @@ export function ActivityFormScreen(onFocus = () => {}, ...props) {
   const onHandleSubmitForm = (items) => {
     console.log(items);
     dispatch(addPhysicalActivity(items));
-    dispatch(addProcessingActivity({}));
+    dispatch(addProcessingActivity({
+      pointA: '',
+      pointB: '',
+      burnedCalories: 0,
+      drankWater: false,
+      mood: []
+    }));
     push('/');
   }
 

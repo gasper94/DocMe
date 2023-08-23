@@ -97,6 +97,7 @@ export function HomeScreen() {
     </ScrollView>
       <Text>{JSON.stringify(processingActivity)}</Text>
       <Text>{activity.length}</Text>
+      <Text>{`${JSON.stringify(activity)}`}</Text>
       {/* <View
         style={[styles.container, isHovered && styles.containerHovered]}
         onMouseEnter={handleMouseEnter}

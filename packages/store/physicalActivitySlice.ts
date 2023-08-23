@@ -18,7 +18,7 @@ const physicalActivitySlice = createSlice({
         addPhysicalActivity: (state, action: PayloadAction<PhysicalActivity>) => {
             state.activity.push(action.payload);
         },
-        addProcessingActivity: (state, action: PayloadAction<PhysicalActivity | {}>) => {
+        addProcessingActivity: (state, action: PayloadAction<PhysicalActivity>) => {
             state.processingActivity = {...action.payload}
         },
     },  

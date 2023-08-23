@@ -8,7 +8,7 @@ interface PhysicalActivity {
 
 interface ActivityState {
     activity: PhysicalActivity[];
-    processingActivity: PhysicalActivity | {};
+    processingActivity: PhysicalActivity;
 }
 
 export {PhysicalActivity, ActivityState}
