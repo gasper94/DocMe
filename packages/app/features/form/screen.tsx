@@ -14,8 +14,9 @@ import { A, H1 } from 'app/design/typography';
 import { ExclamationCircle, XMark, ArrowLeft } from '@nandorojo/heroicons/24/outline';
 
 // State Management
-import {useDispatch} from 'react-redux';
-import { addPhysicalActivity } from '../../../store/physicalActivitySlice';
+import {RootState} from "../../../store/store";
+import {useDispatch, useSelector} from 'react-redux';
+import { addPhysicalActivity, addProcessingActivity } from '../../../store/physicalActivitySlice';
 
 interface Transcript {
   calories?: number;
@@ -36,6 +37,7 @@ export function ActivityFormScreen(onFocus = () => {}, ...props) {
   const { push, replace, back, parseNextPath } = useRouter()
   
   // State Management
+  const processingActivity = useSelector((state: RootState) => state.activities.processingActivity);
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState('');
@@ -45,11 +47,18 @@ export function ActivityFormScreen(onFocus = () => {}, ...props) {
 
   const [pointAFlag, setPointAFlag] = useState(false);
   const [pointBFlag, setPointBFlag] = useState(false);
-  const [calories, setCalories] = useState<Number | null>(null);
-  const [pointA, setPointA] = useState<String | null>(null);
-  const [pointB, setPointB] = useState<String | null>(null);
-  const [mood, setMood] = useState<String[] | null>(null);
+  const [calories, setCalories] = useState<Number | null>(processingActivity.burnedCalories ? processingActivity.burnedCalories : null);
+  const [pointA, setPointA] = useState<String | null>(processingActivity.pointA ? processingActivity.pointA : null);
+  const [pointB, setPointB] = useState<String | null>(processingActivity.pointB ? processingActivity.pointB : null);
+  const [mood, setMood] = useState<String[] | null>(processingActivity.mood ? processingActivity.mood : null);
   const [drankWater, setDrankwater] = useState<boolean | null>(null);
+
+  // useEffect(() => {
+  //   console.log("processing:", processingActivity.pointA);
+  //     if (processingActivity.pointA) {
+  //         setPointA(processingActivity.pointA);
+  //     }
+  // }, [processingActivity.pointA]);
 
   // Audio Recording Transcript
   const [transcript, setTranscript] = useState(null);
@@ -89,41 +98,42 @@ export function ActivityFormScreen(onFocus = () => {}, ...props) {
 
   const onHandleSubmitForm = (items) => {
     console.log(items);
-    dispatch(addPhysicalActivity(items))
+    dispatch(addPhysicalActivity(items));
+    dispatch(addProcessingActivity({}));
     push('/');
   }
 
-  useEffect(() => {
-    if(transcriptObject){
-      console.log("Activity-screen:", transcriptObject);
-      console.log("Activity-screen:", transcriptObject.calories);
-    }
+  // useEffect(() => {
+  //   if(transcriptObject){
+  //     console.log("Activity-screen:", transcriptObject);
+  //     console.log("Activity-screen:", transcriptObject.calories);
+  //   }
 
-    if (transcriptObject && transcriptObject.calories) {
-      setCalories(transcriptObject.calories);
-    }
+  //   if (transcriptObject && transcriptObject.calories) {
+  //     setCalories(transcriptObject.calories);
+  //   }
 
-    if (transcriptObject && transcriptObject.pointA) {
-      setPointA(transcriptObject.pointA);
-    }
+  //   if (transcriptObject && transcriptObject.pointA) {
+  //     setPointA(transcriptObject.pointA);
+  //   }
 
-    if (transcriptObject && transcriptObject.pointB) {
-      setPointB(transcriptObject.pointB);
-    }
+  //   if (transcriptObject && transcriptObject.pointB) {
+  //     setPointB(transcriptObject.pointB);
+  //   }
 
-    if (transcriptObject && transcriptObject.mood) {
-      setMood(transcriptObject.mood);
-    }
+  //   if (transcriptObject && transcriptObject.mood) {
+  //     setMood(transcriptObject.mood);
+  //   }
 
-    if (transcriptObject && transcriptObject.drankWater) {
-      setDrankwater(transcriptObject.drankWater);
-    }
+  //   if (transcriptObject && transcriptObject.drankWater) {
+  //     setDrankwater(transcriptObject.drankWater);
+  //   }
 
-    // await console.log("PointA: ", transcriptObject.pointA);
-    // await console.log("PointB: ", transcriptObject.pointB);
-    // await console.log("mood: ", transcriptObject.drankWater);
+  //   // await console.log("PointA: ", transcriptObject.pointA);
+  //   // await console.log("PointB: ", transcriptObject.pointB);
+  //   // await console.log("mood: ", transcriptObject.drankWater);
 
-  },[transcriptObject]);
+  // },[transcriptObject]);
 
   const handleNextStep = () => {
     setCurrentStep((prevStep) => prevStep + 1);
@@ -136,11 +146,11 @@ export function ActivityFormScreen(onFocus = () => {}, ...props) {
   };
 
   const data = [
-    {
-      placeholder: 'Enter calories burned',
-      iconName: 'icon',
-      label: 'Calories Burned',
-    },
+    // {
+    //   placeholder: 'Enter calories burned',
+    //   iconName: 'icon',
+    //   label: 'Calories Burned',
+    // },
     // {
     //   placeholder: 'Did you drink water?',
     //   iconName: 'icon',
@@ -193,8 +203,8 @@ export function ActivityFormScreen(onFocus = () => {}, ...props) {
                 <Text style={{ color: COLORS.grey, fontSize: 18, marginVertical: 10 }}>Enter Your Details to Register</Text>
 
                 <View style={{marginTop: 20}}>
-                  <DisplayItem label={"Start (point A)"} currentLocation={''}/>
-                  <DisplayItem label={"Start (point B)"} currentLocation={''}/>
+                  <DisplayItem label={"Start (point A)"} currentLocation={pointA}/>
+                  <DisplayItem label={"Start (point B)"} currentLocation={pointB}/>
                   <Input
                     placeholder={'Enter Calories'}
                     iconName={'icon'}
@@ -203,6 +213,7 @@ export function ActivityFormScreen(onFocus = () => {}, ...props) {
                     error={undefined}
                     password={undefined}
                   />
+                  <Text>{`${calories}`}</Text>
                   <View style={{display: 'flex', flexDirection: 'row', height: 100 }}>
                     <View style={{display: 'flex', justifyContent: 'center', flex: 1,}}>
                       <Text style={styles.label}>Mood</Text>

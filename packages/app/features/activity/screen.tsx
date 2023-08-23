@@ -1,3 +1,4 @@
+import { useSelector} from 'react-redux'
 import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'solito/router'
 import { Text, TouchableOpacity, View, StyleSheet, FlatList, Button, TextInput } from 'react-native';
@@ -13,12 +14,16 @@ import AudioRecorder from '../audioRecorder/AudioRecorder';
 import { A, H1 } from 'app/design/typography';
 import { ExclamationCircle, XMark, ArrowLeft, ArrowRight } from '@nandorojo/heroicons/24/outline';
 
+
 // State Management
 import {useDispatch} from 'react-redux';
-import { addPhysicalActivity } from '../../../store/physicalActivitySlice';
+import { addPhysicalActivity, addProcessingActivity } from '../../../store/physicalActivitySlice';
 import RecordingAnimation from './RecordingAnimation';
 import SingleAudioRecorder from '../singleAudioRecorder/SingleAudioRecorder';
 import { getDurationFormatted } from 'app/singleAudioRecording/index';
+
+// Interfaces
+import {RootState} from "../../../store/store";
 
 interface Transcript {
   calories?: number;
@@ -99,7 +104,8 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
   const onHandleSubmitForm = (items) => {
     console.log(items);
     dispatch(addPhysicalActivity(items))
-    push('/');
+    dispatch(addProcessingActivity(items))
+    push('/form/xxx');
   }
 
   useEffect(() => {

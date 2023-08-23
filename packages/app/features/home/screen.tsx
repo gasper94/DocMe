@@ -47,6 +47,7 @@ export function HomeScreen() {
 
   // State Management
   const activity = useSelector((state: RootState) => state.activities.activity);
+  const processingActivity = useSelector((state: RootState) => state.activities.processingActivity);
 
   const [visible, toggle] = useReducer((s) => !s, true);
   const [isHovered, setIsHovered] = useState(false);
@@ -77,10 +78,6 @@ export function HomeScreen() {
     setIsHovered(false);
   };
 
-  const handleFormPress = () => {
-    router.push('/form/x')
-  };
-
   return (
     <View className="flex-1 items-center justify-center p-3">
 
@@ -98,6 +95,7 @@ export function HomeScreen() {
       </View>
       {/* <Text>{`Key: ${key}`}</Text> */}
     </ScrollView>
+      <Text>{JSON.stringify(processingActivity)}</Text>
       <Text>{activity.length}</Text>
       {/* <View
         style={[styles.container, isHovered && styles.containerHovered]}
@@ -164,7 +162,6 @@ export function HomeScreen() {
           </Text>
         </MotiLink>
 
-        <Button onPress={handleFormPress} title='go to form' />
       </Row>
     </View>
   )
