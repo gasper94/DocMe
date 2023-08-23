@@ -48,8 +48,8 @@ export function ActivityFormScreen(onFocus = () => {}, ...props) {
   const [pointAFlag, setPointAFlag] = useState(false);
   const [pointBFlag, setPointBFlag] = useState(false);
   const [calories, setCalories] = useState<Number | null>(processingActivity.burnedCalories ? processingActivity.burnedCalories : null);
-  const [pointA, setPointA] = useState<String | null>(processingActivity.pointA ? processingActivity.pointA : null);
-  const [pointB, setPointB] = useState<String | null>(processingActivity.pointB ? processingActivity.pointB : null);
+  const [pointA, setPointA] = useState<String | null>(processingActivity.pointA ? processingActivity.pointA : ' ');
+  const [pointB, setPointB] = useState<String | null>(processingActivity.pointB ? processingActivity.pointB : ' ');
   const [mood, setMood] = useState<String[] | null>(processingActivity.mood ? processingActivity.mood : null);
   const [drankWater, setDrankwater] = useState<boolean | null>(processingActivity.drankWater);
 
@@ -308,7 +308,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 25,
+    paddingTop: 55,
+    paddingBottom: 25,
     paddingHorizontal: 20,
     // backgroundColor: '#007bff',
   },

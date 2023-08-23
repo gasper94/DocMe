@@ -19,6 +19,7 @@ export function NavigationProvider({
               'user-detail': 'user/:id',
               'user-activity': 'activity/:id',
               'user-form': 'form/:id',
+              'saved-activities' : 'saved-activities/'
             },
           },
         }),

@@ -95,9 +95,9 @@ export function HomeScreen() {
       </View>
       {/* <Text>{`Key: ${key}`}</Text> */}
     </ScrollView>
-      <Text>{JSON.stringify(processingActivity)}</Text>
+      
       <Text>{activity.length}</Text>
-      <Text>{`${JSON.stringify(activity)}`}</Text>
+      {/* <Text>{`${JSON.stringify(activity)}`}</Text> */}
       {/* <View
         style={[styles.container, isHovered && styles.containerHovered]}
         onMouseEnter={handleMouseEnter}
@@ -160,6 +160,25 @@ export function HomeScreen() {
           }} style={undefined} onLayout={undefined}>
           <Text selectable={false} className="text-base font-bold">
             Add Activity
+          </Text>
+        </MotiLink>
+
+         <MotiLink
+          href="/saved-activities"
+          animate={({ hovered, pressed }) => {
+            'worklet'
+
+            return {
+              scale: pressed ? 0.95 : hovered ? 1.1 : 1,
+              rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
+            }
+          } }
+          transition={{
+            type: 'timing',
+            duration: 150,
+          }} style={undefined} onLayout={undefined}>
+          <Text selectable={false} className="text-base font-bold">
+            Saved Activities
           </Text>
         </MotiLink>
 

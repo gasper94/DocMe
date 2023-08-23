@@ -4,12 +4,14 @@ import { HomeScreen } from '../../features/home/screen'
 import { UserDetailScreen } from '../../features/user/screen'
 import { ActivityScreen } from '../../features/activity/screen';
 import { ActivityFormScreen } from "../../features/form/screen";
+import { SavedActivities } from "../../features/savedActivities/SavedActivities";
 
 const Stack = createNativeStackNavigator<{
   home: undefined
   'user-detail': undefined
   'user-activity': undefined
   'user-form': undefined
+  'saved-activities': undefined
 }>()
 
 
@@ -44,6 +46,14 @@ export function NativeNavigation() {
       <Stack.Screen
         name="user-form"
         component={ActivityFormScreen}
+        options={{
+          title: 'Form',
+        }}
+      />
+
+      <Stack.Screen
+        name="saved-activities"
+        component={SavedActivities}
         options={{
           title: 'Form',
         }}
