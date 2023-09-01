@@ -307,7 +307,13 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
       </View>
       <View style={{minHeight: 50, display: 'flex', flexDirection: 'row'}}>
         {/* <Text>Hello there!</Text> */}
-        <SingleAudioRecorder setTranscript={setTranscript} setTranscriptObject={setTranscriptObject} startTimeRef={startTimeRef} audioDuration={audioDuration} setAudioDuration={setAudioDuration}/>
+        <SingleAudioRecorder 
+          setTranscript={setTranscript} 
+          setTranscriptObject={setTranscriptObject} 
+          startTimeRef={startTimeRef} 
+          audioDuration={audioDuration} 
+          setAudioDuration={setAudioDuration}
+        />
         
         {transcript ?
           <TouchableOpacity style={styles.button} onPress={handleNextStep}>

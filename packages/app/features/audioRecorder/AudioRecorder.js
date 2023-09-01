@@ -5,7 +5,7 @@ import { Configuration, OpenAIApi } from 'openai';
 import axios from "axios";
 
 // utils
-import { getAudio, getDurationFormatted, startRecording, stopRecording, handlePlayAudioOnClick, handleGetTranscriptWithUri, handleGetTranscriptObject } from 'app/audioRecording/index';
+import { getAudio, getDurationFormatted, startRecording, stopRecording, handlePlayAudioOnClick, handleGetTranscriptWithUri, handleGetTranscriptObject } from 'app/singleAudioRecording/index';
 
 export default function AudioRecorder({setTranscript, setTranscriptObject}) {
   const configuration = new Configuration({

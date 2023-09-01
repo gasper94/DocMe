@@ -84,7 +84,7 @@ const handlePlayAudioOnClick = (recordingLine) => {
 };
 
 const handleGetTranscriptWithUri = async (audio) => {
-  console.log('handleGetTranscriptWithUri', audio);
+  console.log('handleGetTranscriptWithUri:x', audio);
   const response: any = await FileSystem.uploadAsync('http://10.0.0.141:3006/transcript', audio.file, {
       fieldName: 'file',
       httpMethod: 'POST',

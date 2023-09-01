@@ -84,8 +84,8 @@ const handlePlayAudioOnClick = (recordingLine) => {
 };
 
 const handleGetTranscriptWithUri = async (audio) => {
-  console.log('handleGetTranscriptWithUri', audio);
-  const response: any = await FileSystem.uploadAsync('http://10.0.0.141:3006/transcript', audio.file, {
+    console.log('handleGetTranscriptWithUri:', audio);
+    const response: any = await FileSystem.uploadAsync('http://10.0.0.140:3006/transcript', audio.file, {
       fieldName: 'file',
       httpMethod: 'POST',
       uploadType: FileSystem.FileSystemUploadType.MULTIPART,
@@ -115,7 +115,7 @@ const handleGetTranscriptObject = async (transcript) => {
 
         const config:any = {
             method: 'post',
-            url: 'http://10.0.0.141:3006/test',
+            url: 'http://10.0.0.140:3006/test',
             headers: {
                 'Content-Type': 'application/json'
             },
