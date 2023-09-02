@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Animated } from 'react-native';
+import { Microphone } from '@nandorojo/heroicons/24/outline';
+
 
 const RecordingAnimation = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -28,14 +30,6 @@ const RecordingAnimation = () => {
     };
   }, [isRecording]);
 
-  const startRecording = () => {
-    setIsRecording(true);
-  };
-
-  const stopRecording = () => {
-    setIsRecording(false);
-  };
-
   const animateCircle = () => {
     Animated.sequence([
       Animated.timing(scaleValue, {
@@ -55,18 +49,24 @@ const RecordingAnimation = () => {
     transform: [{ scale: scaleValue }],
   };
 
+  const handleStartRecording = () => {
+    setIsRecording(!isRecording);
+  }
+
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <TouchableOpacity
-        onPressIn={startRecording}
-        onPressOut={stopRecording}
-        style={{ marginTop: 20 }}
+        onPress={handleStartRecording}
       >
-        <Animated.View style={[{ width: 100, height: 100, borderRadius: 50, backgroundColor: 'red' }, animatedStyle]}>
+        <Animated.View style={[{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: 70, height: 70, borderRadius: 50, backgroundColor: 'red' }, animatedStyle]}>
             {isRecording ?
-            <Text style={{ color: 'white', textAlign: 'center', marginTop: 40 }}>Recording</Text>
+            <Text style={{ color: 'white', textAlign: 'center' }}>
+              Stop
+            </Text>
             :
-            <Text style={{ color: 'white', textAlign: 'center', marginTop: 40 }}>Record</Text>
+            <Text style={{display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white', textAlign: 'center' }}>
+              <Microphone color={'white'}/>
+            </Text>
             }
         </Animated.View>
       </TouchableOpacity>

@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect} from 'react';
-import { Button, Text, View, TextInput} from 'react-native';
+import { Button, Text, View, TextInput, TouchableOpacity, Animated} from 'react-native';
 import { Audio } from 'expo-av';
 import { Configuration, OpenAIApi } from 'openai';
-import axios from "axios";
+import { Microphone } from '@nandorojo/heroicons/24/outline';
 
 // utils
 import { getAudio, getDurationFormatted, startRecording, stopRecording, handlePlayAudioOnClick, handleGetTranscriptWithUri, handleGetTranscriptObject } from 'app/singleAudioRecording/index';
@@ -110,69 +110,78 @@ export default function SingleAudioRecorder({setTranscript, setTranscriptObject,
     // await setMesssage(objTranscript);
   };
 
+   const [isRecording, setIsRecording] = useState(false);
+  const scaleValue = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    let animationInterval;
+
+    if (isRecording) {
+      animateCircle(); // Start the animation
+      animationInterval = setInterval(() => {
+        scaleValue.stopAnimation();
+        scaleValue.setValue(1);
+        animateCircle();
+      }, 1000);
+    } else {
+      clearInterval(animationInterval);
+      scaleValue.stopAnimation();
+      scaleValue.setValue(1);
+    }
+
+    return () => {
+      clearInterval(animationInterval);
+      scaleValue.stopAnimation();
+      scaleValue.setValue(1);
+    };
+  }, [isRecording]);
+
+  const animateCircle = () => {
+    Animated.sequence([
+      Animated.timing(scaleValue, {
+        toValue: 1.2,
+        duration: 300,
+        useNativeDriver: false,
+      }),
+      Animated.timing(scaleValue, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: false,
+      }),
+    ]).start();
+  };
+
+  const animatedStyle = {
+    transform: [{ scale: scaleValue }],
+  };
+
+  const handleStartRecordingButton = () => {
+    setIsRecording(!isRecording);
+  }
+
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'red' }}>
-      {/* <RecordingAnimation /> */}
-      <Button
-        title={recording ? 'Stop Recording' : 'Start Recording'}
+    // <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'red' }}>
+    //   <Button
+    //     title={recording ? 'Stop Recording' : 'Start Recording'}
+    //     onPress={recording ? handleStopRecording : handleStartRecording}
+    //   />
+    // </View>
+     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <TouchableOpacity
         onPress={recording ? handleStopRecording : handleStartRecording}
-      />
-      <Text>Duration: {`${getDurationFormatted(audioDuration)}`}</Text>
-      {/* {getRecordingLines()} */}
-
-      {/* {transcript ?
-        <View>
-          <Text>Transcript: {transcript}</Text>
-        </View>
-      :null} */}
-
-      {/* {newMessage ? 
-        <View>
-          <Text>Transcription: {newMessage.pointA}</Text>
-          <View>
-            <Text>Point A</Text>
-            <TextInput
-              placeholder="Point A"
-              value={newMessage.pointA}
-              onChangeText={() => alert(newMessage.pointA)}
-            />
-          </View>
-           <View>
-          
-          <Text>Point B</Text>
-          <TextInput
-            placeholder="Point B"
-            value={newMessage.pointB ? newMessage.pointB : ''}
-            onChangeText={() => alert(newMessage.pointB)}
-          />
-          </View>
-          <View>
-          <Text>Mood</Text>
-          {newMessage.mood.length > 0 ?
-            <>
-              {newMessage.mood.map((item, index) => (
-                <TextInput
-                  index={index}
-                  placeholder="Mood"
-                  value={item}
-                  onChangeText={() => alert(item)}
-                />
-              ))}
-            </>
-          : null}
-          
-          </View>
-          <View>
-          <Text>Point Calories:</Text>
-          <TextInput
-            placeholder="Calories"
-            value={`${newMessage.calories}`}
-            onChangeText={() => alert(newMessage.calories)}
-          />
-          </View>
-          <Text>Drank Wanter: {newMessage.drankWater? 'true': 'false'}</Text>
-        </View>
-      :null} */}
+      >
+        <Animated.View style={[{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: 70, height: 70, borderRadius: 50, backgroundColor: 'red' }, animatedStyle]}>
+            {recording ?
+            <Text style={{ color: 'white', textAlign: 'center' }}>
+              Stop
+            </Text>
+            :
+            <Text style={{display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white', textAlign: 'center' }}>
+              <Microphone color={'white'}/>
+            </Text>
+            }
+        </Animated.View>
+      </TouchableOpacity>
     </View>
   );
 }

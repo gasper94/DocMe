@@ -145,6 +145,13 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
     await onHandleSubmitForm(transcriptObject);
   };
 
+
+  const handleDeleteStep = async () => {
+    setTranscriptObject(null);
+    setTranscript(null);
+    setAudioDuration(0);
+  };
+
   
 
   const handlePreviousStep = () => {
@@ -305,35 +312,50 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
           <Text style={styles.middleText}>{`${getDurationFormatted(audioDuration)}`}</Text>
         </View>
       </View>
-      <View style={{minHeight: 50, display: 'flex', flexDirection: 'row'}}>
-        {/* <Text>Hello there!</Text> */}
-        <SingleAudioRecorder 
-          setTranscript={setTranscript} 
-          setTranscriptObject={setTranscriptObject} 
-          startTimeRef={startTimeRef} 
-          audioDuration={audioDuration} 
-          setAudioDuration={setAudioDuration}
-        />
-        
-        {transcript ?
-          <TouchableOpacity style={styles.button} onPress={handleNextStep}>
-              <Text style={styles.buttonText}>Next</Text>
-          </TouchableOpacity>
-        :null}
-        {/* <RecordingAnimation /> */}
-        {/* <TouchableOpacity style={styles.menuItem}>
-          <Text style={styles.menuText}>Option 2</Text>
-        </TouchableOpacity> */}
-        {/* <TouchableOpacity style={styles.menuItem}>
-          <Text style={styles.menuText}>Option 3</Text>
-        </TouchableOpacity> */}
+
+      <View style={{minHeight: 100, display: 'flex', flexDirection: 'row', width: '100%',  marginTop: 20}}>
+          <View style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1}}>
+            {transcript ?
+              <TouchableOpacity onPress={handleDeleteStep}>
+                  <Text style={styles.deleteButton}>Delete</Text>
+              </TouchableOpacity>
+            :null}
+          </View>
+          <View style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1, minWidth: '30%' }}>
+            {/* <Text>2</Text> */}
+            <SingleAudioRecorder 
+              setTranscript={setTranscript} 
+              setTranscriptObject={setTranscriptObject} 
+              startTimeRef={startTimeRef} 
+              audioDuration={audioDuration} 
+              setAudioDuration={setAudioDuration}
+            />
+             {/* <RecordingAnimation /> */}
+          </View>
+          <View style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1}}>
+            {transcript ?
+              <TouchableOpacity style={styles.button} onPress={handleNextStep}>
+                  <Text style={styles.buttonText}>Next</Text>
+              </TouchableOpacity>
+            :null}
+          </View>
       </View>
+      
     </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  deleteButton: {
+    color: COLORS.blue,
+    padding: 10,
+    borderRadius: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 10,
+    fontWeight: 'bold',
+  },
     button: {
     backgroundColor: COLORS.blue,
     padding: 10,
@@ -405,3 +427,35 @@ const styles = StyleSheet.create({
 });
 
 export default ActivityScreen;
+
+
+{/* <View style={{minHeight: 50, display: 'flex', flexDirection: 'row'}}>
+        <Text>Hello</Text>
+        <SingleAudioRecorder 
+          setTranscript={setTranscript} 
+          setTranscriptObject={setTranscriptObject} 
+          startTimeRef={startTimeRef} 
+          audioDuration={audioDuration} 
+          setAudioDuration={setAudioDuration}
+        />
+
+        <View>
+
+          {transcript ?
+            <TouchableOpacity style={styles.button} onPress={handleNextStep}>
+                <Text style={styles.buttonText}>Next</Text>
+            </TouchableOpacity>
+          :null}
+
+          <Text>Hello</Text>
+        </View>
+        
+        
+       
+        <TouchableOpacity style={styles.menuItem}>
+          <Text style={styles.menuText}>Option 2</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.menuItem}>
+          <Text style={styles.menuText}>Option 3</Text>
+        </TouchableOpacity>
+      </View> */}
