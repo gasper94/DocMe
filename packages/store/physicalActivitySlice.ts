@@ -5,8 +5,7 @@ import {PhysicalActivity, ActivityState} from '../interfaces/PhysicalActivity';
 
 const initialState: ActivityState = {
     activity: [
-        { pointA: "Home", pointB: "Gym", burnedCalories: 100, drankWater: true, mood: []},
-        { pointA: "Office", pointB: "Park", burnedCalories: 150, drankWater: false, mood: []  },
+        { pointA: "Gellert Park", pointB: "AMC Movie Theather", burnedCalories: 350, drankWater: true, mood: ['happy', 'relax']},
     ],
     processingActivity: {pointA: "", pointB: "", burnedCalories: 0, drankWater: false, mood: [] },
 }

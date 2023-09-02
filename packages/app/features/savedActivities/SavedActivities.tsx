@@ -1,3 +1,6 @@
+// other
+import MapView from 'react-native-maps';
+
 // Router
 import { useRouter } from 'solito/router'
 
@@ -40,18 +43,41 @@ export function SavedActivities() {
             <ScrollView contentContainerStyle={styles.containerx}>
                 {activity.map((activity, index) => (
                     <View style={styles.card} key={index}>
-                    <Text style={styles.cardText}>
-                        Calories: {activity.burnedCalories ? activity.burnedCalories : 0}
-                    </Text>
-                    <Text style={styles.cardText}>
-                        From: {activity.pointA} - To: {activity.pointB}
-                    </Text>
-                    <Text style={styles.cardText}>
-                        Mood: {activity.mood.join(', ')}
-                    </Text>
-                    <Text style={styles.cardText}>
-                        Drank Water: {activity.drankWater ? 'Yes' : 'No'}
-                    </Text>
+                      <Text style={styles.cardText}>
+                          Calories: {activity.burnedCalories ? activity.burnedCalories : 0}
+                      </Text>
+                      <Text style={styles.cardText}>
+                          From: {activity.pointA}
+                      </Text>
+                       <Text style={styles.cardText}>
+                          To: {activity.pointB}
+                      </Text>
+                      <Text style={styles.cardText}>
+                          Mood: {activity.mood.join(', ')}
+                      </Text>
+                      <Text style={styles.cardText}>
+                          Drank Water: {activity.drankWater ? 'Yes' : 'No'}
+                      </Text>
+
+                      <View style={styles.map}>
+                          {/* <Text> This is where the map goes</Text> */}
+                          {/* <View style={styles.containerx}> */}
+                            {/* <MapView  /> */}
+                            <MapView
+                              style={styles.mapx}
+                              // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                              region={{
+                                latitude: 37.78825,
+                                longitude: -122.4324,
+                                latitudeDelta: 0.015,
+                                longitudeDelta: 0.0121,
+                              }}
+                              scrollEnabled={false} // Disable map panning
+                              zoomEnabled={false}   // Disable map zooming
+                            >
+                            </MapView>
+                          {/* </View> */}
+                      </View>
                     </View>
                 ))}
             </ScrollView>
@@ -61,6 +87,16 @@ export function SavedActivities() {
 }
 
 const styles = StyleSheet.create({
+  mapx: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 4,
+  },
+  map: {
+    display: 'flex',
+    backgroundColor: 'transparent',
+    height: 200
+  },
     button: {
     backgroundColor: COLORS.blue,
     padding: 10,
@@ -134,11 +170,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   card: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'gray',
     borderRadius: 8,
     padding: 16,
     marginBottom: 16,
     elevation: 2,
+
   },
   cardText: {
     fontSize: 16,

@@ -18,7 +18,8 @@ const DisplayItem = ({error, label, currentLocation}) => {
 
 
     const handleLocationPress = (location) => {
-        console.log("Location:", location.description);
+        console.log('Location: ', JSON.stringify(location));
+        console.log("Location description:", location.description);
         setLocation(location.description);
     }
 
