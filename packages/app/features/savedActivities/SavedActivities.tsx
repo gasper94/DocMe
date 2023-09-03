@@ -48,65 +48,65 @@ export function SavedActivities() {
     // Path coordinates
     const pathCoordinates = [marker1Coordinate, marker2Coordinate];
 
-      useEffect(() => {
-    // Fetch walking directions from a routing service (e.g., Google Maps Directions API)
-    const fetchWalkingDirections = async () => {
-      const startCoordinate = `${marker1Coordinate.latitude},${marker1Coordinate.longitude}`; // Replace with your marker1 coordinate
-      const endCoordinate = `${marker2Coordinate.latitude},${marker2Coordinate.longitude}`;   // Replace with your marker2 coordinate
-      const apiKey = process.env.GOOGLE_API;    // Replace with your API key
+    useEffect(() => {
+      // Fetch walking directions from a routing service (e.g., Google Maps Directions API)
+      const fetchWalkingDirections = async () => {
+        const startCoordinate = `${marker1Coordinate.latitude},${marker1Coordinate.longitude}`; // Replace with your marker1 coordinate
+        const endCoordinate = `${marker2Coordinate.latitude},${marker2Coordinate.longitude}`;   // Replace with your marker2 coordinate
+        const apiKey = process.env.GOOGLE_API;    // Replace with your API key
 
-      try {
-        const response = await fetch(
-          `https://maps.googleapis.com/maps/api/directions/json?origin=${startCoordinate}&destination=${endCoordinate}&mode=walking&key=${apiKey}`
-        );
+        try {
+          const response = await fetch(
+            `https://maps.googleapis.com/maps/api/directions/json?origin=${startCoordinate}&destination=${endCoordinate}&mode=walking&key=${apiKey}`
+          );
 
-        const data = await response.json();
+          const data = await response.json();
 
-        if(data.status === 'OK'){
-          const encodedString = data.routes[0].overview_polyline.points;
+          if(data.status === 'OK'){
+            const encodedString = data.routes[0].overview_polyline.points;
 
-          const decodedCoordinates = polyline.decode(encodedString);
-          console.log("data decoded:", decodedCoordinates);
+            const decodedCoordinates = polyline.decode(encodedString);
+            console.log("data decoded:", decodedCoordinates);
 
-          const formattedCoordinates = decodedCoordinates.map(([latitude, longitude]) => ({
-            latitude,
-            longitude,
-          }));
+            const formattedCoordinates = decodedCoordinates.map(([latitude, longitude]) => ({
+              latitude,
+              longitude,
+            }));
 
-          // const coordinates = decodedCoordinates.map((point) => ({
-          //   latitude: point.lat,
-          //   longitude: point.lng,
-          // }));
+            // const coordinates = decodedCoordinates.map((point) => ({
+            //   latitude: point.lat,
+            //   longitude: point.lng,
+            // }));
 
-          console.log("data coordinates:", formattedCoordinates);
-
-
+            console.log("data coordinates:", formattedCoordinates);
 
 
 
 
 
 
-          setWalkingPath(formattedCoordinates);
+
+
+            setWalkingPath(formattedCoordinates);
+          }
+
+
+
+          // if (data.status === 'OK') {
+          //   const coordinates = data.routes[0].overview_path.map((point) => ({
+          //     latitude: point.lat,
+          //     longitude: point.lng,
+          //   }));
+
+          //   setWalkingPath(coordinates);
+          // }
+        } catch (error) {
+          console.error('Error fetching walking directions:', error);
         }
+      };
 
-
-
-        // if (data.status === 'OK') {
-        //   const coordinates = data.routes[0].overview_path.map((point) => ({
-        //     latitude: point.lat,
-        //     longitude: point.lng,
-        //   }));
-
-        //   setWalkingPath(coordinates);
-        // }
-      } catch (error) {
-        console.error('Error fetching walking directions:', error);
-      }
-    };
-
-    fetchWalkingDirections();
-  }, []);
+      fetchWalkingDirections();
+    }, []);
 
     return (
         <SafeAreaView style={styles.safeArea}>
