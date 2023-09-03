@@ -23,6 +23,7 @@
   },
   "packageManager": "yarn@3.4.1",
   "dependencies": {
+    "@mapbox/polyline": "^1.2.0",
     "@nandorojo/heroicons": "^0.0.5",
     "@reduxjs/toolkit": "^1.9.5",
     "@svgr/cli": "^8.0.1",

@@ -1,5 +1,7 @@
 // other
-import MapView, {Marker} from 'react-native-maps';
+import React, {useState, useEffect} from 'react';
+import MapView, {Marker, Polyline} from 'react-native-maps';
+import polyline from '@mapbox/polyline';
 
 // Router
 import { useRouter } from 'solito/router'
@@ -19,7 +21,9 @@ import {RootState} from "../../../store/store";
 import COLORS from '../../design/const';
 
 export function SavedActivities() {
-
+    
+    const [walkingPath, setWalkingPath] = useState([]);
+    
     // Routing
     const { push, replace, back, parseNextPath } = useRouter()
     
@@ -40,6 +44,69 @@ export function SavedActivities() {
       latitude: (marker1Coordinate.latitude + marker2Coordinate.latitude) / 2,
       longitude: (marker1Coordinate.longitude + marker2Coordinate.longitude) / 2,
     };
+
+    // Path coordinates
+    const pathCoordinates = [marker1Coordinate, marker2Coordinate];
+
+      useEffect(() => {
+    // Fetch walking directions from a routing service (e.g., Google Maps Directions API)
+    const fetchWalkingDirections = async () => {
+      const startCoordinate = `${marker1Coordinate.latitude},${marker1Coordinate.longitude}`; // Replace with your marker1 coordinate
+      const endCoordinate = `${marker2Coordinate.latitude},${marker2Coordinate.longitude}`;   // Replace with your marker2 coordinate
+      const apiKey = process.env.GOOGLE_API;    // Replace with your API key
+
+      try {
+        const response = await fetch(
+          `https://maps.googleapis.com/maps/api/directions/json?origin=${startCoordinate}&destination=${endCoordinate}&mode=walking&key=${apiKey}`
+        );
+
+        const data = await response.json();
+
+        if(data.status === 'OK'){
+          const encodedString = data.routes[0].overview_polyline.points;
+
+          const decodedCoordinates = polyline.decode(encodedString);
+          console.log("data decoded:", decodedCoordinates);
+
+          const formattedCoordinates = decodedCoordinates.map(([latitude, longitude]) => ({
+            latitude,
+            longitude,
+          }));
+
+          // const coordinates = decodedCoordinates.map((point) => ({
+          //   latitude: point.lat,
+          //   longitude: point.lng,
+          // }));
+
+          console.log("data coordinates:", formattedCoordinates);
+
+
+
+
+
+
+
+
+          setWalkingPath(formattedCoordinates);
+        }
+
+
+
+        // if (data.status === 'OK') {
+        //   const coordinates = data.routes[0].overview_path.map((point) => ({
+        //     latitude: point.lat,
+        //     longitude: point.lng,
+        //   }));
+
+        //   setWalkingPath(coordinates);
+        // }
+      } catch (error) {
+        console.error('Error fetching walking directions:', error);
+      }
+    };
+
+    fetchWalkingDirections();
+  }, []);
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -63,10 +130,10 @@ export function SavedActivities() {
                           Calories: {activity.burnedCalories ? activity.burnedCalories : 0}
                       </Text>
                       <Text style={styles.cardText}>
-                          From: {activity.pointA}
+                          Point A: {activity.pointA}
                       </Text>
                        <Text style={styles.cardText}>
-                          To: {activity.pointB}
+                          Point B: {activity.pointB}
                       </Text>
                       <Text style={styles.cardText}>
                           Mood: {activity.mood.join(', ')}
@@ -93,17 +160,19 @@ export function SavedActivities() {
                                initialRegion={{
                                     latitude: (marker1Coordinate.latitude + marker2Coordinate.latitude) / 2,
                                     longitude: (marker1Coordinate.longitude + marker2Coordinate.longitude) / 2,
-                                    latitudeDelta: Math.abs(marker1Coordinate.latitude - marker2Coordinate.latitude) + 0.02,
-                                    longitudeDelta: Math.abs(marker1Coordinate.longitude - marker2Coordinate.longitude) + 0.02,
+                                    latitudeDelta: Math.abs(marker1Coordinate.latitude - marker2Coordinate.latitude) + 0.04,
+                                    longitudeDelta: Math.abs(marker1Coordinate.longitude - marker2Coordinate.longitude) + 0.04,
                                   }}
+                              // minZoomLevel={10} // Set the minimum zoom level
+                              // maxZoomLevel={12} // Set the maximum zoom level
                             >
                               <Marker
                                 coordinate={{
                                   latitude: marker1Coordinate.latitude,
                                   longitude: marker1Coordinate.longitude,
                                 }}
-                                title="Marker Title"
-                                description="Marker Description"
+                                title="Point A:" 
+                                description={activity.pointA}
                                  pinColor="blue"
                               />
 
@@ -112,8 +181,14 @@ export function SavedActivities() {
                                   latitude: marker2Coordinate.latitude,
                                   longitude: marker2Coordinate.longitude,
                                 }}
-                                title="Marker 2"
-                                description="This is Marker 2"
+                                title="Point B:"
+                                description={activity.pointB}
+                              />
+
+                              <Polyline
+                                coordinates={walkingPath ? walkingPath : pathCoordinates}
+                                strokeWidth={3} // Adjust the line width as needed
+                                strokeColor="red" // Adjust the line color as needed
                               />
                             </MapView>
 
