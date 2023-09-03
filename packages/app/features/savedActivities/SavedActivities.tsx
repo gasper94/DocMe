@@ -1,5 +1,5 @@
 // other
-import MapView from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 
 // Router
 import { useRouter } from 'solito/router'
@@ -24,6 +24,22 @@ export function SavedActivities() {
     const { push, replace, back, parseNextPath } = useRouter()
     
     const activity = useSelector((state: RootState) => state.activities.activity);
+
+    const marker1Coordinate = {
+      latitude: 37.78825,
+      longitude: -122.4324,
+    };
+
+    const marker2Coordinate = {
+      latitude: 37.75825,
+      longitude: -122.4824,
+    };
+
+    // Calculate the center coordinate between the two markers
+    const centerCoordinate = {
+      latitude: (marker1Coordinate.latitude + marker2Coordinate.latitude) / 2,
+      longitude: (marker1Coordinate.longitude + marker2Coordinate.longitude) / 2,
+    };
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -66,16 +82,42 @@ export function SavedActivities() {
                             <MapView
                               style={styles.mapx}
                               // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                              region={{
-                                latitude: 37.78825,
-                                longitude: -122.4324,
-                                latitudeDelta: 0.015,
-                                longitudeDelta: 0.0121,
-                              }}
+                              // region={{
+                              //   latitude: 37.78825,
+                              //   longitude: -122.4324,
+                              //   latitudeDelta: 0.015,
+                              //   longitudeDelta: 0.0121,
+                              // }}
                               scrollEnabled={false} // Disable map panning
                               zoomEnabled={false}   // Disable map zooming
+                               initialRegion={{
+                                    latitude: (marker1Coordinate.latitude + marker2Coordinate.latitude) / 2,
+                                    longitude: (marker1Coordinate.longitude + marker2Coordinate.longitude) / 2,
+                                    latitudeDelta: Math.abs(marker1Coordinate.latitude - marker2Coordinate.latitude) + 0.02,
+                                    longitudeDelta: Math.abs(marker1Coordinate.longitude - marker2Coordinate.longitude) + 0.02,
+                                  }}
                             >
+                              <Marker
+                                coordinate={{
+                                  latitude: marker1Coordinate.latitude,
+                                  longitude: marker1Coordinate.longitude,
+                                }}
+                                title="Marker Title"
+                                description="Marker Description"
+                                 pinColor="blue"
+                              />
+
+                              <Marker
+                                coordinate={{
+                                  latitude: marker2Coordinate.latitude,
+                                  longitude: marker2Coordinate.longitude,
+                                }}
+                                title="Marker 2"
+                                description="This is Marker 2"
+                              />
                             </MapView>
+
+
                           {/* </View> */}
                       </View>
                     </View>
@@ -87,6 +129,12 @@ export function SavedActivities() {
 }
 
 const styles = StyleSheet.create({
+  customMarker: {
+    width: 40,
+    height: 40,
+    resizeMode: 'contain',
+    backgroundColor: 'blue',
+  },
   mapx: {
     width: '100%',
     height: '100%',
