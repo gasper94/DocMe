@@ -1,4 +1,5 @@
 // other
+import { SolitoImage } from 'solito/image'
 import React, {useState, useEffect} from 'react';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 import polyline from '@mapbox/polyline';
@@ -11,7 +12,7 @@ import { Text } from 'app/design/typography'
 import { View  } from 'app/design/view'
 import { SafeAreaView, ScrollView} from 'moti';
 import { TouchableOpacity, StyleSheet } from 'react-native';
-import { ArrowLeft } from '@nandorojo/heroicons/24/outline';
+import { ArrowLeft, ChevronRight } from '@nandorojo/heroicons/24/outline';
 
 // State Management
 import { useSelector} from 'react-redux'
@@ -126,6 +127,31 @@ export function SavedActivities() {
             <ScrollView contentContainerStyle={styles.containerx}>
                 {activity.map((activity, index) => (
                     <View style={styles.card} key={index}>
+                      <View style={styles.cardHeadingContent}>
+                        <View style={styles.cardHeadingUserImage}>
+                          <SolitoImage
+                            alt="user-image"
+                            src={require('../../../assets/images/ulises.jpeg')}
+                            style={{ borderRadius: 40 }}
+                            height={50}
+                            width={50}
+                            />
+                        </View>
+                        <View style={styles.cardHeadingTitle}>
+                          <Text style={styles.cardTitle}>Activity Name</Text>
+                          <View style={styles.cardHeadingTitleContent}>
+                            <Text>Feb 2, 2023</Text>
+                            <View style={styles.box}></View>
+                            <View>
+                              <Text>14mi</Text>
+                            </View>
+                          </View>
+
+                        </View>
+                        <View style={styles.options}>
+                          <ChevronRight color={'blue'}/>
+                        </View>
+                      </View>
                       <Text style={styles.cardText}>
                           Calories: {activity.burnedCalories ? activity.burnedCalories : 0}
                       </Text>
@@ -204,6 +230,53 @@ export function SavedActivities() {
 }
 
 const styles = StyleSheet.create({
+  cardTitle: {
+    fontWeight: "500",
+    fontSize: 16,
+  },
+  box:{
+    backgroundColor: '#D1D1D1',
+    height: 10,
+    width: 10,
+    borderRadius: 999,
+  },
+  cardHeadingTitleContent:{
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 4,
+    color: 'red',
+  },
+  cardHeadingUserImage:{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minWidth: 60,
+    maxWidth: 60,
+    // backgroundColor: 'green',
+  },
+  cardHeadingTitle:{
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    gap: 4,
+    flex: 1,
+    paddingLeft: 4,
+    // backgroundColor: 'purple',
+  },
+  options:{
+    display: 'flex',
+    justifyContent: 'center',
+    minWidth: 20,
+    maxWidth: 20,
+    // backgroundColor: 'pink',
+  },
+  cardHeadingContent: {
+    display: 'flex',
+    flexDirection: 'row',
+    // backgroundColor: 'red',
+    height: 70
+  },
   customMarker: {
     width: 40,
     height: 40,
@@ -235,7 +308,7 @@ const styles = StyleSheet.create({
   },
     safeArea: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#E3E0F0',
   },
   container: {
     flex: 1,
@@ -293,7 +366,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   card: {
-    backgroundColor: 'gray',
+    backgroundColor: 'white',
     borderRadius: 8,
     padding: 16,
     marginBottom: 16,
