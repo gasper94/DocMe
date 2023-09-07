@@ -2,6 +2,8 @@
 .env.development
 .env.production 
 
+# ... (other rules remain the same)
+
 # OSX
 #
 .DS_Store
