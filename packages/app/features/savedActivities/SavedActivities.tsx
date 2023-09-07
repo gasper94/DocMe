@@ -12,7 +12,7 @@ import { Text } from 'app/design/typography'
 import { View  } from 'app/design/view'
 import { SafeAreaView, ScrollView} from 'moti';
 import { TouchableOpacity, StyleSheet } from 'react-native';
-import { ArrowLeft, ChevronRight } from '@nandorojo/heroicons/24/outline';
+import { ArrowLeft, ChevronRight, XMark } from '@nandorojo/heroicons/24/outline';
 
 // State Management
 import { useSelector} from 'react-redux'
@@ -114,7 +114,7 @@ export function SavedActivities() {
             <View style={styles.container}>
             <View style={styles.navigation}>
                 <TouchableOpacity style={styles.navigationItem} onPress={() => push("/")}>
-                <ArrowLeft color={'blue'}/>
+                <ArrowLeft color={'#4250CF'}/>
                 </TouchableOpacity>
                 <View style={styles.navigationMiddle}>
                 <Text style={styles.navigationText}>Saved Physical Activities</Text>
@@ -149,24 +149,57 @@ export function SavedActivities() {
 
                         </View>
                         <View style={styles.options}>
-                          <ChevronRight color={'blue'}/>
+                          <ChevronRight color={'#4250CF'}/>
                         </View>
                       </View>
+
+                      <View>
+
+                      <View style={styles.cardText}>
+                          <Text>
+                            Point A: 
+                          </Text>
+                          <Text style={{color: '#4250CF'}}>
+                            {activity.pointA}
+                          </Text>
+                      </View>
+                      <View style={styles.cardText}>
+                          <Text>
+                            Point B: 
+                          </Text>
+                          <Text style={{color: '#4250CF'}}>
+                            {activity.pointB}
+                          </Text>
+                      </View>
+
                       <Text style={styles.cardText}>
-                          Calories: {activity.burnedCalories ? activity.burnedCalories : 0}
+                          Calories: <Text style={{color: '#4250CF'}}>{activity.burnedCalories ? activity.burnedCalories : 0}</Text>
                       </Text>
                       <Text style={styles.cardText}>
-                          Point A: {activity.pointA}
+                          Drank Water: <Text style={{color: '#4250CF'}}>{activity.drankWater ? 'Yes' : 'No'}</Text>
                       </Text>
-                       <Text style={styles.cardText}>
-                          Point B: {activity.pointB}
-                      </Text>
-                      <Text style={styles.cardText}>
-                          Mood: {activity.mood.join(', ')}
-                      </Text>
-                      <Text style={styles.cardText}>
-                          Drank Water: {activity.drankWater ? 'Yes' : 'No'}
-                      </Text>
+
+                      <View style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', marginBottom: 4}}>
+                            <Text>Mood:</Text> 
+                            {/* {activity.mood.join(', ')} */}
+                            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                              {activity.mood ? (
+                                activity.mood.map((item, index) => (
+                                  <TouchableOpacity
+                                  key={index}
+                                  style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: '#4250CF', borderRadius: 99, paddingHorizontal: 6 }}
+                                  onPress={() => {}}
+                                  >
+                                      <Text style={{ padding: 5, color: 'white' }}>{item}</Text>
+                                    </TouchableOpacity>
+                                ))
+                                ) : (
+                                  <Text style={{ color: COLORS.grey, paddingTop: 10 }}>Empty</Text>
+                                  )}
+                            </View>
+                      </View>
+
+                      </View>
 
                       <View style={styles.map}>
                           {/* <Text> This is where the map goes</Text> */}
@@ -325,7 +358,7 @@ const styles = StyleSheet.create({
   navigationItem: {},
   navigationMiddle: {},
   navigationText: {
-    color: 'blue',
+    color: '#4250CF',
     fontWeight: 'bold',
   },
   middle: {

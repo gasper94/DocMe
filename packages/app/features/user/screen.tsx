@@ -10,6 +10,7 @@ import React, { useState } from 'react';
 import { Button } from 'react-native';
 
 // Components
+import AlertToggle from './alertToggle';
 import MultiStepForm from '../MultiStepForm/MultiStepForm';
 
 // const { useParam } = createParam<{ id: string }>()
@@ -50,6 +51,8 @@ export function UserDetailScreen() {
 
   return (
     <View className="flex-1 items-center justify-center bg-blue-200">
+      <Text>Hello</Text>
+      <AlertToggle />
       <Text>UserPage</Text>
       <TextLink href="/">👈 Go Home</TextLink>
     </View>

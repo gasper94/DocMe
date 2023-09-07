@@ -11,7 +11,7 @@ import ExclamationCircle from "../../assets/Icons/exclamation/exclamation";
 
 const GOOGLE_API_KEY = process.env.GOOGLE_API;
 
-const DisplayItem = ({error, label, currentLocation}) => {
+const DisplayItem = ({error, label, currentLocation, setCurrentLocation}) => {
 
     const [isFocused, setIsFocused] = useState(false);
     const [location, setLocation] = useState();
@@ -21,6 +21,7 @@ const DisplayItem = ({error, label, currentLocation}) => {
         console.log('Location: ', JSON.stringify(location));
         console.log("Location description:", location.description);
         setLocation(location.description);
+        setCurrentLocation(location.description);
     }
 
     const ref = useRef<GooglePlacesAutocompleteRef | null>(null);

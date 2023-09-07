@@ -209,8 +209,8 @@ export function ActivityFormScreen(onFocus = () => {}, ...props) {
                 <Text style={{ color: COLORS.grey, fontSize: 18, marginVertical: 10 }}>Enter Your Details to Register</Text>
 
                 <View style={{marginTop: 20}}>
-                  <DisplayItem label={"Start (point A)"} currentLocation={pointA}/>
-                  <DisplayItem label={"Start (point B)"} currentLocation={pointB}/>
+                  <DisplayItem label={"Start (point A)"} currentLocation={pointA} setCurrentLocation={setPointA}/>
+                  <DisplayItem label={"Start (point B)"} currentLocation={pointB} setCurrentLocation={setPointB}/>
                   <Input
                     placeholder={'Enter Calories'}
                     iconName={'icon'}
