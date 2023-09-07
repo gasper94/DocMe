@@ -1,49 +1,50 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Button, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Switch, Button } from 'react-native';
 import * as Notifications from 'expo-notifications';
 
-const hardcodedMessage = 'This is a hardcoded message for the triggered notification.';
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 const AlertToggle = () => {
-  const [notificationStatus, setNotificationStatus] = useState(null);
+    const [notificationStatus, setNotificationStatus] = useState(null);
 
-  useEffect(() => {
-    requestNotificationPermission();
-  }, []);
+    useEffect(() => {
+        requestNotificationPermission();
+    }, []);
 
-  const requestNotificationPermission = async () => {
-    const { status } = await Notifications.requestPermissionsAsync();
+    const requestNotificationPermission = async () => {
+        const { status } = await Notifications.requestPermissionsAsync();
 
-    if (status !== 'granted') {
-      Alert.alert('Notification permission not granted');
-      setNotificationStatus('Permission Not Granted');
-    } else {
-      setNotificationStatus('Permission Granted');
+        if (status !== 'granted') {
+            Alert.alert('Notification permission not granted');
+            setNotificationStatus('Permission Not Granted');
+        } else {
+            setNotificationStatus('Permission Granted');
+            // setNotifications();
+        }
+    };
+
+    const triggleCall = () => {
+        Notifications.scheduleNotificationAsync({
+            content: {
+                title: 'Look at that notification',
+                body: "I'm so proud of myself!",
+            },
+            trigger: null,
+        });
     }
-  };
 
-  const triggerNotification = async () => {
-    try {
-      await Notifications.scheduleNotificationAsync({
-        content: {
-          title: 'Triggered Notification',
-          body: hardcodedMessage,
-          sound: true,
-          vibrate: [100, 200, 100],
-        },
-        trigger: null, // Trigger immediately
-      });
-
-      Alert.alert('Notification triggered successfully');
-    } catch (error) {
-      console.error('Error triggering notification:', error);
-    }
-  };
 
   return (
     <View>
-      <Text>Notification Status: {notificationStatus}</Text>
-      <Button title="Trigger Notification" onPress={triggerNotification} />
+      <Text>Toggle Alert: {notificationStatus}</Text>
+      
+      <Button title="Show Alert" onPress={triggleCall}/>
     </View>
   );
 };
