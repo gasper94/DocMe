@@ -1,67 +1,86 @@
-import React, { useState, useRef, useEffect} from 'react';
-import { Button, Text, View, TextInput} from 'react-native';
-import { Audio } from 'expo-av';
-import { Configuration, OpenAIApi } from 'openai';
-import axios from "axios";
+import React, { useState, useRef, useEffect } from 'react'
+import { Button, Text, View, TextInput } from 'react-native'
+import { Audio } from 'expo-av'
+import { Configuration, OpenAIApi } from 'openai'
+import axios from 'axios'
 
 // utils
-import { getAudio, getDurationFormatted, startRecording, stopRecording, handlePlayAudioOnClick, handleGetTranscriptWithUri, handleGetTranscriptObject } from 'app/singleAudioRecording/index';
+import {
+  getAudio,
+  getDurationFormatted,
+  startRecording,
+  stopRecording,
+  handlePlayAudioOnClick,
+  handleGetTranscriptWithUri,
+  handleGetTranscriptObject,
+} from 'app/singleAudioRecording/index'
 
-export default function AudioRecorder({setTranscript, setTranscriptObject}) {
+export default function AudioRecorder({ setTranscript, setTranscriptObject }) {
   const configuration = new Configuration({
     apiKey: process.env.OPEN_AI,
-  });
+  })
 
-  const openai = new OpenAIApi(configuration);
+  const openai = new OpenAIApi(configuration)
 
-  const [recording, setRecording] = useState();
-  const [recordings, setRecordings] = useState([]);
+  const [recording, setRecording] = useState()
+  const [recordings, setRecordings] = useState([])
   // new
-  const [audioDuration, setAudioDuration] = useState(0);
-  const startTimeRef = useRef(null);
+  const [audioDuration, setAudioDuration] = useState(0)
+  const startTimeRef = useRef(null)
 
   // new
-  const [newMessage, setMesssage] = useState(null);
+  const [newMessage, setMesssage] = useState(null)
   // const [transcript, setTranscript] = useState(null);
 
   // Might be able to need this. Else remove it later on.
   useEffect(() => {
-    let interval;
+    let interval
 
     if (recording) {
       interval = setInterval(() => {
-        const currentTime = (Date.now() - startTimeRef.current) / 1000;
-        setAudioDuration(currentTime);
-      }, 1000);
+        const currentTime = (Date.now() - startTimeRef.current) / 1000
+        setAudioDuration(currentTime)
+      }, 1000)
     } else {
-      clearInterval(interval);
+      clearInterval(interval)
     }
 
-    return () => clearInterval(interval);
-  }, [recording]);
+    return () => clearInterval(interval)
+  }, [recording])
 
   const handleStartRecording = async () => {
-    await console.log("setRecordings", setRecordings);
-    await startRecording(Audio, startTimeRef, setRecording, recordings,  setRecordings);
-
-  };
+    await console.log('setRecordings', setRecordings)
+    await startRecording(
+      Audio,
+      startTimeRef,
+      setRecording,
+      recordings,
+      setRecordings
+    )
+  }
 
   const handleStopRecording = async () => {
-    await stopRecording(setRecording, startTimeRef, recording, recordings, setRecordings);
+    await stopRecording(
+      setRecording,
+      startTimeRef,
+      recording,
+      recordings,
+      setRecordings
+    )
 
-    // await 
+    // await
     // await handleGetTranscript(recordings[0]);r
   }
 
   useEffect(() => {
     // console.log("recordings handle:", recordings[0]);
-    if(recordings[0]){
+    if (recordings[0]) {
       handleGetTranscript(recordings[0])
     }
-  },[recordings])
+  }, [recordings])
 
   const getRecordingLines = () => {
-    console.log("recordings:", recordings);
+    console.log('recordings:', recordings)
     return recordings.map((recordingLine, index) => {
       return (
         <View key={index} style={{ backgroundColor: 'purple' }}>
@@ -73,42 +92,35 @@ export default function AudioRecorder({setTranscript, setTranscriptObject}) {
             onPress={() => handlePlayAudioOnClick(recordingLine)}
             title="Play"
           />
-           <Button
+          <Button
             style={{ backgroundColor: 'red' }}
             onPress={() => handleGetTranscript(recordingLine)}
             title="Get Transcript"
           />
         </View>
-      );
-    });
-  };
+      )
+    })
+  }
 
   function splitInput(input, chunkSize) {
-    const chunks = [];
-    let i = 0;
+    const chunks = []
+    let i = 0
     while (i < input.length) {
-      chunks.push(input.slice(i, i + chunkSize));
-      i += chunkSize;
+      chunks.push(input.slice(i, i + chunkSize))
+      i += chunkSize
     }
-    return chunks;
+    return chunks
   }
 
   const handleGetTranscript = async (audio) => {
-    console.log("starting handleGetTranscript", audio);
-    const transcript = await handleGetTranscriptWithUri(audio);
+    console.log('starting handleGetTranscript', audio)
+    const transcript = await handleGetTranscriptWithUri(audio)
 
-    console.log("Transcript:", transcript);
-    setTranscript(transcript);
-    const objTranscript = await handleGetTranscriptObject(transcript);
-    await setTranscriptObject(objTranscript);
-    // await console.log('string:', objTranscript);
-    // await console.log("PointA: ", objTranscript.pointA);
-    // await console.log("PointB: ", objTranscript.pointB);
-    // await console.log("Calories: ", objTranscript.calories);
-    // await console.log("mood: ", objTranscript.drankWater);
-
-    // await setMesssage(objTranscript);
-  };
+    console.log('Transcript:', transcript)
+    setTranscript(transcript)
+    const objTranscript = await handleGetTranscriptObject(transcript)
+    await setTranscriptObject(objTranscript)
+  }
 
   return (
     <View style={{ backgroundColor: 'red' }}>
@@ -125,7 +137,7 @@ export default function AudioRecorder({setTranscript, setTranscriptObject}) {
         </View>
       :null} */}
 
-      {newMessage ? 
+      {newMessage ? (
         <View>
           <Text>Transcription: {newMessage.pointA}</Text>
           <View>
@@ -136,57 +148,47 @@ export default function AudioRecorder({setTranscript, setTranscriptObject}) {
               onChangeText={() => alert(newMessage.pointA)}
             />
           </View>
-           <View>
-          
-          <Text>Point B</Text>
-          <TextInput
-            placeholder="Point B"
-            value={newMessage.pointB ? newMessage.pointB : ''}
-            onChangeText={() => alert(newMessage.pointB)}
-          />
+          <View>
+            <Text>Point B</Text>
+            <TextInput
+              placeholder="Point B"
+              value={newMessage.pointB ? newMessage.pointB : ''}
+              onChangeText={() => alert(newMessage.pointB)}
+            />
           </View>
           <View>
-          <Text>Mood</Text>
-          {newMessage.mood.length > 0 ?
-            <>
-              {newMessage.mood.map((item, index) => (
-                <TextInput
-                  index={index}
-                  placeholder="Mood"
-                  value={item}
-                  onChangeText={() => alert(item)}
-                />
-              ))}
-            </>
-          : null}
-          
+            <Text>Mood</Text>
+            {newMessage.mood.length > 0 ? (
+              <>
+                {newMessage.mood.map((item, index) => (
+                  <TextInput
+                    index={index}
+                    placeholder="Mood"
+                    value={item}
+                    onChangeText={() => alert(item)}
+                  />
+                ))}
+              </>
+            ) : null}
           </View>
           <View>
-          <Text>Point Calories:</Text>
-          <TextInput
-            placeholder="Calories"
-            value={`${newMessage.calories}`}
-            onChangeText={() => alert(newMessage.calories)}
-          />
+            <Text>Point Calories:</Text>
+            <TextInput
+              placeholder="Calories"
+              value={`${newMessage.burnedCalories}`}
+              onChangeText={() => alert(newMessage.burnedCalories)}
+            />
           </View>
-          <Text>Drank Wanter: {newMessage.drankWater? 'true': 'false'}</Text>
+          <Text>Drank Wanter: {newMessage.drankWater ? 'true' : 'false'}</Text>
         </View>
-      :<Text>No Transcript</Text>}
+      ) : (
+        <Text>No Transcript</Text>
+      )}
     </View>
-  );
+  )
 }
 
-
 // Todo bug on Mobile, once that get solved merge two ui with extracted functionality.
-
-
-
-
-
-
-
-
-
 
 // // Web logic
 // import { Button, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
@@ -199,7 +201,7 @@ export default function AudioRecorder({setTranscript, setTranscriptObject}) {
 //   const [recording, setRecording] = useState(false);
 //   const [recordings, setRecordings] = useState([]);
 
-//   // new 
+//   // new
 //   const [audioDuration, setAudioDuration] = useState(0);
 //   const startTimeRef = useRef(null);
 
@@ -215,7 +217,7 @@ export default function AudioRecorder({setTranscript, setTranscriptObject}) {
 //   const handleStopRecording = async () => {
 //     await stopRecording(setRecording);
 //   }
-  
+
 //   // Might be able to need this. Else remove it later on.
 //   useEffect(() => {
 //     let interval;
@@ -274,7 +276,6 @@ export default function AudioRecorder({setTranscript, setTranscriptObject}) {
 //       {getRecordingLines()}
 //     </View>
 
-
 //     // <div>
 //     //   <button onClick={recording ? handleStopRecording : handleStartRecording}>
 //     //     {recording ? 'Stop Recording' : 'Start Recording'}
@@ -285,10 +286,6 @@ export default function AudioRecorder({setTranscript, setTranscriptObject}) {
 //     //   {recording ? <div>Duration: {getDurationFormatted(audioDuration)}</div>:null}
 //     //   {getRecordingLines()}
 //     // </div>
-
-
-
-
 
 //     // <View style={{ backgroundColor: 'red' }}>
 //     //   <Button
@@ -316,25 +313,6 @@ export default function AudioRecorder({setTranscript, setTranscriptObject}) {
 // };
 
 // export default AudioRecorder;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // // import * as React from 'react';
 // // import { Text, View, StyleSheet, Button } from 'react-native';
@@ -380,29 +358,28 @@ export default function AudioRecorder({setTranscript, setTranscriptObject}) {
 
 // // export default AudioRecorder;
 
-
 // {
-//   "duration": "00:00:02", 
-//   "file": "file:///var/mobile/Containers/Data/Application/C915C898-277E-4677-88AC-778B79366D37/Library/Caches/ExponentExperienceData/%2540umartinez%252Fsolito-nativewind/AV/recording-A4318775-8ACA-4CAD-A395-04328E13AF29.caf", 
+//   "duration": "00:00:02",
+//   "file": "file:///var/mobile/Containers/Data/Application/C915C898-277E-4677-88AC-778B79366D37/Library/Caches/ExponentExperienceData/%2540umartinez%252Fsolito-nativewind/AV/recording-A4318775-8ACA-4CAD-A395-04328E13AF29.caf",
 //   "sound": {
-//     "_coalesceStatusUpdatesInMillis": 100, 
-//     "_errorCallback": [Function anonymous], 
+//     "_coalesceStatusUpdatesInMillis": 100,
+//     "_errorCallback": [Function anonymous],
 //     "_eventEmitter": {
-//       "_eventEmitter": [NativeEventEmitter], 
-//       "_listenerCount": 3, 
+//       "_eventEmitter": [NativeEventEmitter],
+//       "_listenerCount": 3,
 //       "_nativeModule": [Object]
-//       }, 
-//       "_internalErrorCallback": [Function anonymous], 
-//       "_internalMetadataUpdateCallback": [Function anonymous], 
-//       "_internalStatusUpdateCallback": [Function anonymous], 
-//       "_key": 0, 
-//       "_lastStatusUpdate": null, 
-//       "_lastStatusUpdateTime": null, 
-//       "_loaded": true, "_loading": false, 
-//       "_onAudioSampleReceived": null, 
-//       "_onMetadataUpdate": null, 
-//       "_onPlaybackStatusUpdate": null, 
-//       "_subscriptions": [[Object], [Object], [Object]], 
+//       },
+//       "_internalErrorCallback": [Function anonymous],
+//       "_internalMetadataUpdateCallback": [Function anonymous],
+//       "_internalStatusUpdateCallback": [Function anonymous],
+//       "_key": 0,
+//       "_lastStatusUpdate": null,
+//       "_lastStatusUpdateTime": null,
+//       "_loaded": true, "_loading": false,
+//       "_onAudioSampleReceived": null,
+//       "_onMetadataUpdate": null,
+//       "_onPlaybackStatusUpdate": null,
+//       "_subscriptions": [[Object], [Object], [Object]],
 //       "getStatusAsync": [Function anonymous]
 //     }
 //   }

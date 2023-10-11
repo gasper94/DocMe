@@ -1,67 +1,99 @@
-import React, { useState, useRef, useEffect} from 'react';
-import { Button, Text, View, TextInput, TouchableOpacity, Animated} from 'react-native';
-import { Audio } from 'expo-av';
-import { Configuration, OpenAIApi } from 'openai';
-import { Microphone } from '@nandorojo/heroicons/24/outline';
+import React, { useState, useRef, useEffect } from 'react'
+import {
+  Button,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Animated,
+} from 'react-native'
+import { Audio } from 'expo-av'
+import { Configuration, OpenAIApi } from 'openai'
+import { Microphone } from '@nandorojo/heroicons/24/outline'
 
 // utils
-import { getAudio, getDurationFormatted, startRecording, stopRecording, handlePlayAudioOnClick, handleGetTranscriptWithUri, handleGetTranscriptObject } from 'app/singleAudioRecording/index';
+import {
+  getAudio,
+  getDurationFormatted,
+  startRecording,
+  stopRecording,
+  handlePlayAudioOnClick,
+  handleGetTranscriptWithUri,
+  handleGetTranscriptObject,
+} from 'app/singleAudioRecording/index'
 
-export default function SingleAudioRecorder({setTranscript, setTranscriptObject, startTimeRef, audioDuration, setAudioDuration}) {
+export default function SingleAudioRecorder({
+  setTranscript,
+  setTranscriptObject,
+  startTimeRef,
+  audioDuration,
+  setAudioDuration,
+}) {
   const configuration = new Configuration({
     apiKey: process.env.OPEN_AI,
-  });
+  })
 
-  const openai = new OpenAIApi(configuration);
+  const openai = new OpenAIApi(configuration)
 
-  const [recording, setRecording] = useState();
-  const [recordings, setRecordings] = useState([]);
+  const [recording, setRecording] = useState()
+  const [recordings, setRecordings] = useState([])
   // new
   // const [audioDuration, setAudioDuration] = useState(0);
   // const startTimeRef = useRef(null);
 
   // new
-  const [newMessage, setMesssage] = useState(null);
+  const [newMessage, setMesssage] = useState(null)
   // const [transcript, setTranscript] = useState(null);
 
   // Might be able to need this. Else remove it later on.
   useEffect(() => {
-    let interval;
+    let interval
 
     if (recording) {
       interval = setInterval(() => {
-        const currentTime = (Date.now() - startTimeRef.current) / 1000;
-        setAudioDuration(currentTime);
-      }, 1000);
+        const currentTime = (Date.now() - startTimeRef.current) / 1000
+        setAudioDuration(currentTime)
+      }, 1000)
     } else {
-      clearInterval(interval);
+      clearInterval(interval)
     }
 
-    return () => clearInterval(interval);
-  }, [recording]);
+    return () => clearInterval(interval)
+  }, [recording])
 
   const handleStartRecording = async () => {
-    await console.log("setRecordings", setRecordings);
-    await startRecording(Audio, startTimeRef, setRecording, recordings,  setRecordings);
-
-  };
+    await console.log('setRecordings', setRecordings)
+    await startRecording(
+      Audio,
+      startTimeRef,
+      setRecording,
+      recordings,
+      setRecordings
+    )
+  }
 
   const handleStopRecording = async () => {
-    await stopRecording(setRecording, startTimeRef, recording, recordings, setRecordings);
+    await stopRecording(
+      setRecording,
+      startTimeRef,
+      recording,
+      recordings,
+      setRecordings
+    )
 
-    // await 
+    // await
     // await handleGetTranscript(recordings[0]);r
   }
 
   useEffect(() => {
     // console.log("recordings handle:", recordings[0]);
-    if(recordings[0]){
+    if (recordings[0]) {
       handleGetTranscript(recordings[0])
     }
-  },[recordings])
+  }, [recordings])
 
   const getRecordingLines = () => {
-    console.log("recordings:", recordings);
+    console.log('recordings:', recordings)
     return recordings.map((recordingLine, index) => {
       return (
         <View key={index} style={{ backgroundColor: 'purple' }}>
@@ -73,68 +105,61 @@ export default function SingleAudioRecorder({setTranscript, setTranscriptObject,
             onPress={() => handlePlayAudioOnClick(recordingLine)}
             title="Play"
           />
-           <Button
+          <Button
             style={{ backgroundColor: 'red' }}
             onPress={() => handleGetTranscript(recordingLine)}
             title="Get Transcript"
           />
         </View>
-      );
-    });
-  };
+      )
+    })
+  }
 
   function splitInput(input, chunkSize) {
-    const chunks = [];
-    let i = 0;
+    const chunks = []
+    let i = 0
     while (i < input.length) {
-      chunks.push(input.slice(i, i + chunkSize));
-      i += chunkSize;
+      chunks.push(input.slice(i, i + chunkSize))
+      i += chunkSize
     }
-    return chunks;
+    return chunks
   }
 
   const handleGetTranscript = async (audio) => {
-    console.log("starting handleGetTranscript", audio);
-    const transcript = await handleGetTranscriptWithUri(audio);
+    console.log('starting handleGetTranscript', audio)
+    const transcript = await handleGetTranscriptWithUri(audio)
 
-    console.log("Transcript:", transcript);
-    setTranscript(transcript);
-    const objTranscript = await handleGetTranscriptObject(transcript);
-    await setTranscriptObject(objTranscript);
-    // await console.log('string:', objTranscript);
-    // await console.log("PointA: ", objTranscript.pointA);
-    // await console.log("PointB: ", objTranscript.pointB);
-    // await console.log("Calories: ", objTranscript.calories);
-    // await console.log("mood: ", objTranscript.drankWater);
+    console.log('Transcript:', transcript)
+    setTranscript(transcript)
+    const objTranscript = await handleGetTranscriptObject(transcript)
+    await setTranscriptObject(objTranscript)
+  }
 
-    // await setMesssage(objTranscript);
-  };
-
-   const [isRecording, setIsRecording] = useState(false);
-  const scaleValue = useRef(new Animated.Value(1)).current;
+  const [isRecording, setIsRecording] = useState(false)
+  const scaleValue = useRef(new Animated.Value(1)).current
 
   useEffect(() => {
-    let animationInterval;
+    let animationInterval
 
     if (isRecording) {
-      animateCircle(); // Start the animation
+      animateCircle() // Start the animation
       animationInterval = setInterval(() => {
-        scaleValue.stopAnimation();
-        scaleValue.setValue(1);
-        animateCircle();
-      }, 1000);
+        scaleValue.stopAnimation()
+        scaleValue.setValue(1)
+        animateCircle()
+      }, 1000)
     } else {
-      clearInterval(animationInterval);
-      scaleValue.stopAnimation();
-      scaleValue.setValue(1);
+      clearInterval(animationInterval)
+      scaleValue.stopAnimation()
+      scaleValue.setValue(1)
     }
 
     return () => {
-      clearInterval(animationInterval);
-      scaleValue.stopAnimation();
-      scaleValue.setValue(1);
-    };
-  }, [isRecording]);
+      clearInterval(animationInterval)
+      scaleValue.stopAnimation()
+      scaleValue.setValue(1)
+    }
+  }, [isRecording])
 
   const animateCircle = () => {
     Animated.sequence([
@@ -148,15 +173,15 @@ export default function SingleAudioRecorder({setTranscript, setTranscriptObject,
         duration: 300,
         useNativeDriver: false,
       }),
-    ]).start();
-  };
+    ]).start()
+  }
 
   const animatedStyle = {
     transform: [{ scale: scaleValue }],
-  };
+  }
 
   const handleStartRecordingButton = () => {
-    setIsRecording(!isRecording);
+    setIsRecording(!isRecording)
   }
 
   return (
@@ -166,22 +191,41 @@ export default function SingleAudioRecorder({setTranscript, setTranscriptObject,
     //     onPress={recording ? handleStopRecording : handleStartRecording}
     //   />
     // </View>
-     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <TouchableOpacity
         onPress={recording ? handleStopRecording : handleStartRecording}
       >
-        <Animated.View style={[{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: 70, height: 70, borderRadius: 50, backgroundColor: 'red' }, animatedStyle]}>
-            {recording ?
-            <Text style={{ color: 'white', textAlign: 'center' }}>
-              Stop
+        <Animated.View
+          style={[
+            {
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: 70,
+              height: 70,
+              borderRadius: 50,
+              backgroundColor: 'red',
+            },
+            animatedStyle,
+          ]}
+        >
+          {recording ? (
+            <Text style={{ color: 'white', textAlign: 'center' }}>Stop</Text>
+          ) : (
+            <Text
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                color: 'white',
+                textAlign: 'center',
+              }}
+            >
+              <Microphone color={'white'} />
             </Text>
-            :
-            <Text style={{display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white', textAlign: 'center' }}>
-              <Microphone color={'white'}/>
-            </Text>
-            }
+          )}
         </Animated.View>
       </TouchableOpacity>
     </View>
-  );
+  )
 }
