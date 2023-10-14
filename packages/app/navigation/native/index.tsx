@@ -8,12 +8,12 @@ import { ActivityFormScreen } from '../../features/form/screen'
 import { SavedActivities } from '../../features/savedActivities/SavedActivities'
 
 const Stack = createNativeStackNavigator<{
+  login: undefined
   home: undefined
   'user-detail': undefined
   'user-activity': undefined
   'user-form': undefined
   'saved-activities': undefined
-  login: undefined
 }>()
 
 export function NativeNavigation() {
@@ -24,17 +24,17 @@ export function NativeNavigation() {
       }}
     >
       <Stack.Screen
-        name="home"
-        component={HomeScreen}
-        options={{
-          title: 'Home',
-        }}
-      />
-      <Stack.Screen
         name="login"
         component={Login}
         options={{
           title: 'Login',
+        }}
+      />
+      <Stack.Screen
+        name="home"
+        component={HomeScreen}
+        options={{
+          title: 'Home',
         }}
       />
       <Stack.Screen

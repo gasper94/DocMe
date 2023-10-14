@@ -13,10 +13,10 @@ export function NavigationProvider({
         () => ({
           prefixes: [Linking.createURL('/')],
           config: {
-            initialRouteName: 'home',
+            initialRouteName: 'login/',
             screens: {
-              home: '',
               login: 'login/',
+              home: '',
               'user-detail': 'user/:id',
               'user-activity': 'activity/:id',
               'user-form': 'form/:id',
