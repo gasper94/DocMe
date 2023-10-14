@@ -1,3 +1,6 @@
+#Supabase
+packages/store/context/supabase/supabase.ts
+
 # Environment Variables
 .env.development
 .env.production 
