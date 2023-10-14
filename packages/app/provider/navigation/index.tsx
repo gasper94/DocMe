@@ -16,10 +16,11 @@ export function NavigationProvider({
             initialRouteName: 'home',
             screens: {
               home: '',
+              login: 'login/',
               'user-detail': 'user/:id',
               'user-activity': 'activity/:id',
               'user-form': 'form/:id',
-              'saved-activities' : 'saved-activities/'
+              'saved-activities': 'saved-activities/',
             },
           },
         }),

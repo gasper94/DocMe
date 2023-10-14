@@ -1,10 +1,11 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
+import { Login } from '../../features/login_page/screen'
 import { HomeScreen } from '../../features/home/screen'
 import { UserDetailScreen } from '../../features/user/screen'
-import { ActivityScreen } from '../../features/activity/screen';
-import { ActivityFormScreen } from "../../features/form/screen";
-import { SavedActivities } from "../../features/savedActivities/SavedActivities";
+import { ActivityScreen } from '../../features/activity/screen'
+import { ActivityFormScreen } from '../../features/form/screen'
+import { SavedActivities } from '../../features/savedActivities/SavedActivities'
 
 const Stack = createNativeStackNavigator<{
   home: undefined
@@ -12,8 +13,8 @@ const Stack = createNativeStackNavigator<{
   'user-activity': undefined
   'user-form': undefined
   'saved-activities': undefined
+  login: undefined
 }>()
-
 
 export function NativeNavigation() {
   return (
@@ -27,6 +28,13 @@ export function NativeNavigation() {
         component={HomeScreen}
         options={{
           title: 'Home',
+        }}
+      />
+      <Stack.Screen
+        name="login"
+        component={Login}
+        options={{
+          title: 'Login',
         }}
       />
       <Stack.Screen
