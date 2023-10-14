@@ -8,7 +8,7 @@ type SupabaseContextProps = {
   signInWithPassword: (email: string, password: string) => Promise<void>
   resetPasswordForEmail: (email: string) => Promise<void>
   signOut: () => Promise<void>
-  LoggedInUser: () => Promise<void>
+  LoggedInUser: () => Promise<any>
   supabase: any
 }
 
