@@ -37,6 +37,7 @@
     "expo-secure-store": "^12.5.0",
     "expo-sharing": "^11.2.2",
     "expo-speech": "^11.1.1",
+    "next-compose-plugins": "^2.2.1",
     "openai": "^3.3.0",
     "patch-package": "^7.0.0",
     "postinstall-postinstall": "^2.1.0",

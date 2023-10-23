@@ -13,7 +13,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
 // Auth
-// import { useSupabase } from '../../store/context/supabase/useSupabase'
+import { PrintHello } from '../../auth/supabase/index'
+import { useSupabase } from '../../store/context/supabase/useSupabase'
 
 // const FormSchema = z.object({
 //   email: z.string().email('Please enter a valid email address.'),
@@ -24,8 +25,8 @@ import * as z from 'zod'
 // })
 
 export function Login() {
-  // const { signInWithPassword, isLoggedIn, LoggedInUser, signOut } =
-  //   useSupabase()
+  const { isTest } = useSupabase()
+
   const [currentUser, setCurrentUser] = useState(null)
   const [email, setEmail] = useState<String | null>('')
   const [password, setPassword] = useState<String | null>('')
@@ -74,8 +75,15 @@ export function Login() {
   //   }
   // }
 
+  const handleGetPlatform = () => {
+    PrintHello()
+  }
+
   return (
     <View className="flex-1 items-center justify-center">
+      <Text>is test:</Text>
+      <Text>{`${process.env.NEXT_PUBLIC_SUPABASE_URL}`}</Text>
+
       <Text>{`${JSON.stringify(currentUser)}`}</Text>
 
       <Button title="get user" onPress={handleLogin} />
@@ -87,6 +95,18 @@ export function Login() {
         onChangeText={handleEmailInput}
       /> */}
 
+      <TextInput
+        style={{ width: 200, borderWidth: 1, padding: 8 }}
+        placeholder="Email"
+        value={'Ulises'}
+        onChangeText={() => {}}
+        autoCapitalize="none"
+        autoComplete="email"
+        autoCorrect={false}
+        keyboardType="email-address"
+      />
+
+      <Button title="get auth platform" onPress={handleGetPlatform} />
       {/* <Controller
         control={control}
         name="email"

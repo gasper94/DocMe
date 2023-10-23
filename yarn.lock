@@ -10305,6 +10305,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"next-compose-plugins@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "next-compose-plugins@npm:2.2.1"
+  checksum: 771762fda2b12b81daf10431cbb494816cff96be02b44009692c6c0eefbacd62cbf51ddb93af8d3380ec00254c6a95d64d10f744d4b9ddadefc21efee7dc69fc
+  languageName: node
+  linkType: hard
+
 "next-tick@npm:^1.1.0":
   version: 1.1.0
   resolution: "next-tick@npm:1.1.0"
@@ -13082,6 +13089,7 @@ __metadata:
     expo-secure-store: ^12.5.0
     expo-sharing: ^11.2.2
     expo-speech: ^11.1.1
+    next-compose-plugins: ^2.2.1
     openai: ^3.3.0
     patch-package: ^7.0.0
     postinstall-postinstall: ^2.1.0
