@@ -15,8 +15,8 @@ export function NavigationProvider({
           config: {
             initialRouteName: 'login/:id',
             screens: {
-              home: 'home/',
-              login: 'login/:id',
+              home: 'home',
+              login: 'login',
               'user-activity': 'activity/:id',
               'user-detail': 'user/:id',
               'user-form': 'form/:id',

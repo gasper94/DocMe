@@ -177,7 +177,7 @@ export function HomeScreen() {
         </MotiLink> */}
 
         <MotiLink
-          href="/login/xxx"
+          href="/login"
           animate={({ hovered, pressed }) => {
             'worklet'
 
