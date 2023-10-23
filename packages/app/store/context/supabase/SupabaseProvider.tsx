@@ -66,6 +66,7 @@ export const SupabaseProvider = (props: SupabaseProviderProps) => {
   }
 
   const signInWithPassword = async (email: string, password: string) => {
+    console.log('ready to login')
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
