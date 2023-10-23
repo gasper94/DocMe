@@ -13,31 +13,33 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
 // Auth
-import { useSupabase } from '../../store/context/supabase/useSupabase'
+// import { useSupabase } from '../../store/context/supabase/useSupabase'
 
-const FormSchema = z.object({
-  email: z.string().email('Please enter a valid email address.'),
-  password: z
-    .string()
-    .min(8, 'Please enter at least 8 character.')
-    .max(64, 'Please enter fewer than 64 characters.'),
-})
+// const FormSchema = z.object({
+//   email: z.string().email('Please enter a valid email address.'),
+//   password: z
+//     .string()
+//     .min(8, 'Please enter at least 8 character.')
+//     .max(64, 'Please enter fewer than 64 characters.'),
+// })
 
 export function Login() {
-  const { signInWithPassword, isLoggedIn, LoggedInUser } = useSupabase()
+  // const { signInWithPassword, isLoggedIn, LoggedInUser, signOut } =
+  //   useSupabase()
+  const [currentUser, setCurrentUser] = useState(null)
   const [email, setEmail] = useState<String | null>('')
   const [password, setPassword] = useState<String | null>('')
 
   const alertRef = React.useRef<any>(null)
 
-  const {
-    control,
-    handleSubmit,
-    trigger,
-    formState: { errors: isSubmitting },
-  } = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-  })
+  // const {
+  //   control,
+  //   handleSubmit,
+  //   trigger,
+  //   formState: { errors: isSubmitting },
+  // } = useForm<z.infer<typeof FormSchema>>({
+  //   resolver: zodResolver(FormSchema),
+  // })
 
   const handleEmailInput = (text) => {
     setEmail(text)
@@ -48,27 +50,36 @@ export function Login() {
   }
 
   const handleLogin = async () => {
-    const data = await LoggedInUser()
-    console.log('data:', data)
+    // const data = await LoggedInUser()
+
+    // setCurrentUser(data)
+    console.log('data:')
   }
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
-    try {
-      await signInWithPassword(data.email, data.password)
-    } catch (error: Error | any) {
-      alertRef.current?.showAlert({
-        variant: 'destructive',
-        title: 'Error',
-        message: error.message,
-      })
-    }
+  const handleSignOut = async () => {
+    console.log('sign out')
+    // await signOut()
+    // setCurrentUser(null)
   }
+
+  // async function onSubmit(data: z.infer<typeof FormSchema>) {
+  //   try {
+  //     await signInWithPassword(data.email, data.password)
+  //   } catch (error: Error | any) {
+  //     alertRef.current?.showAlert({
+  //       variant: 'destructive',
+  //       title: 'Error',
+  //       message: error.message,
+  //     })
+  //   }
+  // }
 
   return (
     <View className="flex-1 items-center justify-center">
-      <Text>{`${JSON.stringify(LoggedInUser)}`}</Text>
+      <Text>{`${JSON.stringify(currentUser)}`}</Text>
 
       <Button title="get user" onPress={handleLogin} />
+      <Button title="signout" onPress={handleSignOut} />
       {/* <TextInput
         style={{ width: 200, borderWidth: 1, padding: 8 }}
         placeholder="Enter Email"
@@ -76,7 +87,7 @@ export function Login() {
         onChangeText={handleEmailInput}
       /> */}
 
-      <Controller
+      {/* <Controller
         control={control}
         name="email"
         render={({ field: { onChange, onBlur, value } }) => (
@@ -95,7 +106,7 @@ export function Login() {
             keyboardType="email-address"
           />
         )}
-      />
+      /> */}
 
       {/* <TextInput
           style={{ width: 200, borderWidth: 1, padding: 8 }}
@@ -104,7 +115,7 @@ export function Login() {
           onChangeText={handlePasswordInput}
         /> */}
 
-      <Controller
+      {/* <Controller
         control={control}
         name="password"
         render={({ field: { onChange, onBlur, value } }) => (
@@ -123,13 +134,13 @@ export function Login() {
             secureTextEntry
           />
         )}
-      />
+      /> */}
 
-      <Button title="Login" onPress={handleSubmit(onSubmit)} />
+      {/* <Button title="Login" onPress={handleSubmit(onSubmit)} /> */}
       {/* <Button title="Log in" onPress={handleLogin} /> */}
 
       <Text>This is the Login Page</Text>
-      <TextLink href="/">👈 Go Home</TextLink>
+      <TextLink href="/home">👈 Go Home</TextLink>
     </View>
   )
 }

@@ -153,7 +153,7 @@ export function HomeScreen() {
             User
           </Text>
         </MotiLink>
-
+        {/* 
         <MotiLink
           href="/activity/xxx"
           animate={({ hovered, pressed }) => {
@@ -174,10 +174,10 @@ export function HomeScreen() {
           <Text selectable={false} className="text-base font-bold">
             Add Activity
           </Text>
-        </MotiLink>
+        </MotiLink> */}
 
         <MotiLink
-          href="/login"
+          href="/login/xxx"
           animate={({ hovered, pressed }) => {
             'worklet'
 
@@ -198,7 +198,7 @@ export function HomeScreen() {
           </Text>
         </MotiLink>
 
-        <MotiLink
+        {/* <MotiLink
           href="/saved-activities"
           animate={({ hovered, pressed }) => {
             'worklet'
@@ -218,7 +218,7 @@ export function HomeScreen() {
           <Text selectable={false} className="text-base font-bold">
             Saved Activities
           </Text>
-        </MotiLink>
+        </MotiLink> */}
       </Row>
     </View>
   )

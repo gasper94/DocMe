@@ -1,5 +1,5 @@
-import 'react-native-url-polyfill/auto'
-import React from 'react'
+// import 'react-native-url-polyfill/auto'
+import React, { useCallback } from 'react'
 
 import { EmailOtpType, createClient } from '@supabase/supabase-js'
 import * as SecureStore from 'expo-secure-store'
@@ -8,7 +8,7 @@ import * as SecureStore from 'expo-secure-store'
 import { SupabaseContext } from './SupabaseContext'
 
 // Router
-// import { useRouter } from 'solito/router'
+import { useRouter } from 'solito/router'
 
 // We are using Expo Secure Store to persist session info
 const ExpoSecureStoreAdapter = {
@@ -21,6 +21,12 @@ const ExpoSecureStoreAdapter = {
   removeItem: (key: string) => {
     SecureStore.deleteItemAsync(key)
   },
+}
+
+// This hook will protect the route access based on user authentication.
+function useProtectedRoute(isLoggedIn: boolean) {
+  const router = useRouter()
+  console.log('This should protect Routes!', isLoggedIn)
 }
 
 type SupabaseProviderProps = {
@@ -92,15 +98,15 @@ export const SupabaseProvider = (props: SupabaseProviderProps) => {
     return data
   }
 
-  const getSession = async () => {
+  const getSession = useCallback(async () => {
     const result = await supabase.auth.getSession()
     setLoggedIn(result.data.session !== null)
-  }
+  }, [supabase])
 
-  // React.useEffect(() => {
-  //   getSession()
-  //   console.log('isLoggedIn', isLoggedIn)
-  // }, [isLoggedIn])
+  React.useEffect(() => {
+    getSession()
+    console.log('isLoggedIn', isLoggedIn)
+  }, [isLoggedIn, getSession])
 
   // useProtectedRoute(isLoggedIn)
 

@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import { Login } from '../../features/login_page/screen'
+import { Login } from '../../features/login/screen'
 import { HomeScreen } from '../../features/home/screen'
 import { UserDetailScreen } from '../../features/user/screen'
 import { ActivityScreen } from '../../features/activity/screen'
