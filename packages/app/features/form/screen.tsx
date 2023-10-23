@@ -26,12 +26,12 @@ import {
 } from '@nandorojo/heroicons/24/outline'
 
 // State Management
-import { RootState } from '../../../store/store'
+import { RootState } from '../../store/store'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   addPhysicalActivity,
   addProcessingActivity,
-} from '../../../store/physicalActivitySlice'
+} from '../../store/physicalActivitySlice'
 
 interface Transcript {
   calories?: number

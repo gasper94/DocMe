@@ -32,13 +32,13 @@ import { useDispatch } from 'react-redux'
 import {
   addPhysicalActivity,
   addProcessingActivity,
-} from '../../../store/physicalActivitySlice'
+} from '../../store/physicalActivitySlice'
 import RecordingAnimation from './RecordingAnimation'
 import SingleAudioRecorder from '../singleAudioRecorder/SingleAudioRecorder'
 import { getDurationFormatted } from 'app/singleAudioRecording/index'
 
 // Interfaces
-import { RootState } from '../../../store/store'
+import { RootState } from '../../store/store'
 
 interface Transcript {
   burnedCalories?: number

@@ -23,7 +23,7 @@ import { ExclamationCircle, XMark } from '@nandorojo/heroicons/24/outline'
 
 // State Management
 import { useDispatch } from 'react-redux'
-import { addPhysicalActivity } from '../../../store/physicalActivitySlice'
+import { addPhysicalActivity } from '../../store/physicalActivitySlice'
 
 interface Transcript {
   burnedCalories?: number

@@ -8,11 +8,11 @@ import { SafeAreaView } from 'moti'
 import { Input } from 'hammerjs'
 import { TextInput } from 'react-native-gesture-handler'
 
-// import React, { useState } from 'react';
-
-// Components
+// Auth
+import { useSupabase } from '../../store/context/supabase/useSupabase'
 
 export function Login() {
+  const { isLoggedIn } = useSupabase()
   const [email, setEmail] = useState<String | null>('')
   const [password, setPassword] = useState<String | null>('')
 
@@ -41,6 +41,7 @@ export function Login() {
         {`${JSON.stringify({
           email: email,
           password: password,
+          isLoggedIn: isLoggedIn,
         })}`}
       </Text>
 

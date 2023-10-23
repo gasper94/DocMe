@@ -3,10 +3,12 @@ import React from 'react'
 
 import { EmailOtpType, createClient } from '@supabase/supabase-js'
 import * as SecureStore from 'expo-secure-store'
-import { useSegments, useRouter } from 'expo-router'
+// import { useSegments } from 'expo-router'
 
 import { SupabaseContext } from './SupabaseContext'
-import { supabaseUrl, supabaseKey } from './supabase'
+
+// Router
+// import { useRouter } from 'solito/router'
 
 // We are using Expo Secure Store to persist session info
 const ExpoSecureStoreAdapter = {
@@ -21,28 +23,6 @@ const ExpoSecureStoreAdapter = {
   },
 }
 
-// This hook will protect the route access based on user authentication.
-function useProtectedRoute(isLoggedIn: boolean) {
-  const segments = useSegments()
-  const router = useRouter()
-
-  React.useEffect(() => {
-    const inAuthGroup = segments[0] === '(auth)'
-
-    if (
-      // If the user is not logged in and the initial segment is not anything in the auth group.
-      !isLoggedIn &&
-      !inAuthGroup
-    ) {
-      // Redirect to the sign-up page.
-      router.replace('/sign-up')
-    } else if (isLoggedIn && inAuthGroup) {
-      // Redirect away from the sign-up page.
-      router.replace('/')
-    }
-  }, [isLoggedIn, segments])
-}
-
 type SupabaseProviderProps = {
   children: JSX.Element | JSX.Element[]
 }
@@ -50,14 +30,18 @@ type SupabaseProviderProps = {
 export const SupabaseProvider = (props: SupabaseProviderProps) => {
   const [isLoggedIn, setLoggedIn] = React.useState<boolean>(false)
 
-  const supabase = createClient(supabaseUrl, supabaseKey, {
-    auth: {
-      storage: ExpoSecureStoreAdapter,
-      autoRefreshToken: true,
-      persistSession: true,
-      detectSessionInUrl: false,
-    },
-  })
+  const supabase = createClient(
+    process.env.supabaseUrl || '',
+    process.env.supabaseKey || '',
+    {
+      auth: {
+        storage: ExpoSecureStoreAdapter,
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: false,
+      },
+    }
+  )
 
   const signUp = async (email: string, password: string) => {
     const { error } = await supabase.auth.signUp({
@@ -112,12 +96,12 @@ export const SupabaseProvider = (props: SupabaseProviderProps) => {
     setLoggedIn(result.data.session !== null)
   }
 
-  React.useEffect(() => {
-    getSession()
-    console.log('isLoggedIn', isLoggedIn)
-  }, [isLoggedIn])
+  // React.useEffect(() => {
+  //   getSession()
+  //   console.log('isLoggedIn', isLoggedIn)
+  // }, [isLoggedIn])
 
-  useProtectedRoute(isLoggedIn)
+  // useProtectedRoute(isLoggedIn)
 
   return (
     <SupabaseContext.Provider

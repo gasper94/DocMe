@@ -34,7 +34,7 @@ import LongPressButton from './components/RecordingButton/RecordingButton'
 import { NavigationScreen } from '../components/NavigationBar/NavigationBar'
 
 // Interfaces
-import { RootState } from '../../../store/store'
+import { RootState } from '../../store/store'
 
 // State Management
 import { useSelector } from 'react-redux'
