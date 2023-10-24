@@ -14,7 +14,7 @@ import * as z from 'zod'
 
 // Auth
 import { PrintHello } from '../../auth/supabase/index'
-import { useSupabase } from '../../store/context/supabase/useSupabase'
+// import { useSupabase } from '../../store/context/supabase/useSupabase'
 
 const FormSchema = z.object({
   email: z.string().email('Please enter a valid email address.'),
@@ -25,7 +25,7 @@ const FormSchema = z.object({
 })
 
 export function Login() {
-  const { isTest, signInWithPassword, LoggedInUser, signOut } = useSupabase()
+  // const { isTest } = useSupabase()
 
   const [currentUser, setCurrentUser] = useState(null)
   const [email, setEmail] = useState<String | null>('')
@@ -51,27 +51,27 @@ export function Login() {
   }
 
   const handleLogin = async () => {
-    const data = await LoggedInUser()
+    // const data = await LoggedInUser()
 
-    setCurrentUser(data)
+    // setCurrentUser(data)
     console.log('data:')
   }
 
   const handleSignOut = async () => {
-    await signOut()
+    // await signOut()
     setCurrentUser(null)
   }
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    try {
-      await signInWithPassword(data.email, data.password)
-    } catch (error: Error | any) {
-      alertRef.current?.showAlert({
-        variant: 'destructive',
-        title: 'Error',
-        message: error.message,
-      })
-    }
+    // try {
+    //   await signInWithPassword(data.email, data.password)
+    // } catch (error: Error | any) {
+    //   alertRef.current?.showAlert({
+    //     variant: 'destructive',
+    //     title: 'Error',
+    //     message: error.message,
+    //   })
+    // }
   }
 
   const handleGetPlatform = () => {

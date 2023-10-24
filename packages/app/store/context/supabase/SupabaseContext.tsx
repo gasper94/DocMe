@@ -3,11 +3,11 @@ import { EmailOtpType } from '@supabase/supabase-js'
 
 type SupabaseContextProps = {
   isTest: string
-  // isLoggedIn: boolean
+  isLoggedIn: boolean
   signUp: (email: string, password: string) => Promise<void>
-  // verifyOtp: (email: string, token: string, type: EmailOtpType) => Promise<void>
+  verifyOtp: (email: string, token: string, type: EmailOtpType) => Promise<void>
   signInWithPassword: (email: string, password: string) => Promise<void>
-  // resetPasswordForEmail: (email: string) => Promise<void>
+  resetPasswordForEmail: (email: string) => Promise<void>
   signOut: () => Promise<void>
   LoggedInUser: () => Promise<any>
   supabase: any
@@ -15,11 +15,11 @@ type SupabaseContextProps = {
 
 export const SupabaseContext = createContext<SupabaseContextProps>({
   isTest: '',
-  // isLoggedIn: false,
+  isLoggedIn: false,
   signUp: async () => {},
-  // verifyOtp: async () => {},
+  verifyOtp: async () => {},
   signInWithPassword: async () => {},
-  // resetPasswordForEmail: async () => {},
+  resetPasswordForEmail: async () => {},
   signOut: async () => {},
   LoggedInUser: async () => {},
   supabase: async () => {},

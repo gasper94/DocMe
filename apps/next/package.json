@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@babel/core": "^7.23.2",
+    "@babel/preset-env": "^7.23.2",
     "@expo/next-adapter": "5.0.2",
     "app": "*",
     "next": "13.2.4",

@@ -15,9 +15,11 @@ export function Provider({ children }: { children: React.ReactNode }) {
   return (
     <ReduxProvider store={store}>
       <SafeArea>
-        <SupabaseProvider>
-          <NavigationProvider>{children}</NavigationProvider>
-        </SupabaseProvider>
+        <NavigationProvider>
+          <SupabaseProvider>
+            <>{children}</>
+          </SupabaseProvider>
+        </NavigationProvider>
       </SafeArea>
     </ReduxProvider>
 
