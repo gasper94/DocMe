@@ -27,6 +27,19 @@ const ExpoSecureStoreAdapter = {
 function useProtectedRoute(isLoggedIn: boolean) {
   const router = useRouter()
   console.log('This should protect Routes!', isLoggedIn)
+
+  React.useEffect(() => {
+    if (
+      // If the user is not logged in and the initial segment is not anything in the auth group.
+      !isLoggedIn
+    ) {
+      // Redirect to the sign-up page.
+      router.replace('/login')
+    } else if (isLoggedIn) {
+      // Redirect away from the sign-up page.
+      router.replace('/home')
+    }
+  }, [isLoggedIn])
 }
 
 type SupabaseProviderProps = {
@@ -35,28 +48,28 @@ type SupabaseProviderProps = {
 
 export const SupabaseProvider = (props: SupabaseProviderProps) => {
   const [isTest, setIsTest] = React.useState<string>('This is a test')
-  // const [isLoggedIn, setLoggedIn] = React.useState<boolean>(false)
+  const [isLoggedIn, setLoggedIn] = React.useState<boolean>(false)
 
-  // const supabase = createClient(
-  //   process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  //   process.env.NEXT_PUBLIC_SUPABASE_KEY || '',
-  //   {
-  //     auth: {
-  //       // storage: ExpoSecureStoreAdapter,
-  //       autoRefreshToken: true,
-  //       persistSession: true,
-  //       detectSessionInUrl: false,
-  //     },
-  //   }
-  // )
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+    process.env.NEXT_PUBLIC_SUPABASE_KEY || '',
+    {
+      auth: {
+        // storage: ExpoSecureStoreAdapter,
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: false,
+      },
+    }
+  )
 
-  // const signUp = async (email: string, password: string) => {
-  //   const { error } = await supabase.auth.signUp({
-  //     email,
-  //     password,
-  //   })
-  //   if (error) throw error
-  // }
+  const signUp = async (email: string, password: string) => {
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+    })
+    if (error) throw error
+  }
 
   // const verifyOtp = async (
   //   email: string,
@@ -72,44 +85,44 @@ export const SupabaseProvider = (props: SupabaseProviderProps) => {
   //   setLoggedIn(true)
   // }
 
-  // const signInWithPassword = async (email: string, password: string) => {
-  //   console.log('ready to login')
-  //   const { error } = await supabase.auth.signInWithPassword({
-  //     email,
-  //     password,
-  //   })
-  //   if (error) throw error
-  //   setLoggedIn(true)
-  // }
+  const signInWithPassword = async (email: string, password: string) => {
+    console.log('ready to login')
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+    if (error) throw error
+    setLoggedIn(true)
+  }
 
   // const resetPasswordForEmail = async (email: string) => {
   //   const { error } = await supabase.auth.resetPasswordForEmail(email)
   //   if (error) throw error
   // }
 
-  // const signOut = async () => {
-  //   const { error } = await supabase.auth.signOut()
-  //   if (error) throw error
-  //   setLoggedIn(false)
-  // }
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut()
+    if (error) throw error
+    setLoggedIn(false)
+  }
 
-  // const LoggedInUser = async () => {
-  //   const { data, error } = await supabase.auth.getUser()
-  //   if (error) throw error
-  //   return data
-  // }
+  const LoggedInUser = async () => {
+    const { data, error } = await supabase.auth.getUser()
+    if (error) throw error
+    return data
+  }
 
-  // const getSession = useCallback(async () => {
-  //   const result = await supabase.auth.getSession()
-  //   setLoggedIn(result.data.session !== null)
-  // }, [supabase])
+  const getSession = useCallback(async () => {
+    const result = await supabase.auth.getSession()
+    setLoggedIn(result.data.session !== null)
+  }, [supabase])
 
-  // React.useEffect(() => {
-  //   getSession()
-  //   console.log('isLoggedIn', isLoggedIn)
-  // }, [isLoggedIn, getSession])
+  React.useEffect(() => {
+    getSession()
+    console.log('isLoggedIn', isLoggedIn)
+  }, [isLoggedIn, getSession])
 
-  // useProtectedRoute(isLoggedIn)
+  useProtectedRoute(isLoggedIn)
 
   React.useEffect(() => {
     console.log('change')
@@ -120,13 +133,13 @@ export const SupabaseProvider = (props: SupabaseProviderProps) => {
       value={{
         isTest,
         // isLoggedIn,
-        // signInWithPassword,
+        signInWithPassword,
         // verifyOtp,
-        // signUp,
+        signUp,
         // resetPasswordForEmail,
-        // signOut,
-        // LoggedInUser,
-        // supabase,
+        signOut,
+        LoggedInUser,
+        supabase,
       }}
     >
       {props.children}
