@@ -7,7 +7,7 @@ import { Text } from 'app/design/typography'
 // State Management
 import { Provider as ReduxProvider } from 'react-redux'
 import { store } from '../store/store'
-import { SupabaseProvider } from '../store/context/supabase/SupabaseProvider'
+import { SupabaseProvider } from '../auth/supabase'
 
 // Supabase
 

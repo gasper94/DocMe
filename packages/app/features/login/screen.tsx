@@ -13,8 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
 // Auth
-import { PrintHello } from '../../auth/supabase/index'
-// import { useSupabase } from '../../store/context/supabase/useSupabase'
+// import { useSupabase } from '../../auth/supabase'
 
 const FormSchema = z.object({
   email: z.string().email('Please enter a valid email address.'),
@@ -27,7 +26,7 @@ const FormSchema = z.object({
 export function Login() {
   // const { isTest } = useSupabase()
 
-  const [currentUser, setCurrentUser] = useState(null)
+  const [currentUser, setCurrentUser] = useState<string | ''>('')
   const [email, setEmail] = useState<String | null>('')
   const [password, setPassword] = useState<String | null>('')
 
@@ -53,13 +52,13 @@ export function Login() {
   const handleLogin = async () => {
     // const data = await LoggedInUser()
 
-    // setCurrentUser(data)
+    // setCurrentUser(isTest)
     console.log('data:')
   }
 
   const handleSignOut = async () => {
     // await signOut()
-    setCurrentUser(null)
+    // setCurrentUser(null)
   }
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
@@ -72,10 +71,6 @@ export function Login() {
     //     message: error.message,
     //   })
     // }
-  }
-
-  const handleGetPlatform = () => {
-    PrintHello()
   }
 
   return (
@@ -105,7 +100,6 @@ export function Login() {
         keyboardType="email-address"
       /> */}
 
-      <Button title="get auth platform" onPress={handleGetPlatform} />
       <Controller
         control={control}
         name="email"
