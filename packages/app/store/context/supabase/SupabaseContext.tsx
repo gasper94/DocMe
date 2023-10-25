@@ -2,7 +2,6 @@ import { createContext } from 'react'
 import { EmailOtpType } from '@supabase/supabase-js'
 
 type SupabaseContextProps = {
-  isTest: string
   isLoggedIn: boolean
   signUp: (email: string, password: string) => Promise<void>
   verifyOtp: (email: string, token: string, type: EmailOtpType) => Promise<void>
@@ -14,7 +13,6 @@ type SupabaseContextProps = {
 }
 
 export const SupabaseContext = createContext<SupabaseContextProps>({
-  isTest: '',
   isLoggedIn: false,
   signUp: async () => {},
   verifyOtp: async () => {},

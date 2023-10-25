@@ -13,7 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
 // Auth
-// import { useSupabase } from '../../auth/supabase'
+import { useSupabase } from '../../auth/supabase/useSupabase'
 
 const FormSchema = z.object({
   email: z.string().email('Please enter a valid email address.'),
@@ -24,9 +24,9 @@ const FormSchema = z.object({
 })
 
 export function Login() {
-  // const { isTest } = useSupabase()
+  const { isTest, signInWithPassword, LoggedInUser, signOut } = useSupabase()
 
-  const [currentUser, setCurrentUser] = useState<string | ''>('')
+  const [currentUser, setCurrentUser] = useState<string | null>(null)
   const [email, setEmail] = useState<String | null>('')
   const [password, setPassword] = useState<String | null>('')
 
@@ -50,27 +50,27 @@ export function Login() {
   }
 
   const handleLogin = async () => {
-    // const data = await LoggedInUser()
-
-    // setCurrentUser(isTest)
-    console.log('data:')
+    const data = await LoggedInUser()
+    setCurrentUser(data)
+    console.log('data:', isTest, ':', data)
   }
 
   const handleSignOut = async () => {
-    // await signOut()
-    // setCurrentUser(null)
+    await signOut()
+    setCurrentUser(null)
   }
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    // try {
-    //   await signInWithPassword(data.email, data.password)
-    // } catch (error: Error | any) {
-    //   alertRef.current?.showAlert({
-    //     variant: 'destructive',
-    //     title: 'Error',
-    //     message: error.message,
-    //   })
-    // }
+    try {
+      // console.log(data.email, data.password)
+      await signInWithPassword(data.email, data.password)
+    } catch (error: Error | any) {
+      alertRef.current?.showAlert({
+        variant: 'destructive',
+        title: 'Error',
+        message: error.message,
+      })
+    }
   }
 
   return (

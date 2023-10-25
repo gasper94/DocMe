@@ -1,13 +1,14 @@
 import { NavigationProvider } from './navigation'
 import { SafeArea } from './safe-area'
-
-//
 import { Text } from 'app/design/typography'
 
 // State Management
 import { Provider as ReduxProvider } from 'react-redux'
 import { store } from '../store/store'
-import { SupabaseProvider } from '../auth/supabase'
+
+//
+import { SupabaseProvider } from '../auth/supabase/index'
+// import { SupabaseProvider } from '..'
 
 // Supabase
 
