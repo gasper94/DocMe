@@ -6,11 +6,8 @@ import { Text } from 'app/design/typography'
 import { Provider as ReduxProvider } from 'react-redux'
 import { store } from '../store/store'
 
-//
-import { SupabaseProvider } from '../auth/supabase/index'
-// import { SupabaseProvider } from '..'
-
 // Supabase
+import { SupabaseProvider } from '../auth/supabase/index'
 
 export function Provider({ children }: { children: React.ReactNode }) {
   return (
@@ -23,9 +20,5 @@ export function Provider({ children }: { children: React.ReactNode }) {
         </NavigationProvider>
       </SafeArea>
     </ReduxProvider>
-
-    // <SupabaseProvider>
-    //   <Text>Hello entry point</Text>
-    // </SupabaseProvider>
   )
 }
