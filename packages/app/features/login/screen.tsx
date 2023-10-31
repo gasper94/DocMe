@@ -76,7 +76,6 @@ export function Login() {
   return (
     <View className="flex-1 items-center justify-center">
       <Text>is test:</Text>
-      <Text>{`${process.env.NEXT_PUBLIC_SUPABASE_URL}`}</Text>
 
       <Text>{`${JSON.stringify(currentUser)}`}</Text>
 

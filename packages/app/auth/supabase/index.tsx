@@ -9,6 +9,16 @@ import { SupabaseContext } from './SupabaseContext'
 
 import { useRouter } from 'solito/router'
 
+const supabaseUrl =
+  process.env.NEXT_PUBLIC_PLATFORM === 'web'
+    ? process.env.NEXT_PUBLIC_SUPABASE_URL
+    : process.env.supabaseUrl
+
+const supabaseKey =
+  process.env.NEXT_PUBLIC_PLATFORM === 'web'
+    ? process.env.NEXT_PUBLIC_SUPABASE_KEY
+    : process.env.supabaseKey
+
 // We are using Expo Secure Store to persist session info
 const ExpoSecureStoreAdapter = {
   getItem: (key: string) => {
@@ -49,8 +59,8 @@ export const SupabaseProvider = (props: SupabaseProviderProps) => {
   const [isLoggedIn, setLoggedIn] = React.useState<boolean>(false)
 
   const supabase = createClient(
-    'https://gobfjrghwpnrdzuroqlr.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvYmZqcmdod3BucmR6dXJvcWxyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTY0NTEyMTIsImV4cCI6MjAxMjAyNzIxMn0.b1EO_Qz-IbuxBLmWgPLHPHxJJv-JxoQmNWRK4L7fK7Q',
+    supabaseUrl, // @ts-ignore
+    supabaseKey, // @ts-ignore
     {
       auth: {
         storage: ExpoSecureStoreAdapter,
