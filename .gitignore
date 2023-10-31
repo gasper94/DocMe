@@ -5,6 +5,9 @@ packages/store/context/supabase/supabase.ts
 .env.development
 .env.production 
 
+.env.dev-web-development
+.env.dev-mobile-development
+
 # ... (other rules remain the same)
 
 # OSX
