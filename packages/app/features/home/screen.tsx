@@ -86,140 +86,151 @@ export function HomeScreen() {
     setIsHovered(false)
   }
 
+  const handleSingOut = () => {
+    alert('signout')
+  }
+
   return (
+    // <View className="flex-1 items-center justify-center p-3">
+    //   <View className="flex w-full">
+    //     <NavigationScreen />
+    //   </View>
+
+    //   {/* <View>
+    //   <AudioRecorder />
+    //   <DistanceCalculator />
+    // </View> */}
+    //   <ScrollView style={{ paddingTop: 20 }}>
+    //     <View className="flex flex-col items-center justify-center">
+    //       <Calendar />
+    //     </View>
+    //     {/* <Text>{`Key: ${key}`}</Text> */}
+    //   </ScrollView>
+
+    //   <Text>{activity.length}</Text>
+
+    //   {/* <View
+    //     style={[styles.container, isHovered && styles.containerHovered]}
+    //     onMouseEnter={handleMouseEnter}
+    //     onMouseLeave={handleMouseLeave}
+    //   >
+    //     <TouchableHighlight
+    //       onPressIn={handlePressIn}
+    //       onPressOut={handlePressOut}
+    //       style={[styles.button, isHovered && styles.buttonHovered]}
+    //       underlayColor="red"
+    //     >
+    //       <Text style={styles.buttonText}>Hover Me2</Text>
+    //     </TouchableHighlight>
+    //   </View> */}
+
+    //   {/* This bellow is a touchable button */}
+    //   {/* <TouchableWithoutFeedback
+    //       onPress={() => console.log('Button clicked!')}
+    //       onPressIn={handlePressIn}
+    //       onPressOut={handlePressOut}
+    //     >
+    //     <View style={buttonStyle}>
+    //       <Text>Button</Text>
+    //     </View>
+    //   </TouchableWithoutFeedback> */}
+
+    //   <Row className="space-x-8">
+    //     <MotiLink
+    //       href="/user/xxx"
+    //       animate={({ hovered, pressed }) => {
+    //         'worklet'
+
+    //         return {
+    //           scale: pressed ? 0.95 : hovered ? 1.1 : 1,
+    //           rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
+    //         }
+    //       }}
+    //       transition={{
+    //         type: 'timing',
+    //         duration: 150,
+    //       }}
+    //       style={undefined}
+    //       onLayout={undefined}
+    //     >
+    //       <Text selectable={false} className="text-base font-bold">
+    //         User
+    //       </Text>
+    //     </MotiLink>
+    //     {/*
+    //     <MotiLink
+    //       href="/activity/xxx"
+    //       animate={({ hovered, pressed }) => {
+    //         'worklet'
+
+    //         return {
+    //           scale: pressed ? 0.95 : hovered ? 1.1 : 1,
+    //           rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
+    //         }
+    //       }}
+    //       transition={{
+    //         type: 'timing',
+    //         duration: 150,
+    //       }}
+    //       style={undefined}
+    //       onLayout={undefined}
+    //     >
+    //       <Text selectable={false} className="text-base font-bold">
+    //         Add Activity
+    //       </Text>
+    //     </MotiLink> */}
+
+    //     <MotiLink
+    //       href="/login"
+    //       animate={({ hovered, pressed }) => {
+    //         'worklet'
+
+    //         return {
+    //           scale: pressed ? 0.95 : hovered ? 1.1 : 1,
+    //           rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
+    //         }
+    //       }}
+    //       transition={{
+    //         type: 'timing',
+    //         duration: 150,
+    //       }}
+    //       style={undefined}
+    //       onLayout={undefined}
+    //     >
+    //       <Text selectable={false} className="text-base font-bold">
+    //         Go to Login
+    //       </Text>
+    //     </MotiLink>
+
+    //     {/* <MotiLink
+    //       href="/saved-activities"
+    //       animate={({ hovered, pressed }) => {
+    //         'worklet'
+
+    //         return {
+    //           scale: pressed ? 0.95 : hovered ? 1.1 : 1,
+    //           rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
+    //         }
+    //       }}
+    //       transition={{
+    //         type: 'timing',
+    //         duration: 150,
+    //       }}
+    //       style={undefined}
+    //       onLayout={undefined}
+    //     >
+    //       <Text selectable={false} className="text-base font-bold">
+    //         Saved Activities
+    //       </Text>
+    //     </MotiLink> */}
+    //   </Row>
+    // </View>
     <View className="flex-1 items-center justify-center p-3">
       <View className="flex w-full">
         <NavigationScreen />
       </View>
 
-      {/* <View>
-      <AudioRecorder />
-      <DistanceCalculator />
-    </View> */}
-      <ScrollView style={{ paddingTop: 20 }}>
-        <View className="flex flex-col items-center justify-center">
-          <Calendar />
-        </View>
-        {/* <Text>{`Key: ${key}`}</Text> */}
-      </ScrollView>
-
-      <Text>{activity.length}</Text>
-
-      {/* <View
-        style={[styles.container, isHovered && styles.containerHovered]}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        <TouchableHighlight
-          onPressIn={handlePressIn}
-          onPressOut={handlePressOut}
-          style={[styles.button, isHovered && styles.buttonHovered]}
-          underlayColor="red"
-        >
-          <Text style={styles.buttonText}>Hover Me2</Text>
-        </TouchableHighlight>
-      </View> */}
-
-      {/* This bellow is a touchable button */}
-      {/* <TouchableWithoutFeedback
-          onPress={() => console.log('Button clicked!')}
-          onPressIn={handlePressIn}
-          onPressOut={handlePressOut}
-        >
-        <View style={buttonStyle}>
-          <Text>Button</Text>
-        </View>
-      </TouchableWithoutFeedback> */}
-
-      <Row className="space-x-8">
-        <MotiLink
-          href="/user/xxx"
-          animate={({ hovered, pressed }) => {
-            'worklet'
-
-            return {
-              scale: pressed ? 0.95 : hovered ? 1.1 : 1,
-              rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
-            }
-          }}
-          transition={{
-            type: 'timing',
-            duration: 150,
-          }}
-          style={undefined}
-          onLayout={undefined}
-        >
-          <Text selectable={false} className="text-base font-bold">
-            User
-          </Text>
-        </MotiLink>
-        {/* 
-        <MotiLink
-          href="/activity/xxx"
-          animate={({ hovered, pressed }) => {
-            'worklet'
-
-            return {
-              scale: pressed ? 0.95 : hovered ? 1.1 : 1,
-              rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
-            }
-          }}
-          transition={{
-            type: 'timing',
-            duration: 150,
-          }}
-          style={undefined}
-          onLayout={undefined}
-        >
-          <Text selectable={false} className="text-base font-bold">
-            Add Activity
-          </Text>
-        </MotiLink> */}
-
-        <MotiLink
-          href="/login"
-          animate={({ hovered, pressed }) => {
-            'worklet'
-
-            return {
-              scale: pressed ? 0.95 : hovered ? 1.1 : 1,
-              rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
-            }
-          }}
-          transition={{
-            type: 'timing',
-            duration: 150,
-          }}
-          style={undefined}
-          onLayout={undefined}
-        >
-          <Text selectable={false} className="text-base font-bold">
-            Go to Login
-          </Text>
-        </MotiLink>
-
-        {/* <MotiLink
-          href="/saved-activities"
-          animate={({ hovered, pressed }) => {
-            'worklet'
-
-            return {
-              scale: pressed ? 0.95 : hovered ? 1.1 : 1,
-              rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
-            }
-          }}
-          transition={{
-            type: 'timing',
-            duration: 150,
-          }}
-          style={undefined}
-          onLayout={undefined}
-        >
-          <Text selectable={false} className="text-base font-bold">
-            Saved Activities
-          </Text>
-        </MotiLink> */}
-      </Row>
+      <Text>Hello there</Text>
     </View>
   )
 }

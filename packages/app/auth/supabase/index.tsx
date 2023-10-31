@@ -10,12 +10,12 @@ import { SupabaseContext } from './SupabaseContext'
 import { useRouter } from 'solito/router'
 
 const supabaseUrl =
-  process.env.NEXT_PUBLIC_PLATFORM === 'web'
+  process.env.PLATFORM === 'web'
     ? process.env.NEXT_PUBLIC_SUPABASE_URL
     : process.env.supabaseUrl
 
 const supabaseKey =
-  process.env.NEXT_PUBLIC_PLATFORM === 'web'
+  process.env.PLATFORM === 'web'
     ? process.env.NEXT_PUBLIC_SUPABASE_KEY
     : process.env.supabaseKey
 
@@ -59,8 +59,8 @@ export const SupabaseProvider = (props: SupabaseProviderProps) => {
   const [isLoggedIn, setLoggedIn] = React.useState<boolean>(false)
 
   const supabase = createClient(
-    supabaseUrl, // @ts-ignore
-    supabaseKey, // @ts-ignore
+    supabaseUrl || '', // @ts-ignore
+    supabaseKey || '', // @ts-ignore
     {
       auth: {
         storage: ExpoSecureStoreAdapter,
