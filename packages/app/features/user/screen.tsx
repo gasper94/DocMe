@@ -9,9 +9,6 @@ import { Button } from 'react-native'
 // Components
 import MultiStepForm from '../MultiStepForm/MultiStepForm'
 
-// Stack
-import { Link, Stack } from 'expo-router'
-
 export function UserDetailScreen() {
   return (
     <View className="flex-1 items-center justify-center bg-blue-200">

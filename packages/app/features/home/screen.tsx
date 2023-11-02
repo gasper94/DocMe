@@ -44,65 +44,6 @@ import { useSelector } from 'react-redux'
 import { useRouter } from 'solito/router'
 import { style } from '@motionone/dom'
 
-const RedBox = () => {
-  return (
-    <View className="w-full bg-red-300">
-      <Text>Box</Text>
-    </View>
-  )
-}
-
-// const Card = () => {
-//   return (
-//     <div className="relative flex w-full max-w-[48rem] flex-row rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-//       <div className="relative m-0 w-2/5 shrink-0 overflow-hidden rounded-xl rounded-r-none bg-white bg-clip-border text-gray-700">
-//         <img
-//           src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1471&amp;q=80"
-//           alt="image"
-//           className="h-full w-full object-cover"
-//         />
-//       </div>
-//       <div className="p-6">
-//         <h6 className="mb-4 block font-sans text-base font-semibold uppercase leading-relaxed tracking-normal text-pink-500 antialiased">
-//           startups
-//         </h6>
-//         <h4 className="text-blue-gray-900 mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal antialiased">
-//           Lyft launching cross-platform service this week
-//         </h4>
-//         <p className="mb-8 block font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
-//           Like so many organizations these days, Autodesk is a company in
-//           transition. It was until recently a traditional boxed software company
-//           selling licenses. Yet its own business model disruption is only part
-//           of the story
-//         </p>
-//         <a className="inline-block" href="#">
-//           <button
-//             className="flex select-none items-center gap-2 rounded-lg px-6 py-3 text-center align-middle font-sans text-xs font-bold uppercase text-pink-500 transition-all hover:bg-pink-500/10 active:bg-pink-500/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-//             type="button"
-//           >
-//             Learn More
-//             <svg
-//               xmlns="http://www.w3.org/2000/svg"
-//               fill="none"
-//               viewBox="0 0 24 24"
-//               stroke-width="2"
-//               stroke="currentColor"
-//               aria-hidden="true"
-//               className="h-4 w-4"
-//             >
-//               <path
-//                 stroke-linecap="round"
-//                 stroke-linejoin="round"
-//                 d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-//               ></path>
-//             </svg>
-//           </button>
-//         </a>
-//       </div>
-//     </div>
-//   )
-// }
-
 const Card = () => {
   return (
     <View style={stylex.cardContainer}>
@@ -432,54 +373,19 @@ export function HomeScreen() {
     // </View>
     // </View>
     <SafeAreaView style={styles.container}>
-      {/* <View style={styles.navigation}>
-        <NavigationScreen />
-      </View>
-
-      <View
-        // className="flex flex-row bg-blue-100 min-[320px]:mt-3.5 min-[640px]:mt-0"
-        style={styles.mainx}
-      >
-        <View className="flex-1 bg-yellow-100">
-          <Text>1</Text>
-        </View>
-        <View className="flex-1 bg-yellow-100">
-          <Text>2</Text>
-        </View>
-        <View className="flex-1 bg-blue-300">
-          <Text>3</Text>
-        </View>
-      </View> */}
       <View style={styles.navigation}>
         <NavigationScreen />
       </View>
       <View style={styles.mainx}>
         <View style={styles.left}>
-          <Text>1</Text>
+          <View style={styles.leftContainer}>
+            <View style={styles.calendar}>
+              <Text>The calendar should go here!</Text>
+            </View>
+          </View>
         </View>
 
-        <ScrollView style={styles.center}>
-          <MotiLink
-            href="/user/xxx"
-            animate={({ hovered, pressed }) => {
-              'worklet'
-
-              return {
-                scale: pressed ? 0.95 : hovered ? 1.1 : 1,
-                rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
-              }
-            }}
-            transition={{
-              type: 'timing',
-              duration: 150,
-            }}
-            style={undefined}
-            onLayout={undefined}
-          >
-            <Text selectable={false} className="text-base font-bold">
-              User
-            </Text>
-          </MotiLink>
+        <ScrollView style={styles.center} showsVerticalScrollIndicator={false}>
           <Card />
           <Card />
           <Card />
@@ -489,7 +395,11 @@ export function HomeScreen() {
         </ScrollView>
 
         <View style={styles.right}>
-          <Text>3</Text>
+          <View style={styles.rightContainer}>
+            <View style={styles.calendar}>
+              <Text>The options should go here</Text>
+            </View>
+          </View>
         </View>
       </View>
     </SafeAreaView>
@@ -500,7 +410,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     flex: 1,
-    backgroundColor: 'pink',
+    backgroundColor: 'rgb(33, 37, 46)',
     overflow: 'hidden',
     height: '100%',
     width: '100%',
@@ -508,7 +418,7 @@ const styles = StyleSheet.create({
   navigation: {
     width: '100%',
     height: '5%',
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
 
     ...Platform.select({
       ios: {
@@ -521,14 +431,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     height: '95%',
-    backgroundColor: 'purple',
+    // backgroundColor: 'purple',
     overflow: 'hidden',
   },
   center: {
     overflow: 'scroll',
     flex: 1,
     height: '100%',
-    backgroundColor: 'pink',
+    // backgroundColor: 'pink',
 
     ...Platform.select({
       ios: {
@@ -538,7 +448,7 @@ const styles = StyleSheet.create({
   },
   left: {
     flex: 1,
-    backgroundColor: 'yellow',
+    // backgroundColor: 'yellow',
     overflow: 'hidden',
 
     ...Platform.select({
@@ -549,7 +459,7 @@ const styles = StyleSheet.create({
   },
   right: {
     flex: 1,
-    backgroundColor: 'blue',
+    // backgroundColor: 'blue',
     overflow: 'hidden',
 
     ...Platform.select({
@@ -557,5 +467,20 @@ const styles = StyleSheet.create({
         display: 'none',
       },
     }),
+  },
+  leftContainer: {
+    display: 'flex',
+    alignItems: 'flex-end',
+    // backgroundColor: 'purple',
+  },
+  rightContainer: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    // backgroundColor: 'purple',
+  },
+  calendar: {
+    width: 400,
+    height: 400,
+    backgroundColor: 'red',
   },
 })
