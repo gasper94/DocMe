@@ -419,8 +419,8 @@ export function HomeScreen() {
       </ScrollView> */}
 
       <ScrollView
-        style={{ margin: 0 }}
-        className="z-40 w-full min-[320px]:bg-green-100 sm:bg-red-100"
+        // style={{ margin: 0 }}
+        className="z-40 flex h-screen w-full min-[320px]:mt-0 sm:bg-red-100 min-[640px]:pt-20"
       >
         {/* <View className="flex flex-col items-center justify-center">
           <Calendar />
@@ -436,17 +436,15 @@ export function HomeScreen() {
           <Text>Hello there!</Text>
         </View> */}
 
-        <View className="flew-col flex items-center justify-center bg-purple-200">
+        <View className="flew-col h-full flex-1 items-center justify-center bg-purple-200">
           {/* <View>
             <Card />
             <Card />
           </View> */}
           <View className="flex w-full justify-center bg-purple-500 min-[320px]:flex-col md:flex-row">
-            <View className="min-w-96 max-w-96  w-auto min-[320px]:bg-purple-300 min-[640px]:bg-green-100">
-              <View className="h-99 w-96">
-                <Text>
-                  <Calendar />
-                </Text>
+            <View className="min-w-96 max-w-96 h-auto w-auto min-[320px]:bg-purple-300 min-[640px]:bg-green-100">
+              <View className=" mt-4 flex h-80 w-96 items-center justify-center">
+                <Calendar />
               </View>
             </View>
             <View className="h-auto max-w-xl bg-blue-100 min-[320px]:w-full">
