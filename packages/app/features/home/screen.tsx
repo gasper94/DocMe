@@ -1,5 +1,6 @@
 'use client'
-
+import { useRef } from 'react'
+import { Platform } from 'react-native'
 import { A, H1, P, Text, TextLink } from 'app/design/typography'
 import { Row } from 'app/design/layout'
 import { View, Button, ScrollView } from 'app/design/view'
@@ -41,6 +42,7 @@ import { RootState } from '../../store/store'
 import { useSelector } from 'react-redux'
 
 import { useRouter } from 'solito/router'
+import { style } from '@motionone/dom'
 
 const RedBox = () => {
   return (
@@ -195,6 +197,22 @@ const stylex = StyleSheet.create({
 export default Card
 
 export function HomeScreen() {
+  let isChildScrolling = false
+
+  const handleChildScroll = () => {
+    isChildScrolling = true
+  }
+
+  const handleChildTouchStart = () => {
+    isChildScrolling = false
+  }
+
+  const handleParentScroll = () => {
+    if (!isChildScrolling) {
+      // Parent scroll behavior
+    }
+  }
+
   const router = useRouter()
 
   // State Management
@@ -401,153 +419,142 @@ export function HomeScreen() {
     //   </MotiLink>
     // </View>
 
-    <View className="flex-1 items-center justify-center">
-      <View className="fixed top-0 z-50 flex w-full">
+    // <View className="h-screen w-full">
+    //   <View style={styles.navigation}>
+    //     <NavigationScreen />
+    //   </View>
+
+    // <View
+    //   className="bg-blue-100 min-[320px]:mt-4 min-[640px]:mt-1"
+    //   style={styles.mainx}
+    // >
+    //   <Text>Hello</Text>
+    // </View>
+    // </View>
+    <SafeAreaView style={styles.container}>
+      {/* <View style={styles.navigation}>
         <NavigationScreen />
       </View>
 
-      {/* <View>
-      <AudioRecorder />
-      <DistanceCalculator />
-    </View> */}
-
-      {/* <View className="flex w-full">
-    </View> */}
-
-      {/* <ScrollView >
-        <Text>Hello there!</Text>
-      </ScrollView> */}
-
-      <ScrollView
-        // style={{ margin: 0 }}
-        className="z-40 flex h-screen w-full min-[320px]:mt-0 sm:bg-red-100 min-[640px]:pt-20"
+      <View
+        // className="flex flex-row bg-blue-100 min-[320px]:mt-3.5 min-[640px]:mt-0"
+        style={styles.mainx}
       >
-        {/* <View className="flex flex-col items-center justify-center">
-          <Calendar />
+        <View className="flex-1 bg-yellow-100">
+          <Text>1</Text>
         </View>
-        <View className="flex flex-col items-center justify-center">
-          <Calendar />
+        <View className="flex-1 bg-yellow-100">
+          <Text>2</Text>
         </View>
-        <View className="flex flex-col items-center justify-center">
-          <Calendar />
-        </View> */}
-
-        {/* <View className="bg-pink-200">
-          <Text>Hello there!</Text>
-        </View> */}
-
-        <View className="flew-col h-full flex-1 items-center justify-center bg-purple-200">
-          {/* <View>
-            <Card />
-            <Card />
-          </View> */}
-          <View className="flex w-full justify-center bg-purple-500 min-[320px]:flex-col md:flex-row">
-            <View className="min-w-96 max-w-96 h-auto w-auto min-[320px]:bg-purple-300 min-[640px]:bg-green-100">
-              <View className=" mt-4 flex h-80 w-96 items-center justify-center">
-                <Calendar />
-              </View>
-            </View>
-            <View className="h-auto max-w-xl bg-blue-100 min-[320px]:w-full">
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-            </View>
-            <View className="min-w-96 block w-auto min-[320px]:hidden min-[640px]:block min-[640px]:bg-green-100">
-              <View className="w-96">
-                <Text>2</Text>
-              </View>
-            </View>
-          </View>
+        <View className="flex-1 bg-blue-300">
+          <Text>3</Text>
         </View>
-        {/* <Text>{`Key: ${key}`}</Text> */}
-      </ScrollView>
-
-      {/* <Text>{activity.length}</Text> */}
-
-      {/* <View
-        style={[styles.container, isHovered && styles.containerHovered]}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        <TouchableHighlight
-          onPressIn={handlePressIn}
-          onPressOut={handlePressOut}
-          style={[styles.button, isHovered && styles.buttonHovered]}
-          underlayColor="red"
-        >
-          <Text style={styles.buttonText}>Hover Me2</Text>
-        </TouchableHighlight>
       </View> */}
-
-      {/* This bellow is a touchable button */}
-      {/* <TouchableWithoutFeedback
-          onPress={() => console.log('Button clicked!')}
-          onPressIn={handlePressIn}
-          onPressOut={handlePressOut}
-        >
-        <View style={buttonStyle}>
-          <Text>Button</Text>
+      <View style={styles.navigation}>
+        <Text>Navigation bar</Text>
+      </View>
+      <View style={styles.mainx}>
+        <View style={styles.left}>
+          <Text>1</Text>
         </View>
-      </TouchableWithoutFeedback> */}
-    </View>
+
+        <ScrollView
+          style={styles.center}
+          //  style={{ width: '100%' }}
+          // contentContainerStyle={{ flexGrow: 1 }}
+        >
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </ScrollView>
+
+        {/* <View style={styles.center}>
+          <Text>2</Text>
+          
+          <Card />
+          <Card />
+          <Card />
+        </View> */}
+
+        {/* <ScrollView style={styles.center}>
+          <Text>2</Text>
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </ScrollView> */}
+
+        <View style={styles.right}>
+          <Text>3</Text>
+        </View>
+      </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
-  options: {
-    backgroundColor: 'yellow',
-    // width: '100%',
-    '@media (min-width: 600px)': {
-      backgroundColor: 'red', // Change background color for screens with width > 320px
-    },
-  },
-
-  shape: {
-    justifyContent: 'center',
-    height: 550,
-    width: 550,
-    borderRadius: 25,
-    marginRight: 10,
-    backgroundColor: 'white',
-  },
   container: {
-    height: 'auto',
-    justifyContent: 'center',
+    position: 'absolute',
+    flex: 1,
+    backgroundColor: 'pink',
+    overflow: 'hidden',
+    height: '100%',
+    width: '100%',
+  },
+  navigation: {
+    width: '100%',
+    height: '5%',
+    backgroundColor: 'red',
+
+    ...Platform.select({
+      ios: {
+        height: 70,
+      },
+    }),
+  },
+  mainx: {
+    display: 'flex',
     flexDirection: 'row',
+    width: '100%',
+    height: '95%',
+    backgroundColor: 'purple',
+    overflow: 'hidden',
+  },
+  center: {
+    overflow: 'scroll',
+    flex: 1,
+    height: '100%',
+    backgroundColor: 'pink',
+
+    ...Platform.select({
+      ios: {
+        height: '100%',
+      },
+    }),
+  },
+  left: {
+    flex: 1,
+    backgroundColor: 'yellow',
+    overflow: 'hidden',
+
+    ...Platform.select({
+      ios: {
+        display: 'none',
+      },
+    }),
+  },
+  right: {
+    flex: 1,
     backgroundColor: 'blue',
-    borderRadius: 5,
-  },
-  //  container: {
-  //   flex: 1,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  // },
-  button: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    backgroundColor: 'blue',
-    borderRadius: 5,
-  },
-  buttonHovered: {
-    backgroundColor: 'red',
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  containerHovered: {
-    backgroundColor: 'red',
-    borderRadius: 5,
-  },
-  text: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
+    overflow: 'hidden',
+
+    ...Platform.select({
+      ios: {
+        display: 'none',
+      },
+    }),
   },
 })
