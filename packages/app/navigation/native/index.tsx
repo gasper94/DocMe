@@ -20,7 +20,7 @@ export function NativeNavigation() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false, // Hide the navigation bar
+        headerShown: true, // Hide the navigation bar
       }}
     >
       <Stack.Screen
@@ -28,6 +28,7 @@ export function NativeNavigation() {
         component={Login}
         options={{
           title: 'Login',
+          headerShown: false,
         }}
       />
       <Stack.Screen
@@ -35,6 +36,7 @@ export function NativeNavigation() {
         component={HomeScreen}
         options={{
           title: 'Home',
+          headerShown: false,
         }}
       />
       <Stack.Screen
@@ -49,6 +51,7 @@ export function NativeNavigation() {
         component={ActivityScreen}
         options={{
           title: 'Activity',
+          headerShown: true,
         }}
       />
       <Stack.Screen
@@ -56,6 +59,7 @@ export function NativeNavigation() {
         component={ActivityFormScreen}
         options={{
           title: 'Form',
+          headerShown: true,
         }}
       />
 
@@ -64,6 +68,7 @@ export function NativeNavigation() {
         component={SavedActivities}
         options={{
           title: 'Form',
+          headerShown: true,
         }}
       />
     </Stack.Navigator>

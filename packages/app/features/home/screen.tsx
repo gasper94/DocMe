@@ -299,27 +299,27 @@ export function HomeScreen() {
     //   </TouchableWithoutFeedback> */}
 
     //   <Row className="space-x-8">
-    //     <MotiLink
-    //       href="/user/xxx"
-    //       animate={({ hovered, pressed }) => {
-    //         'worklet'
+    // <MotiLink
+    //   href="/user/xxx"
+    //   animate={({ hovered, pressed }) => {
+    //     'worklet'
 
-    //         return {
-    //           scale: pressed ? 0.95 : hovered ? 1.1 : 1,
-    //           rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
-    //         }
-    //       }}
-    //       transition={{
-    //         type: 'timing',
-    //         duration: 150,
-    //       }}
-    //       style={undefined}
-    //       onLayout={undefined}
-    //     >
-    //       <Text selectable={false} className="text-base font-bold">
-    //         User
-    //       </Text>
-    //     </MotiLink>
+    //     return {
+    //       scale: pressed ? 0.95 : hovered ? 1.1 : 1,
+    //       rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
+    //     }
+    //   }}
+    //   transition={{
+    //     type: 'timing',
+    //     duration: 150,
+    //   }}
+    //   style={undefined}
+    //   onLayout={undefined}
+    // >
+    //   <Text selectable={false} className="text-base font-bold">
+    //     User
+    //   </Text>
+    // </MotiLink>
     //     {/*
     //     <MotiLink
     //       href="/activity/xxx"
@@ -451,18 +451,35 @@ export function HomeScreen() {
         </View>
       </View> */}
       <View style={styles.navigation}>
-        <Text>Navigation bar</Text>
+        <NavigationScreen />
       </View>
       <View style={styles.mainx}>
         <View style={styles.left}>
           <Text>1</Text>
         </View>
 
-        <ScrollView
-          style={styles.center}
-          //  style={{ width: '100%' }}
-          // contentContainerStyle={{ flexGrow: 1 }}
-        >
+        <ScrollView style={styles.center}>
+          <MotiLink
+            href="/user/xxx"
+            animate={({ hovered, pressed }) => {
+              'worklet'
+
+              return {
+                scale: pressed ? 0.95 : hovered ? 1.1 : 1,
+                rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
+              }
+            }}
+            transition={{
+              type: 'timing',
+              duration: 150,
+            }}
+            style={undefined}
+            onLayout={undefined}
+          >
+            <Text selectable={false} className="text-base font-bold">
+              User
+            </Text>
+          </MotiLink>
           <Card />
           <Card />
           <Card />
@@ -470,22 +487,6 @@ export function HomeScreen() {
           <Card />
           <Card />
         </ScrollView>
-
-        {/* <View style={styles.center}>
-          <Text>2</Text>
-          
-          <Card />
-          <Card />
-          <Card />
-        </View> */}
-
-        {/* <ScrollView style={styles.center}>
-          <Text>2</Text>
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-        </ScrollView> */}
 
         <View style={styles.right}>
           <Text>3</Text>
