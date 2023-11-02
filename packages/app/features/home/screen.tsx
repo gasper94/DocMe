@@ -521,13 +521,41 @@ export function HomeScreen() {
           <Calendar />
         </View> */}
 
-        <View className="grid  w-full max-w-screen-md grid-flow-col grid-rows-4 bg-green-100">
-          <Card />
+        {/* <View className="bg-pink-200">
+          <Text>Hello there!</Text>
+        </View> */}
+
+        <View className="flew-col flex items-center justify-center bg-purple-200">
+          {/* <View>
+            <Card />
+            <Card />
+          </View> */}
+          <View className="flex w-full justify-center bg-purple-500 min-[320px]:flex-col md:flex-row">
+            <View className="min-w-96 max-w-96 w-auto min-[320px]:bg-yellow-300 min-[640px]:bg-green-100">
+              <View className="w-96">
+                <Text>1</Text>
+              </View>
+            </View>
+            <View className="h-auto max-w-xl bg-blue-100 min-[320px]:w-full">
+              <Card />
+              <Card />
+              <Card />
+              <Card />
+              <Card />
+              <Card />
+              <Card />
+            </View>
+            <View className="min-w-96 w-auto min-[320px]:bg-yellow-300 min-[640px]:bg-green-100">
+              <View className="w-96">
+                <Text>2</Text>
+              </View>
+            </View>
+          </View>
         </View>
         {/* <Text>{`Key: ${key}`}</Text> */}
       </ScrollView>
 
-      <Text>{activity.length}</Text>
+      {/* <Text>{activity.length}</Text> */}
 
       {/* <View
         style={[styles.container, isHovered && styles.containerHovered]}
@@ -559,6 +587,14 @@ export function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  options: {
+    backgroundColor: 'yellow',
+    // width: '100%',
+    '@media (min-width: 600px)': {
+      backgroundColor: 'red', // Change background color for screens with width > 320px
+    },
+  },
+
   shape: {
     justifyContent: 'center',
     height: 550,
