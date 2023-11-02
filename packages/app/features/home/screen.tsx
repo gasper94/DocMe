@@ -402,7 +402,7 @@ export function HomeScreen() {
     // </View>
 
     <View className="flex-1 items-center justify-center">
-      <View className="flex w-full">
+      <View className="fixed top-0 z-50 flex w-full">
         <NavigationScreen />
       </View>
 
@@ -411,95 +411,6 @@ export function HomeScreen() {
       <DistanceCalculator />
     </View> */}
 
-      <Row className="space-x-8">
-        <MotiLink
-          href="/user/xxx"
-          animate={({ hovered, pressed }) => {
-            'worklet'
-
-            return {
-              scale: pressed ? 0.95 : hovered ? 1.1 : 1,
-              rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
-            }
-          }}
-          transition={{
-            type: 'timing',
-            duration: 150,
-          }}
-          style={undefined}
-          onLayout={undefined}
-        >
-          <Text selectable={false} className="text-base font-bold">
-            User
-          </Text>
-        </MotiLink>
-        {/*
-        <MotiLink
-          href="/activity/xxx"
-          animate={({ hovered, pressed }) => {
-            'worklet'
-
-            return {
-              scale: pressed ? 0.95 : hovered ? 1.1 : 1,
-              rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
-            }
-          }}
-          transition={{
-            type: 'timing',
-            duration: 150,
-          }}
-          style={undefined}
-          onLayout={undefined}
-        >
-          <Text selectable={false} className="text-base font-bold">
-            Add Activity
-          </Text>
-        </MotiLink> */}
-
-        <MotiLink
-          href="/login"
-          animate={({ hovered, pressed }) => {
-            'worklet'
-
-            return {
-              scale: pressed ? 0.95 : hovered ? 1.1 : 1,
-              rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
-            }
-          }}
-          transition={{
-            type: 'timing',
-            duration: 150,
-          }}
-          style={undefined}
-          onLayout={undefined}
-        >
-          <Text selectable={false} className="text-base font-bold">
-            Go to Login
-          </Text>
-        </MotiLink>
-
-        {/* <MotiLink
-          href="/saved-activities"
-          animate={({ hovered, pressed }) => {
-            'worklet'
-
-            return {
-              scale: pressed ? 0.95 : hovered ? 1.1 : 1,
-              rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
-            }
-          }}
-          transition={{
-            type: 'timing',
-            duration: 150,
-          }}
-          style={undefined}
-          onLayout={undefined}
-        >
-          <Text selectable={false} className="text-base font-bold">
-            Saved Activities
-          </Text>
-        </MotiLink> */}
-      </Row>
       {/* <View className="flex w-full">
     </View> */}
 
@@ -508,8 +419,8 @@ export function HomeScreen() {
       </ScrollView> */}
 
       <ScrollView
-        style={{ paddingTop: 20, margin: 0 }}
-        className="w-full min-[320px]:bg-green-100 sm:bg-red-100"
+        style={{ margin: 0 }}
+        className="z-40 w-full min-[320px]:bg-green-100 sm:bg-red-100"
       >
         {/* <View className="flex flex-col items-center justify-center">
           <Calendar />
@@ -531,9 +442,11 @@ export function HomeScreen() {
             <Card />
           </View> */}
           <View className="flex w-full justify-center bg-purple-500 min-[320px]:flex-col md:flex-row">
-            <View className="min-w-96 max-w-96 w-auto min-[320px]:bg-yellow-300 min-[640px]:bg-green-100">
-              <View className="w-96">
-                <Text>1</Text>
+            <View className="min-w-96 max-w-96  w-auto min-[320px]:bg-purple-300 min-[640px]:bg-green-100">
+              <View className="h-99 w-96">
+                <Text>
+                  <Calendar />
+                </Text>
               </View>
             </View>
             <View className="h-auto max-w-xl bg-blue-100 min-[320px]:w-full">
@@ -545,7 +458,7 @@ export function HomeScreen() {
               <Card />
               <Card />
             </View>
-            <View className="min-w-96 w-auto min-[320px]:bg-yellow-300 min-[640px]:bg-green-100">
+            <View className="min-w-96 block w-auto min-[320px]:hidden min-[640px]:block min-[640px]:bg-green-100">
               <View className="w-96">
                 <Text>2</Text>
               </View>
