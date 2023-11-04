@@ -60,23 +60,11 @@ const Calendar = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={goToPreviousMonth}>
-          {/* <Text style={styles.headerText}>Previous Month</Text> */}
           <LeftIcon width={24} height={24} fill="red" color={'red'} />
         </TouchableOpacity>
         <Text style={styles.headerText}>{currentMonth.toLocaleString('default', { month: 'long' })} {currentMonth.getFullYear()}</Text>
         <TouchableOpacity onPress={goToNextMonth}>
-          {/* <Text style={styles.headerText}> */}
-            {/* Next */}
             <RightIcon width={24} height={24} fill="red" color={'red'} />
-      {/* <RightIcon width={24} height={24} fill="blue" /> */}
-            {/* <AntDesign name="right" size={24} color="black" /> */}
-
-            {/* <HeroOutline  /> */}
-            {/* <ArrowRight height="24" width="24" color="#8A8F98" /> */}
-            
-            {/* <Image style={styles.logo} source={require('../../../assets/arrow-right')} /> */}
-            {/* <HeroOutline.Calendar height="24" width="24" color="#8A8F98" /> */}
-          {/* </Text> */}
         </TouchableOpacity>
       </View>
       <View style={styles.calendar}>
@@ -91,11 +79,16 @@ const styles = StyleSheet.create({
     height: 128,
     width: 128,
   },
+  options: {
+    backgroundColor: 'green',
+    height: 30
+  },  
   container: {
     display: 'flex',
     flex: 1,
     maxWidth: 350,
     height: 200,
+    // backgroundColor: 'red'
   },
   header: {
     flexDirection: 'row',

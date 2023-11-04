@@ -1,6 +1,6 @@
 'use client'
 import { useRef } from 'react'
-import { Platform } from 'react-native'
+import { Platform, Animated, Easing } from 'react-native'
 import { A, H1, P, Text, TextLink } from 'app/design/typography'
 import { Row } from 'app/design/layout'
 import { View, Button, ScrollView } from 'app/design/view'
@@ -44,7 +44,7 @@ import { useSelector } from 'react-redux'
 import { useRouter } from 'solito/router'
 import { style } from '@motionone/dom'
 
-const Card = () => {
+export const Card = () => {
   return (
     <View style={stylex.cardContainer}>
       <View style={stylex.imageContainer}>
@@ -135,9 +135,20 @@ const stylex = StyleSheet.create({
   },
 })
 
-export default Card
+export const newCalendar = () => {
+  return (
+    <View>
+      <Text>Hello there</Text>
+    </View>
+  )
+}
+
+export default newCalendar
 
 export function HomeScreen() {
+  const [mobileCalendar, setMobileCalendar] = useState(34)
+  const [miniCalendar, setMiniCalendar] = useState(false)
+
   let isChildScrolling = false
 
   const handleChildScroll = () => {
@@ -192,6 +203,21 @@ export function HomeScreen() {
 
   const handleSingOut = () => {
     alert('signout')
+  }
+
+  const [isExpanded, setIsExpanded] = useState(true)
+
+  const toggleCalendar = () => {
+    setIsExpanded(!isExpanded)
+  }
+
+  const changeCalendarView = () => {
+    setMiniCalendar(!miniCalendar)
+    if (mobileCalendar === 34) {
+      setMobileCalendar(350)
+    } else if (mobileCalendar === 350) {
+      setMobileCalendar(34)
+    }
   }
 
   return (
@@ -337,27 +363,27 @@ export function HomeScreen() {
     //   </View>
 
     //   <Text>Hello there</Text>
-    //   <MotiLink
-    //     href="/login"
-    //     animate={({ hovered, pressed }) => {
-    //       'worklet'
+    // <MotiLink
+    //   href="/login"
+    //   animate={({ hovered, pressed }) => {
+    //     'worklet'
 
-    //       return {
-    //         scale: pressed ? 0.95 : hovered ? 1.1 : 1,
-    //         rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
-    //       }
-    //     }}
-    //     transition={{
-    //       type: 'timing',
-    //       duration: 150,
-    //     }}
-    //     style={undefined}
-    //     onLayout={undefined}
-    //   >
-    //     <Text selectable={false} className="text-base font-bold">
-    //       Go to Login
-    //     </Text>
-    //   </MotiLink>
+    //     return {
+    //       scale: pressed ? 0.95 : hovered ? 1.1 : 1,
+    //       rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
+    //     }
+    //   }}
+    //   transition={{
+    //     type: 'timing',
+    //     duration: 150,
+    //   }}
+    //   style={undefined}
+    //   onLayout={undefined}
+    // >
+    //   <Text selectable={false} className="text-base font-bold">
+    //     Go to Login
+    //   </Text>
+    // </MotiLink>
     // </View>
 
     // <View className="h-screen w-full">
@@ -377,11 +403,59 @@ export function HomeScreen() {
         <NavigationScreen />
       </View>
       <View style={styles.mainx}>
-        <View style={styles.left}>
-          <View style={styles.leftContainer}>
-            <View style={styles.calendar}>
-              <Text>The calendar should go here!</Text>
-            </View>
+        <View
+          // className=" min-[320px]:bg-green-500 min-[540px]:bg-red-500 min-[1540px]:bg-purple-500"
+          style={{ ...styles.left, maxHeight: mobileCalendar }}
+        >
+          <View
+            style={styles.leftContainer}
+            className="align-center min-[320px]:bg-green-200 min-[540px]:bg-orange-200 min-[720px]:bg-blue-600 min-[1540px]:items-end"
+          >
+            {/* <Calendar /> */}
+
+            {miniCalendar ? (
+              // <View className=" w-full">
+              //   <View className="h-12 bg-red-900">
+              //     <TouchableOpacity
+              //       className="w-32 bg-red-400"
+              //       onPress={() => changeCalendarView()}
+              //     >
+              //       <Text>Options</Text>
+              //     </TouchableOpacity>
+              //   </View>
+              // <View
+              //   style={styles.leftContainer}
+              //   className="align-center min-[320px]:bg-green-200 min-[540px]:bg-orange-200 min-[720px]:bg-blue-600 min-[1540px]:items-end"
+              // >
+              //   <View style={styles.calendar}>
+              //     <Calendar />
+              //   </View>
+              // </View>
+              // </View>
+              <View className="h-8 w-full">
+                <View className=" ml-4 mr-4 flex h-full items-end justify-center bg-red-400">
+                  <TouchableOpacity onPress={() => changeCalendarView()}>
+                    <Text>Options</Text>
+                  </TouchableOpacity>
+                </View>
+                <View
+                  style={styles.leftContainer}
+                  className="align-center mt-4 min-[320px]:bg-green-200 min-[540px]:bg-orange-200 min-[720px]:bg-blue-600 min-[1540px]:items-end"
+                >
+                  <View style={styles.calendar}>
+                    <Calendar />
+                  </View>
+                </View>
+              </View>
+            ) : (
+              <View className="h-8 w-full bg-red-900">
+                <View className=" ml-4 mr-4 flex h-full items-end justify-center bg-red-400">
+                  <TouchableOpacity onPress={() => changeCalendarView()}>
+                    <Text>Options</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
           </View>
         </View>
 
@@ -422,7 +496,7 @@ const styles = StyleSheet.create({
 
     ...Platform.select({
       ios: {
-        height: 70,
+        height: 'auto',
       },
     }),
   },
@@ -432,7 +506,13 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '95%',
     // backgroundColor: 'purple',
+
     overflow: 'hidden',
+    ...Platform.select({
+      ios: {
+        flexDirection: 'column',
+      },
+    }),
   },
   center: {
     overflow: 'scroll',
@@ -448,18 +528,25 @@ const styles = StyleSheet.create({
   },
   left: {
     flex: 1,
-    // backgroundColor: 'yellow',
+    backgroundColor: 'yellow',
     overflow: 'hidden',
+    // display: 'flex',
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // mart
+
+    width: '100%',
+    height: 'auto',
 
     ...Platform.select({
       ios: {
-        display: 'none',
+        maxHeight: 34,
       },
     }),
   },
   right: {
     flex: 1,
-    // backgroundColor: 'blue',
+    backgroundColor: 'blue',
     overflow: 'hidden',
 
     ...Platform.select({
@@ -470,7 +557,7 @@ const styles = StyleSheet.create({
   },
   leftContainer: {
     display: 'flex',
-    alignItems: 'flex-end',
+    alignItems: 'center',
     // backgroundColor: 'purple',
   },
   rightContainer: {
@@ -479,8 +566,11 @@ const styles = StyleSheet.create({
     // backgroundColor: 'purple',
   },
   calendar: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: 400,
     height: 400,
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
   },
 })
