@@ -402,36 +402,18 @@ export function HomeScreen() {
       <View style={styles.navigation}>
         <NavigationScreen />
       </View>
-      <View style={styles.mainx}>
+      <View
+        style={styles.mainx}
+        className="flex flex-col md:flex-row lg:flex-row xl:flex-row 2xl:flex-col"
+      >
         <View
           // className=" min-[320px]:bg-green-500 min-[540px]:bg-red-500 min-[1540px]:bg-purple-500"
           style={{ ...styles.left, maxHeight: mobileCalendar }}
+          className="bg-orange-200"
         >
-          <View
-            style={styles.leftContainer}
-            className="align-center min-[320px]:bg-green-200 min-[540px]:bg-orange-200 min-[720px]:bg-blue-600 min-[1540px]:items-end"
-          >
-            {/* <Calendar /> */}
-
+          <View className="align-center bg-red-100 min-[320px]:bg-green-200 min-[540px]:bg-orange-200 min-[720px]:bg-blue-600 lg:bg-red-700 min-[1540px]:items-end">
+            {/* This is the calendar side */}
             {miniCalendar ? (
-              // <View className=" w-full">
-              //   <View className="h-12 bg-red-900">
-              //     <TouchableOpacity
-              //       className="w-32 bg-red-400"
-              //       onPress={() => changeCalendarView()}
-              //     >
-              //       <Text>Options</Text>
-              //     </TouchableOpacity>
-              //   </View>
-              // <View
-              //   style={styles.leftContainer}
-              //   className="align-center min-[320px]:bg-green-200 min-[540px]:bg-orange-200 min-[720px]:bg-blue-600 min-[1540px]:items-end"
-              // >
-              //   <View style={styles.calendar}>
-              //     <Calendar />
-              //   </View>
-              // </View>
-              // </View>
               <View className="h-8 w-full">
                 <View className=" ml-4 mr-4 flex h-full items-end justify-center bg-red-400">
                   <TouchableOpacity onPress={() => changeCalendarView()}>
@@ -459,6 +441,7 @@ export function HomeScreen() {
           </View>
         </View>
 
+        {/* This might be the feed */}
         <ScrollView style={styles.center} showsVerticalScrollIndicator={false}>
           <Card />
           <Card />
@@ -468,7 +451,11 @@ export function HomeScreen() {
           <Card />
         </ScrollView>
 
-        <View style={styles.right}>
+        {/* This is the right side - Might be menus in the future */}
+        <View
+          style={styles.right}
+          className=" min-[375px]:hidden hidden sm:hidden md:hidden lg:block"
+        >
           <View style={styles.rightContainer}>
             <View style={styles.calendar}>
               <Text>The options should go here</Text>
@@ -528,7 +515,7 @@ const styles = StyleSheet.create({
   },
   left: {
     flex: 1,
-    backgroundColor: 'yellow',
+    // backgroundColor: 'yellow',
     overflow: 'hidden',
     // display: 'flex',
     // justifyContent: 'center',
@@ -558,7 +545,7 @@ const styles = StyleSheet.create({
   leftContainer: {
     display: 'flex',
     alignItems: 'center',
-    // backgroundColor: 'purple',
+    backgroundColor: 'purple',
   },
   rightContainer: {
     display: 'flex',
