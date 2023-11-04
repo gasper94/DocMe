@@ -146,8 +146,8 @@ export const newCalendar = () => {
 export default newCalendar
 
 export function HomeScreen() {
-  const [mobileCalendar, setMobileCalendar] = useState(34)
-  const [miniCalendar, setMiniCalendar] = useState(false)
+  const [mobileCalendar, setMobileCalendar] = useState(350)
+  const [miniCalendar, setMiniCalendar] = useState(true)
 
   let isChildScrolling = false
 
@@ -399,19 +399,19 @@ export function HomeScreen() {
     // </View>
     // </View>
     <SafeAreaView style={styles.container}>
-      <View style={styles.navigation}>
+      <View style={styles.navigation} className="border-b-2">
         <NavigationScreen />
       </View>
       <View
         style={styles.mainx}
-        className="flex flex-col md:flex-row lg:flex-row xl:flex-row 2xl:flex-col"
+        className="flex flex-col md:flex-row lg:flex-row xl:flex-row 2xl:flex-row"
       >
         <View
           // className=" min-[320px]:bg-green-500 min-[540px]:bg-red-500 min-[1540px]:bg-purple-500"
           style={{ ...styles.left, maxHeight: mobileCalendar }}
-          className="bg-orange-200"
+          className="border-b-2 bg-orange-200 lg:max-h-full xl:max-h-full"
         >
-          <View className="align-center bg-red-100 min-[320px]:bg-green-200 min-[540px]:bg-orange-200 min-[720px]:bg-blue-600 lg:bg-red-700 min-[1540px]:items-end">
+          <View className="items-end bg-red-100 min-[320px]:bg-green-200 min-[540px]:bg-orange-200 min-[720px]:bg-blue-600 lg:bg-red-700 min-[1540px]:items-end">
             {/* This is the calendar side */}
             {miniCalendar ? (
               <View className="h-8 w-full">
@@ -422,7 +422,7 @@ export function HomeScreen() {
                 </View>
                 <View
                   style={styles.leftContainer}
-                  className="align-center mt-4 min-[320px]:bg-green-200 min-[540px]:bg-orange-200 min-[720px]:bg-blue-600 min-[1540px]:items-end"
+                  className="align-center mt-4 h-full min-[320px]:bg-green-200 min-[540px]:bg-orange-200 min-[720px]:bg-blue-600 min-[1540px]:items-center"
                 >
                   <View style={styles.calendar}>
                     <Calendar />
@@ -431,7 +431,7 @@ export function HomeScreen() {
               </View>
             ) : (
               <View className="h-8 w-full bg-red-900">
-                <View className=" ml-4 mr-4 flex h-full items-end justify-center bg-red-400">
+                <View className=" ml-4 mr-4 flex h-full items-end justify-center bg-red-400 ">
                   <TouchableOpacity onPress={() => changeCalendarView()}>
                     <Text>Options</Text>
                   </TouchableOpacity>
@@ -442,7 +442,11 @@ export function HomeScreen() {
         </View>
 
         {/* This might be the feed */}
-        <ScrollView style={styles.center} showsVerticalScrollIndicator={false}>
+        <ScrollView
+          style={styles.center}
+          showsVerticalScrollIndicator={false}
+          className="border-l-2 border-r-2"
+        >
           <Card />
           <Card />
           <Card />
@@ -454,11 +458,11 @@ export function HomeScreen() {
         {/* This is the right side - Might be menus in the future */}
         <View
           style={styles.right}
-          className=" min-[375px]:hidden hidden sm:hidden md:hidden lg:block"
+          className=" hidden min-[375px]:hidden sm:hidden md:hidden lg:block"
         >
           <View style={styles.rightContainer}>
-            <View style={styles.calendar}>
-              <Text>The options should go here</Text>
+            <View style={styles.communities} className="p-4">
+              <Text className="text-white">Communities should go here</Text>
             </View>
           </View>
         </View>
@@ -468,6 +472,21 @@ export function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  communities: {
+    backgroundColor: 'rgb(26, 30, 38)',
+    width: 350,
+    height: 350,
+    marginLeft: 20,
+    marginTop: 20,
+    borderRadius: 8,
+  },
+  mobileOptions: {
+    ...Platform.select({
+      ios: {
+        display: 'none',
+      },
+    }),
+  },
   container: {
     position: 'absolute',
     flex: 1,
@@ -479,6 +498,7 @@ const styles = StyleSheet.create({
   navigation: {
     width: '100%',
     height: '5%',
+    borderColor: 'rgb(49, 51, 53)',
     // backgroundColor: 'red',
 
     ...Platform.select({
@@ -505,6 +525,7 @@ const styles = StyleSheet.create({
     overflow: 'scroll',
     flex: 1,
     height: '100%',
+    borderColor: 'rgb(49, 51, 53)',
     // backgroundColor: 'pink',
 
     ...Platform.select({
@@ -523,17 +544,18 @@ const styles = StyleSheet.create({
     // mart
 
     width: '100%',
-    height: 'auto',
+    // height: '100%',
 
-    ...Platform.select({
-      ios: {
-        maxHeight: 34,
-      },
-    }),
+    // ...Platform.select({
+    //   ios: {
+    //     maxHeight: 34,
+    //   },
+    // }),
   },
   right: {
     flex: 1,
-    backgroundColor: 'blue',
+    // backgroundColor: 'blue',
+
     overflow: 'hidden',
 
     ...Platform.select({
