@@ -421,10 +421,10 @@ export function HomeScreen() {
             {/* This is the calendar side */}
             {miniCalendar ? (
               <View className="h-4 w-full">
-                <View className=" ml-4 mr-4 flex h-full items-end justify-center">
+                <View className="ml-4 mr-4 flex h-full items-end justify-center">
                   <TouchableOpacity onPress={() => changeCalendarView()}>
-                    <View className="flex flex-row items-center justify-center">
-                      <Text className="text-white">options</Text>
+                    <View className="mb-2 flex flex-row items-center justify-center">
+                      <Text className="text-white">Calendar</Text>
                       <ChevronUpDown
                         width={24}
                         height={24}
@@ -447,10 +447,10 @@ export function HomeScreen() {
               </View>
             ) : (
               <View className="h-4 w-full">
-                <View className=" ml-4 mr-4 flex h-full items-end justify-center">
+                <View className="ml-4 mr-4 flex h-full items-end justify-center">
                   <TouchableOpacity onPress={() => changeCalendarView()}>
-                    <View className="flex flex-row items-center justify-center">
-                      <Text className="text-white">options</Text>
+                    <View className="mb-2 flex flex-row items-center justify-center">
+                      <Text className="text-white">Calendar</Text>
                       <ChevronUpDown
                         width={24}
                         height={24}
@@ -521,7 +521,7 @@ const styles = StyleSheet.create({
   },
   navigation: {
     width: '100%',
-    height: '5%',
+    height: 'auto',
     borderColor: 'rgb(49, 51, 53)',
     // backgroundColor: 'red',
 
