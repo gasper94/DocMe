@@ -423,7 +423,7 @@ export function HomeScreen() {
               <View className="h-4 w-full">
                 <View className=" ml-4 mr-4 flex h-full items-end justify-center">
                   <TouchableOpacity onPress={() => changeCalendarView()}>
-                    <View className="flex flex-row">
+                    <View className="flex flex-row items-center justify-center">
                       <Text className="text-white">options</Text>
                       <ChevronUpDown
                         width={24}
@@ -449,7 +449,7 @@ export function HomeScreen() {
               <View className="h-4 w-full">
                 <View className=" ml-4 mr-4 flex h-full items-end justify-center">
                   <TouchableOpacity onPress={() => changeCalendarView()}>
-                    <View className="flex flex-row">
+                    <View className="flex flex-row items-center justify-center">
                       <Text className="text-white">options</Text>
                       <ChevronUpDown
                         width={24}
