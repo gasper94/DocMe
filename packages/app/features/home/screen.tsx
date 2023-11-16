@@ -19,7 +19,8 @@ import {
   TouchableOpacity,
 } from 'react-native'
 // import { HeroOutline, HeroSolid, HeroSolid20 } from '@nandorojo/heroicons'
-import RightIcon from '../../../assets/Icons/right/Right'
+import ChevronUpDown from '../../../assets/Icons/chevron-up-down/chevron-up-down'
+
 import XMenu from './Xmenu'
 import React, { useState } from 'react'
 
@@ -77,7 +78,7 @@ export const Card = () => {
 const stylex = StyleSheet.create({
   cardContainer: {
     flexDirection: 'row',
-    borderRadius: 20,
+    borderRadius: 10,
     backgroundColor: 'white',
     shadowColor: 'black',
     shadowOffset: { width: 0, height: 2 },
@@ -409,20 +410,35 @@ export function HomeScreen() {
         <View
           // className=" min-[320px]:bg-green-500 min-[540px]:bg-red-500 min-[1540px]:bg-purple-500"
           style={{ ...styles.left, maxHeight: mobileCalendar }}
-          className="border-b-2 bg-orange-200 lg:max-h-full xl:max-h-full"
+          className=" lg:max-h-full xl:max-h-full"
+          // border-b-2
         >
-          <View className="items-end bg-red-100 min-[320px]:bg-green-200 min-[540px]:bg-orange-200 min-[720px]:bg-blue-600 lg:bg-red-700 min-[1540px]:items-end">
+          <View
+            className="align-center mt-4 h-full min-[1540px]:items-center"
+            // dimensions
+            // className="align-center mt-4 h-full min-[320px]:bg-green-200 min-[540px]:bg-orange-200 min-[720px]:bg-blue-600 min-[1540px]:items-center"
+          >
             {/* This is the calendar side */}
             {miniCalendar ? (
-              <View className="h-8 w-full">
-                <View className=" ml-4 mr-4 flex h-full items-end justify-center bg-red-400">
+              <View className="h-4 w-full">
+                <View className=" ml-4 mr-4 flex h-full items-end justify-center">
                   <TouchableOpacity onPress={() => changeCalendarView()}>
-                    <Text>Options</Text>
+                    <View className="flex flex-row">
+                      <Text className="text-white">options</Text>
+                      <ChevronUpDown
+                        width={24}
+                        height={24}
+                        fill="white"
+                        color={'white'}
+                      />
+                    </View>
                   </TouchableOpacity>
                 </View>
                 <View
                   style={styles.leftContainer}
-                  className="align-center mt-4 h-full min-[320px]:bg-green-200 min-[540px]:bg-orange-200 min-[720px]:bg-blue-600 min-[1540px]:items-center"
+                  className="align-center mt-4 h-full min-[1540px]:items-center"
+                  // dimenstions
+                  // className="align-center mt-4 h-full min-[320px]:bg-green-200 min-[540px]:bg-orange-200 min-[720px]:bg-blue-600 min-[1540px]:items-center"
                 >
                   <View style={styles.calendar}>
                     <Calendar />
@@ -430,10 +446,18 @@ export function HomeScreen() {
                 </View>
               </View>
             ) : (
-              <View className="h-8 w-full bg-red-900">
-                <View className=" ml-4 mr-4 flex h-full items-end justify-center bg-red-400 ">
+              <View className="h-4 w-full">
+                <View className=" ml-4 mr-4 flex h-full items-end justify-center">
                   <TouchableOpacity onPress={() => changeCalendarView()}>
-                    <Text>Options</Text>
+                    <View className="flex flex-row">
+                      <Text className="text-white">options</Text>
+                      <ChevronUpDown
+                        width={24}
+                        height={24}
+                        fill="white"
+                        color={'white'}
+                      />
+                    </View>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -567,7 +591,7 @@ const styles = StyleSheet.create({
   leftContainer: {
     display: 'flex',
     alignItems: 'center',
-    backgroundColor: 'purple',
+    // backgroundColor: 'purple',
   },
   rightContainer: {
     display: 'flex',

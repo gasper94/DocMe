@@ -60,11 +60,11 @@ const Calendar = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={goToPreviousMonth}>
-          <LeftIcon width={24} height={24} fill="red" color={'red'} />
+          <LeftIcon width={24} height={24} fill="white" color={'white'} />
         </TouchableOpacity>
         <Text style={styles.headerText}>{currentMonth.toLocaleString('default', { month: 'long' })} {currentMonth.getFullYear()}</Text>
         <TouchableOpacity onPress={goToNextMonth}>
-            <RightIcon width={24} height={24} fill="red" color={'red'} />
+            <RightIcon width={24} height={24} fill="white" color={'white'} />
         </TouchableOpacity>
       </View>
       <View style={styles.calendar}>
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     width: 128,
   },
   options: {
-    backgroundColor: 'green',
+    backgroundColor: 'white',
     height: 30
   },  
   container: {
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: 'red',
+    color: 'white',
   },
   calendar: {
     flexDirection: 'row',
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   calendarDayNumber: {
     fontSize: 16,
     // color: '#ccc'
-    color: 'black'
+    color: 'white'
   },
   currentDay: {
     display: 'flex',
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: 'lightgray',
-    backgroundColor: 'yellow', // Set the desired color for the current day
+    // backgroundColor: 'yellow', // Set the desired color for the current day
   },
 });
 
