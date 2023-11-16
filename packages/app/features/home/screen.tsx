@@ -436,7 +436,7 @@ export function HomeScreen() {
                 </View>
                 <View
                   style={styles.leftContainer}
-                  className="align-center mt-4 h-full min-[1540px]:items-center"
+                  className="align-center mt-4 h-full min-[1540px]:items-end"
                   // dimenstions
                   // className="align-center mt-4 h-full min-[320px]:bg-green-200 min-[540px]:bg-orange-200 min-[720px]:bg-blue-600 min-[1540px]:items-center"
                 >
