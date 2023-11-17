@@ -45,6 +45,9 @@ import { useSelector } from 'react-redux'
 import { useRouter } from 'solito/router'
 import { style } from '@motionone/dom'
 
+// Assets
+import Plus from '../../../assets/Icons/plus/plus'
+
 export const Card = () => {
   return (
     <View style={stylex.cardContainer}>
@@ -102,20 +105,20 @@ const stylex = StyleSheet.create({
     padding: 16,
   },
   category: {
-    fontFamily: 'sans-serif',
+    // fontFamily: 'sans-serif',
     fontSize: 16,
     fontWeight: 'bold',
     color: '#FF69B4', // Pink color
   },
   title: {
-    fontFamily: 'sans-serif',
+    // fontFamily: 'sans-serif',
     fontSize: 24,
     fontWeight: 'bold',
     color: 'black',
     marginBottom: 8,
   },
   description: {
-    fontFamily: 'sans-serif',
+    // fontFamily: 'sans-serif',
     fontSize: 16,
     color: 'gray',
     marginBottom: 16,
@@ -129,7 +132,7 @@ const stylex = StyleSheet.create({
     padding: 12,
   },
   buttonText: {
-    fontFamily: 'sans-serif',
+    // fontFamily: 'sans-serif',
     fontSize: 14,
     fontWeight: 'bold',
     color: '#FF69B4',
@@ -399,7 +402,30 @@ export function HomeScreen() {
     //   <Text>Hello</Text>
     // </View>
     // </View>
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView className="relative" style={styles.container}>
+      <View className="absolute bottom-4 right-4 z-50 ">
+        <MotiLink
+          href="/activity/xxx"
+          animate={({ hovered, pressed }) => {
+            'worklet'
+
+            return {
+              scale: pressed ? 0.95 : hovered ? 1.1 : 1,
+              rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
+            }
+          }}
+          transition={{
+            type: 'timing',
+            duration: 150,
+          }}
+          style={undefined}
+          onLayout={undefined}
+        >
+          <View className="flex h-20 w-20 items-center justify-center rounded-full bg-blue-600">
+            <Plus width={42} height={42} fill="white" color={'white'} />
+          </View>
+        </MotiLink>
+      </View>
       <View style={styles.navigation} className="border-b-2">
         <NavigationScreen />
       </View>
@@ -416,7 +442,7 @@ export function HomeScreen() {
           <View
             className="align-center mt-4 h-full min-[1540px]:items-center"
             // dimensions
-            // className="align-center mt-4 h-full min-[320px]:bg-green-200 min-[540px]:bg-orange-200 min-[720px]:bg-blue-600 min-[1540px]:items-center"
+            // className="align-center mt-4 h-full min-[320px]:bg-green-200 min-[540px]:bg-orange-200 min-[720px]:bg-blue-600 min-[1540px]:bg-purple-300"
           >
             {/* This is the calendar side */}
             {miniCalendar ? (

@@ -1,502 +1,479 @@
-import { useSelector } from 'react-redux'
-import React, { useEffect, useState, useRef } from 'react'
-import { useRouter } from 'solito/router'
-import {
-  Text,
-  TouchableOpacity,
-  View,
-  StyleSheet,
-  FlatList,
-  Button,
-  TextInput,
-} from 'react-native'
-import { createParam } from 'solito'
-import { SafeAreaView, ScrollView } from 'moti'
-import { NavigationScreen } from '../components/NavigationBar/NavigationBar'
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
-import { StylessButton } from 'app/components/StylessButton/StylessButton'
-import Input from 'app/components/Input/input'
-import { DisplayItem } from 'app/testingInput/index'
-import COLORS from '../../design/const'
-import AudioRecorder from '../audioRecorder/AudioRecorder'
-import { A, H1 } from 'app/design/typography'
-import {
-  ExclamationCircle,
-  XMark,
-  ArrowLeft,
-  ArrowRight,
-} from '@nandorojo/heroicons/24/outline'
+'use client'
+import { useRef } from 'react'
+import { Platform, Animated, Easing } from 'react-native'
+import { A, H1, P, Text, TextLink } from 'app/design/typography'
+import { Row } from 'app/design/layout'
+import { View, Button, ScrollView } from 'app/design/view'
 
-// State Management
-import { useDispatch } from 'react-redux'
+import { MotiLink } from 'solito/moti'
+import { SolitoImage } from 'solito/image'
+import { TextInput } from 'react-native'
+import Calendar from '../home/Calendar'
+import { useEffect, useReducer } from 'react'
 import {
-  addPhysicalActivity,
-  addProcessingActivity,
-} from '../../store/physicalActivitySlice'
-import RecordingAnimation from './RecordingAnimation'
-import SingleAudioRecorder from '../singleAudioRecorder/SingleAudioRecorder'
-import { getDurationFormatted } from 'app/singleAudioRecording/index'
+  Image,
+  StyleSheet,
+  Pressable,
+  TouchableWithoutFeedback,
+  TouchableHighlight,
+  TouchableOpacity,
+} from 'react-native'
+// import { HeroOutline, HeroSolid, HeroSolid20 } from '@nandorojo/heroicons'
+import ChevronUpDown from '../../../assets/Icons/chevron-up-down/chevron-up-down'
+
+// import XMenu from './Xmenu'
+import React, { useState } from 'react'
+
+import { SafeAreaView } from 'moti'
+// import { ScrollView } from 'react-native-gesture-handler'
+
+// import AssetExample from './Asset.jsx'
+
+// Components
+// import DistanceCalculator from './DistanceCalculator'
+import AudioRecorder from '../audioRecorder/AudioRecorder'
+import GenerateCV from '../extractData/extractData'
+// import LongPressButton from './components/RecordingButton/RecordingButton'
+import { NavigationScreen } from '../components/NavigationBar/NavigationBar'
 
 // Interfaces
 import { RootState } from '../../store/store'
 
-interface Transcript {
-  burnedCalories?: number
-  pointA?: string
-  pointB?: string
-  mood?: string[]
-  drankWater?: boolean
-  // Add other properties related to the transcript if needed
-  // For example: pointA: string, pointB: string, drankWater: boolean, etc.
+// State Management
+import { useSelector } from 'react-redux'
+
+import { useRouter } from 'solito/router'
+import { style } from '@motionone/dom'
+
+// Assets
+import Plus from '../../../assets/Icons/plus/plus'
+
+export const Card = () => {
+  return (
+    <View style={stylex.cardContainer}>
+      <View style={stylex.imageContainer}>
+        <Image
+          source={{
+            uri: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80',
+          }}
+          style={stylex.image}
+        />
+      </View>
+      <View style={stylex.contentContainer}>
+        <Text style={stylex.category}>startups</Text>
+        <Text style={stylex.title}>
+          Lyft launching cross-platform service this week
+        </Text>
+        <Text style={stylex.description}>
+          Like so many organizations these days, Autodesk is a company in
+          transition. It was until recently a traditional boxed software company
+          selling licenses. Yet its own business model disruption is only part
+          of the story.
+        </Text>
+        <TouchableOpacity style={stylex.button}>
+          <Text style={stylex.buttonText}>Learn More</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  )
 }
 
-const { useParam } = createParam<{ id: string }>()
-const GOOGLE_API_KEY = process.env.GOOGLE_API
+const stylex = StyleSheet.create({
+  cardContainer: {
+    flexDirection: 'row',
+    borderRadius: 10,
+    backgroundColor: 'white',
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 5,
+    margin: 16,
+  },
+  imageContainer: {
+    width: '40%',
+    overflow: 'hidden',
+    borderTopLeftRadius: 20,
+    borderBottomLeftRadius: 20,
+  },
+  image: {
+    width: '100%',
+    height: 200,
+  },
+  contentContainer: {
+    flex: 1,
+    padding: 16,
+  },
+  category: {
+    // fontFamily: 'sans-serif',
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#FF69B4', // Pink color
+  },
+  title: {
+    // fontFamily: 'sans-serif',
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'black',
+    marginBottom: 8,
+  },
+  description: {
+    // fontFamily: 'sans-serif',
+    fontSize: 16,
+    color: 'gray',
+    marginBottom: 16,
+  },
+  button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(255, 105, 180, 0.1)',
+    borderRadius: 20,
+    padding: 12,
+  },
+  buttonText: {
+    // fontFamily: 'sans-serif',
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#FF69B4',
+  },
+})
 
-export function ActivityScreen(onFocus = () => {}, ...props) {
-  // Routing
-  const { push, replace, back, parseNextPath } = useRouter()
+export const newCalendar = () => {
+  return (
+    <View>
+      <Text>Hello there</Text>
+    </View>
+  )
+}
+
+export default newCalendar
+
+export function ActivityScreen() {
+  const [mobileCalendar, setMobileCalendar] = useState(350)
+  const [miniCalendar, setMiniCalendar] = useState(true)
+
+  let isChildScrolling = false
+
+  const handleChildScroll = () => {
+    isChildScrolling = true
+  }
+
+  const handleChildTouchStart = () => {
+    isChildScrolling = false
+  }
+
+  const handleParentScroll = () => {
+    if (!isChildScrolling) {
+      // Parent scroll behavior
+    }
+  }
+
+  const router = useRouter()
 
   // State Management
-  const dispatch = useDispatch()
-
-  const [email, setEmail] = useState('')
-  const [exampleOne, setExampleOne] = useState(false)
-  const [id] = useParam('id')
-  const [currentStep, setCurrentStep] = useState(1) // Start with the first step
-
-  const [pointAFlag, setPointAFlag] = useState(false)
-  const [pointBFlag, setPointBFlag] = useState(false)
-  const [calories, setCalories] = useState<Number | null>(null)
-  const [pointA, setPointA] = useState<String | null>(null)
-  const [pointB, setPointB] = useState<String | null>(null)
-  const [mood, setMood] = useState<String[] | null>(null)
-  const [drankWater, setDrankwater] = useState<boolean | null>(null)
-
-  const [showExample, setShowExample] = useState(true)
-
-  // Audio Recording Transcript
-  const [transcript, setTranscript] = useState(null)
-  const [transcriptObject, setTranscriptObject] = useState<Transcript | null>(
-    null
+  const activity = useSelector((state: RootState) => state.activities.activity)
+  const processingActivity = useSelector(
+    (state: RootState) => state.activities.processingActivity
   )
 
-  // Audio Duration
-  const [audioDuration, setAudioDuration] = useState(0)
-  const startTimeRef = useRef(null)
+  const [visible, toggle] = useReducer((s) => !s, true)
+  const [isHovered, setIsHovered] = useState(false)
 
-  // Mood
-  const [moodInput, setMoodInput] = useState('')
-  const [isFocused, setIsFocused] = useState(false)
+  const [isPressed, setIsPressed] = useState(false)
 
-  // Checkbox
-  const [checked, setChecked] = useState(false)
-
-  const handleCheckboxChange = () => {
-    setDrankwater(!drankWater)
+  const handlePressIn = () => {
+    setIsPressed(true)
   }
 
-  const handleRemoveMoodItem = (itemMood) => {
-    if (mood) {
-      let NewCollection = mood.filter((item) => item !== itemMood)
-      setMood(NewCollection)
-    }
-  }
-  const handleInputChange = (text) => {
-    setMoodInput(text)
+  const handlePressOut = () => {
+    setIsPressed(false)
   }
 
-  const onPressHandleInsertingMood = (currentMood) => {
-    if (mood) {
-      let newObject = [...mood, currentMood]
-      setMood(newObject)
-    } else {
-      setMood([currentMood])
-    }
-
-    setMoodInput('')
+  const buttonStyle = {
+    backgroundColor: isPressed ? 'blue' : 'red',
+    padding: 10,
+    borderRadius: 5,
+    cursor: 'pointer',
   }
 
-  const onHandleSubmitForm = (items) => {
-    console.log(items)
-    dispatch(addProcessingActivity(items))
-    push('/form/xxx')
+  const handleMouseEnter = () => {
+    setIsHovered(true)
   }
 
-  useEffect(() => {
-    if (transcriptObject) {
-      console.log('Activity-screen:', transcriptObject)
-      console.log('Activity-screen:', transcriptObject.burnedCalories)
-    }
-
-    if (transcriptObject && transcriptObject.burnedCalories) {
-      setCalories(transcriptObject.burnedCalories)
-    }
-
-    if (transcriptObject && transcriptObject.pointA) {
-      setPointA(transcriptObject.pointA)
-    }
-
-    if (transcriptObject && transcriptObject.pointB) {
-      setPointB(transcriptObject.pointB)
-    }
-
-    if (transcriptObject && transcriptObject.mood) {
-      setMood(transcriptObject.mood)
-    }
-
-    if (transcriptObject && transcriptObject.drankWater) {
-      setDrankwater(transcriptObject.drankWater)
-    }
-
-    // await console.log("PointA: ", transcriptObject.pointA);
-    // await console.log("PointB: ", transcriptObject.pointB);
-    // await console.log("mood: ", transcriptObject.drankWater);
-  }, [transcriptObject])
-
-  const handleNextStep = async () => {
-    await console.log('transcriptObject:', transcriptObject)
-    await onHandleSubmitForm(transcriptObject)
+  const handleMouseLeave = () => {
+    setIsHovered(false)
   }
 
-  const handleDeleteStep = async () => {
-    setTranscriptObject(null)
-    setTranscript(null)
-    setAudioDuration(0)
+  const handleSingOut = () => {
+    alert('signout')
   }
 
-  const handlePreviousStep = () => {
-    setCurrentStep((prevStep) => prevStep - 1)
+  const [isExpanded, setIsExpanded] = useState(true)
+
+  const toggleCalendar = () => {
+    setIsExpanded(!isExpanded)
   }
 
-  const data = [
-    // {
-    //   placeholder: 'Enter calories burned',
-    //   iconName: 'icon',
-    //   label: 'Calories Burned',
-    // },
-    // {
-    //   placeholder: 'Did you drink water?',
-    //   iconName: 'icon',
-    //   label: 'Drank water',
-    // },
-    // {
-    //   placeholder: 'How are you feeling?',
-    //   iconName: 'icon',
-    //   label: 'Mood',
-    // },
-  ]
-
-  const renderItem = ({ item }) => (
-    <Input
-      value="d"
-      placeholder={item.placeholder}
-      iconName={item.iconName}
-      label={item.label}
-      error={undefined}
-      password={undefined}
-    />
-  )
-
-  const onHandleShowExample = (item: String) => {
-    if (item === 'script') {
-      setShowExample(true)
-    }
-
-    if (item === 'example') {
-      setShowExample(false)
+  const changeCalendarView = () => {
+    setMiniCalendar(!miniCalendar)
+    if (mobileCalendar === 34) {
+      setMobileCalendar(350)
+    } else if (mobileCalendar === 350) {
+      setMobileCalendar(34)
     }
   }
 
   return (
-    // <View style={{ backgroundColor: 'white', height: '100%' }}>
+    // <View className="flex-1 items-center justify-center p-3">
     //   <View className="flex w-full">
     //     <NavigationScreen />
     //   </View>
 
-    //   <View style={{backgroundColor: 'red', height: '100%'}}>
-    //     <View style={{flex: 1, backgroundColor: 'blue'}}>
-    //       <Text>1</Text>
+    //   {/* <View>
+    //   <AudioRecorder />
+    //   <DistanceCalculator />
+    // </View> */}
+    //   <ScrollView style={{ paddingTop: 20 }}>
+    //     <View className="flex flex-col items-center justify-center">
+    //       <Calendar />
     //     </View>
-    //     <View style={{flex: 1, backgroundColor: 'pink'}}>
-    //       <Text>2</Text>
+    //     {/* <Text>{`Key: ${key}`}</Text> */}
+    //   </ScrollView>
+
+    //   <Text>{activity.length}</Text>
+
+    //   {/* <View
+    //     style={[styles.container, isHovered && styles.containerHovered]}
+    //     onMouseEnter={handleMouseEnter}
+    //     onMouseLeave={handleMouseLeave}
+    //   >
+    //     <TouchableHighlight
+    //       onPressIn={handlePressIn}
+    //       onPressOut={handlePressOut}
+    //       style={[styles.button, isHovered && styles.buttonHovered]}
+    //       underlayColor="red"
+    //     >
+    //       <Text style={styles.buttonText}>Hover Me2</Text>
+    //     </TouchableHighlight>
+    //   </View> */}
+
+    //   {/* This bellow is a touchable button */}
+    //   {/* <TouchableWithoutFeedback
+    //       onPress={() => console.log('Button clicked!')}
+    //       onPressIn={handlePressIn}
+    //       onPressOut={handlePressOut}
+    //     >
+    //     <View style={buttonStyle}>
+    //       <Text>Button</Text>
     //     </View>
-    //     <View style={{backgroundColor: 'yellow', height: 150}}>
-    //       <Text>Options</Text>
-    //     </View>
-    //     <View style={{backgroundColor: 'red', height: 200}}>
-    //       <View style={{display: 'flex', flexDirection: 'row', width: '100%', backgroundColor: 'pink', padding: 12, gap: 2, height: 100}}>
-    //         <View style={{flex: 1, backgroundColor: 'yellow', justifyContent: 'center', alignItems: 'center'}}>
-    //           <Text>Options 1</Text>
-    //         </View>
-    //         <View style={{flex: 1, backgroundColor: 'yellow',justifyContent: 'center', alignItems: 'center'}}>
-    //           <Text>Options 1</Text>
-    //         </View>
-    //         <View style={{flex: 1, backgroundColor: 'yellow',justifyContent: 'center', alignItems: 'center'}}>
-    //           <Text>Options 1</Text>
-    //         </View>
-    //       </View>
-    //     </View>
+    //   </TouchableWithoutFeedback> */}
+
+    //   <Row className="space-x-8">
+    // <MotiLink
+    //   href="/user/xxx"
+    //   animate={({ hovered, pressed }) => {
+    //     'worklet'
+
+    //     return {
+    //       scale: pressed ? 0.95 : hovered ? 1.1 : 1,
+    //       rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
+    //     }
+    //   }}
+    //   transition={{
+    //     type: 'timing',
+    //     duration: 150,
+    //   }}
+    //   style={undefined}
+    //   onLayout={undefined}
+    // >
+    //   <Text selectable={false} className="text-base font-bold">
+    //     User
+    //   </Text>
+    // </MotiLink>
+    //     {/*
+    //     <MotiLink
+    //       href="/activity/xxx"
+    //       animate={({ hovered, pressed }) => {
+    //         'worklet'
+
+    //         return {
+    //           scale: pressed ? 0.95 : hovered ? 1.1 : 1,
+    //           rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
+    //         }
+    //       }}
+    //       transition={{
+    //         type: 'timing',
+    //         duration: 150,
+    //       }}
+    //       style={undefined}
+    //       onLayout={undefined}
+    //     >
+    //       <Text selectable={false} className="text-base font-bold">
+    //         Add Activity
+    //       </Text>
+    //     </MotiLink> */}
+
+    //     <MotiLink
+    //       href="/login"
+    //       animate={({ hovered, pressed }) => {
+    //         'worklet'
+
+    //         return {
+    //           scale: pressed ? 0.95 : hovered ? 1.1 : 1,
+    //           rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
+    //         }
+    //       }}
+    //       transition={{
+    //         type: 'timing',
+    //         duration: 150,
+    //       }}
+    //       style={undefined}
+    //       onLayout={undefined}
+    //     >
+    //       <Text selectable={false} className="text-base font-bold">
+    //         Go to Login
+    //       </Text>
+    //     </MotiLink>
+
+    //     {/* <MotiLink
+    //       href="/saved-activities"
+    //       animate={({ hovered, pressed }) => {
+    //         'worklet'
+
+    //         return {
+    //           scale: pressed ? 0.95 : hovered ? 1.1 : 1,
+    //           rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
+    //         }
+    //       }}
+    //       transition={{
+    //         type: 'timing',
+    //         duration: 150,
+    //       }}
+    //       style={undefined}
+    //       onLayout={undefined}
+    //     >
+    //       <Text selectable={false} className="text-base font-bold">
+    //         Saved Activities
+    //       </Text>
+    //     </MotiLink> */}
+    //   </Row>
+    // </View>
+
+    // // Second View
+    // <View className="flex-1 items-center justify-center p-3">
+    //   <View className="flex w-full">
+    //     <NavigationScreen />
     //   </View>
 
+    //   <Text>Hello there</Text>
+    // <MotiLink
+    //   href="/login"
+    //   animate={({ hovered, pressed }) => {
+    //     'worklet'
+
+    //     return {
+    //       scale: pressed ? 0.95 : hovered ? 1.1 : 1,
+    //       rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
+    //     }
+    //   }}
+    //   transition={{
+    //     type: 'timing',
+    //     duration: 150,
+    //   }}
+    //   style={undefined}
+    //   onLayout={undefined}
+    // >
+    //   <Text selectable={false} className="text-base font-bold">
+    //     Go to Login
+    //   </Text>
+    // </MotiLink>
     // </View>
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
-        <View style={styles.navigation}>
-          <TouchableOpacity
-            style={styles.navigationItem}
-            onPress={() => push('/')}
-          >
-            <ArrowLeft color={'blue'} />
-            {/* <Text style={styles.navigationText}>Left</Text> */}
-          </TouchableOpacity>
-          <View style={styles.navigationMiddle}>
-            <Text style={styles.navigationText}>Log Physical Activity</Text>
-          </View>
-          <TouchableOpacity style={styles.navigationItem}>
-            <Text
-              style={styles.navigationText}
-              onPress={() => push('/form/xxx')}
-            >
-              Skip
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.middle}>
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: 'white',
-              padding: 40,
-              minHeight: 120,
-            }}
-          >
-            <View style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <Text
-                style={{ color: COLORS.grey, fontSize: 18, fontWeight: 800 }}
-              >
-                Read the following script out loud,
-              </Text>
-              <Text
-                style={{ color: COLORS.grey, fontSize: 17, fontWeight: 600 }}
-              >
-                replacing the key points with your own personal experience:
-              </Text>
-            </View>
 
-            <View style={{ flex: 1, minHeight: 90 }}>
-              <View
-                style={{ display: 'flex', flexDirection: 'row', marginTop: 40 }}
-              >
-                {/* <A className='text-xl mb-1 mt-12' style={{backgroundColor: 'blue', paddingHorizontal: 12, paddingVertical: 2, color: 'white', borderRadius: 8}}>
-                Script
-                </A>*/}
+    // <View className="h-screen w-full">
+    //   <View style={styles.navigation}>
+    //     <NavigationScreen />
+    //   </View>
 
-                {showExample ? (
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: 'blue',
-                      paddingVertical: 6,
-                      paddingHorizontal: 12,
-                      borderRadius: 4,
-                    }}
-                    onPress={() => onHandleShowExample('script')}
-                  >
-                    <Text style={styles.menuText}>Script</Text>
-                  </TouchableOpacity>
-                ) : (
-                  <TouchableOpacity
-                    style={{ paddingVertical: 6, paddingHorizontal: 6 }}
-                    onPress={() => onHandleShowExample('script')}
-                  >
-                    <Text style={styles.menuTextOption}>Script</Text>
-                  </TouchableOpacity>
-                )}
+    // <View
+    //   className="bg-blue-100 min-[320px]:mt-4 min-[640px]:mt-1"
+    //   style={styles.mainx}
+    // >
+    //   <Text>Hello</Text>
+    // </View>
+    // </View>
+    <SafeAreaView className="relative" style={styles.container}>
+      <View className="absolute bottom-4 right-4 z-50 ">
+        <MotiLink
+          href="/activity/xxx"
+          animate={({ hovered, pressed }) => {
+            'worklet'
 
-                <A className="text-xl"> / </A>
-
-                {!showExample ? (
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: 'blue',
-                      paddingVertical: 6,
-                      paddingHorizontal: 12,
-                      borderRadius: 4,
-                    }}
-                    onPress={() => onHandleShowExample('example')}
-                  >
-                    <Text style={styles.menuText}>Example</Text>
-                  </TouchableOpacity>
-                ) : (
-                  <TouchableOpacity
-                    style={{ paddingVertical: 6, paddingHorizontal: 6 }}
-                    onPress={() => onHandleShowExample('example')}
-                  >
-                    <Text style={styles.menuTextOption}>Example</Text>
-                  </TouchableOpacity>
-                )}
-              </View>
-
-              {showExample ? (
-                <Text className="w-auto text-left text-base">
-                  Today, I went for a walk from{' '}
-                  <Text style={{ fontWeight: 'bold' }}>[Point A]</Text> to{' '}
-                  <Text style={{ fontWeight: 'bold' }}>[Point B]</Text>. I
-                  burned{' '}
-                  <Text style={{ fontWeight: 'bold' }}>
-                    [Number of Calories]
-                  </Text>{' '}
-                  Calories and{' '}
-                  <Text style={{ fontWeight: 'bold' }}>[drank water]</Text>.
-                  Overall, I feel{' '}
-                  <Text style={{ fontWeight: 'bold' }}>[How you feel]</Text>.
-                </Text>
-              ) : (
-                <Text className="w-auto text-left text-base">
-                  Today, I went for a walk from{' '}
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      textDecorationLine: 'underline',
-                    }}
-                  >
-                    Gellert Park
-                  </Text>{' '}
-                  to{' '}
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      textDecorationLine: 'underline',
-                    }}
-                  >
-                    AMC Movie Theather
-                  </Text>
-                  . I burned{' '}
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      textDecorationLine: 'underline',
-                    }}
-                  >
-                    350 calories
-                  </Text>{' '}
-                  and{' '}
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      textDecorationLine: 'underline',
-                    }}
-                  >
-                    drank water
-                  </Text>
-                  . Overall, I feel{' '}
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      textDecorationLine: 'underline',
-                    }}
-                  >
-                    happy and relax
-                  </Text>
-                  .
-                </Text>
-              )}
-            </View>
-          </View>
-          <View style={{ flex: 1, backgroundColor: 'white', padding: 40 }}>
-            <View className="mb-8 mt-8">
-              <A className="mb-1 text-xl">Your transcript</A>
-              <View
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  backgroundColor: '#E5E4E2',
-                  borderRadius: 3,
-                  height: '100%',
-                  padding: 12,
-                }}
-              >
-                {transcript ? (
-                  <Text className="w-auto text-left text-sm">
-                    {`${transcript}`}
-                  </Text>
-                ) : (
-                  <Text>recorder ready!</Text>
-                )}
-              </View>
-            </View>
-          </View>
-          <View
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: 'auto',
-              backgroundColor: 'white',
-            }}
-          >
-            <Text style={styles.middleText}>{`${getDurationFormatted(
-              audioDuration
-            )}`}</Text>
-          </View>
-        </View>
-
-        <View
-          style={{
-            minHeight: 100,
-            display: 'flex',
-            flexDirection: 'row',
-            width: '100%',
-            marginTop: 20,
+            return {
+              scale: pressed ? 0.95 : hovered ? 1.1 : 1,
+              rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
+            }
           }}
+          transition={{
+            type: 'timing',
+            duration: 150,
+          }}
+          style={undefined}
+          onLayout={undefined}
         >
-          <View
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flex: 1,
-            }}
-          >
-            {transcript ? (
-              <TouchableOpacity onPress={handleDeleteStep}>
-                <Text style={styles.deleteButton}>Delete</Text>
-              </TouchableOpacity>
-            ) : null}
+          <View className="flex h-20 w-20 items-center justify-center rounded-full bg-blue-600">
+            <Plus width={42} height={42} fill="white" color={'white'} />
           </View>
-          <View
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flex: 1,
-              minWidth: '30%',
-            }}
-          >
-            {/* <Text>2</Text> */}
-            <SingleAudioRecorder
-              setTranscript={setTranscript}
-              setTranscriptObject={setTranscriptObject}
-              startTimeRef={startTimeRef}
-              audioDuration={audioDuration}
-              setAudioDuration={setAudioDuration}
-            />
-            {/* <RecordingAnimation /> */}
+        </MotiLink>
+      </View>
+      <View style={styles.navigation} className="border-b-2">
+        <NavigationScreen />
+      </View>
+      <View
+        style={styles.mainx}
+        className="flex flex-col items-center justify-center md:flex-row lg:flex-row xl:flex-row 2xl:flex-row"
+      >
+        {/* <View className="flex h-full w-full items-center justify-center gap-x-4 gap-y-4 bg-transparent ">
+          <View className="h-32 w-32 bg-blue-300">
+            <Text>Box 1</Text>
           </View>
-          <View
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flex: 1,
-            }}
-          >
-            {transcript ? (
-              <TouchableOpacity style={styles.button} onPress={handleNextStep}>
-                <Text style={styles.buttonText}>Next</Text>
-              </TouchableOpacity>
-            ) : null}
+          <View className="h-32 w-32 bg-blue-300">
+            <Text>Box 1</Text>
+          </View>
+        </View> */}
+        {/* <View style={styles.grid}>
+          <View className="flex flex-row flex-wrap">
+            <View className="h-32 w-32 bg-blue-200">
+              <Text>Hello there!</Text>
+            </View>
+            <View className="h-32 w-32 bg-blue-200">
+              <Text>Hello there!</Text>
+            </View>
+            <View className="h-32 w-32 bg-blue-200">
+              <Text>Hello there!</Text>
+            </View>
+          </View>
+        </View> */}
+        <View className="h-screen">
+          <View className="mx-auto grid h-5/6 w-4/5 grid-cols-2 grid-rows-3 gap-4 md:grid-cols-3 md:grid-rows-2">
+            <View className="col-span-1 row-span-1 bg-pink-100">
+              <Text>01</Text>
+            </View>
+            <View className="bg-orange-100">
+              <Text>02</Text>
+            </View>
+            <View className="bg-amber-100">
+              <Text>03</Text>
+            </View>
+            <View className="bg-violet-100 ">
+              <Text>04</Text>
+            </View>
+            <View className="bg-fuchsia-100  ">
+              <Text>05</Text>
+            </View>
+            <View className="bg-blue-100 ">
+              <Text>06</Text>
+            </View>
           </View>
         </View>
       </View>
@@ -505,116 +482,133 @@ export function ActivityScreen(onFocus = () => {}, ...props) {
 }
 
 const styles = StyleSheet.create({
-  deleteButton: {
-    color: COLORS.blue,
-    padding: 10,
-    borderRadius: 4,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 10,
-    fontWeight: 'bold',
+  grid: {
+    minWidth: 800,
+    maxWidth: '100%',
+    backgroundColor: 'red',
   },
-  button: {
-    backgroundColor: COLORS.blue,
-    padding: 10,
-    borderRadius: 4,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 10,
+  communities: {
+    backgroundColor: 'rgb(26, 30, 38)',
+    width: 350,
+    height: 350,
+    marginLeft: 20,
+    marginTop: 20,
+    borderRadius: 8,
   },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  safeArea: {
-    flex: 1,
-    backgroundColor: 'white',
+  mobileOptions: {
+    ...Platform.select({
+      ios: {
+        display: 'none',
+      },
+    }),
   },
   container: {
+    position: 'absolute',
     flex: 1,
-    justifyContent: 'space-between',
-  },
-  navigation: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 25,
-    paddingHorizontal: 20,
-    // backgroundColor: '#007bff',
-  },
-  navigationItem: {},
-  navigationMiddle: {},
-  navigationText: {
-    color: 'blue',
-    fontWeight: 'bold',
-  },
-  middle: {
-    flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    backgroundColor: 'red',
+    backgroundColor: 'rgb(33, 37, 46)',
+    overflow: 'hidden',
+    height: '100%',
     width: '100%',
   },
-  middleText: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  navigation: {
+    width: '100%',
+    height: 'auto',
+    borderColor: 'rgb(49, 51, 53)',
+    // backgroundColor: 'red',
+
+    ...Platform.select({
+      ios: {
+        height: 'auto',
+        display: 'none',
+      },
+    }),
   },
-  bottomMenu: {
+  mainx: {
     display: 'flex',
     flexDirection: 'row',
+    width: '100%',
+    height: '95%',
+    // backgroundColor: 'purple',
+
+    overflow: 'hidden',
+    ...Platform.select({
+      ios: {
+        flexDirection: 'column',
+      },
+    }),
+  },
+  centerBanner: {
+    // overflow: 'scroll',
+    flex: 1,
+    height: '100%',
+    borderColor: 'rgb(49, 51, 53)',
+    // backgroundColor: 'pink',
+
+    ...Platform.select({
+      ios: {
+        height: '100%',
+      },
+    }),
+  },
+  center: {
+    overflow: 'scroll',
+    flex: 1,
+    height: '100%',
+    borderColor: 'rgb(49, 51, 53)',
+    // backgroundColor: 'pink',
+
+    ...Platform.select({
+      ios: {
+        height: '100%',
+      },
+    }),
+  },
+  left: {
+    flex: 1,
+    // backgroundColor: 'yellow',
+    overflow: 'hidden',
+    // display: 'flex',
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // mart
+
+    width: '100%',
+    // height: '100%',
+
+    ...Platform.select({
+      ios: {
+        display: 'none',
+      },
+    }),
+  },
+  right: {
+    flex: 1,
+    // backgroundColor: 'blue',
+
+    overflow: 'hidden',
+
+    ...Platform.select({
+      ios: {
+        display: 'none',
+      },
+    }),
+  },
+  leftContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    // backgroundColor: 'purple',
+  },
+  rightContainer: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    // backgroundColor: 'purple',
+  },
+  calendar: {
+    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    // paddingVertical: 10,
-    backgroundColor: '#f0f0f0',
-  },
-  menuItem: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 5,
-    backgroundColor: '#007bff',
-  },
-  menuText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  menuTextOption: {
-    color: 'blue',
-    fontWeight: 'bold',
+    width: 400,
+    height: 400,
+    // backgroundColor: 'red',
   },
 })
-
-export default ActivityScreen
-
-{
-  /* <View style={{minHeight: 50, display: 'flex', flexDirection: 'row'}}>
-        <Text>Hello</Text>
-        <SingleAudioRecorder 
-          setTranscript={setTranscript} 
-          setTranscriptObject={setTranscriptObject} 
-          startTimeRef={startTimeRef} 
-          audioDuration={audioDuration} 
-          setAudioDuration={setAudioDuration}
-        />
-
-        <View>
-
-          {transcript ?
-            <TouchableOpacity style={styles.button} onPress={handleNextStep}>
-                <Text style={styles.buttonText}>Next</Text>
-            </TouchableOpacity>
-          :null}
-
-          <Text>Hello</Text>
-        </View>
-        
-        
-       
-        <TouchableOpacity style={styles.menuItem}>
-          <Text style={styles.menuText}>Option 2</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem}>
-          <Text style={styles.menuText}>Option 3</Text>
-        </TouchableOpacity>
-      </View> */
-}

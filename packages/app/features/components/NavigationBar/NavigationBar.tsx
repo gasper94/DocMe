@@ -41,16 +41,30 @@ export function NavigationScreen() {
         </View>
 
         <View className="flex flex-row items-center justify-center">
-          <TouchableOpacity
-            onPress={() => alert('implement adding an activity next')}
+          <MotiLink
+            href="/activity/xxx"
+            animate={({ hovered, pressed }) => {
+              'worklet'
+
+              return {
+                scale: pressed ? 0.95 : hovered ? 1.1 : 1,
+                rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
+              }
+            }}
+            transition={{
+              type: 'timing',
+              duration: 150,
+            }}
+            style={undefined}
+            onLayout={undefined}
           >
-            <View className="mr-4 flex flex-row items-center justify-center rounded-full bg-gray-700 p-2 text-white">
+            <View className="mr-4 flex flex-row items-center justify-center rounded-full bg-gray-700 p-2 text-white min-[320px]:hidden min-[540px]:inline-flex min-[720px]:bg-blue-600 min-[1540px]:bg-purple-300">
               <Plus width={24} height={24} fill="white" color={'white'} />
               <Text className="ml-2 mr-2 text-xs font-bold text-white">
                 Add Activity
               </Text>
             </View>
-          </TouchableOpacity>
+          </MotiLink>
           <MotiLink
             href="/user/xxx"
             animate={({ hovered, pressed }) => {
@@ -76,6 +90,26 @@ export function NavigationScreen() {
               width={50}
             />
           </MotiLink>
+
+          {/* <MotiLink
+            href="/activity/xxx"
+            animate={({ hovered, pressed }) => {
+              'worklet'
+
+              return {
+                scale: pressed ? 0.95 : hovered ? 1.1 : 1,
+                rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
+              }
+            }}
+            transition={{
+              type: 'timing',
+              duration: 150,
+            }}
+            style={undefined}
+            onLayout={undefined}
+          >
+            <Text>Mobile</Text>
+          </MotiLink> */}
         </View>
       </View>
     </SafeAreaView>

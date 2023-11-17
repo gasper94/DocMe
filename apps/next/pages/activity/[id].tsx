@@ -1,3 +1,3 @@
-import { ActivityScreen } from 'app/features/activity/activity-screen'
+import { ActivityScreen } from 'app/features/activity/screen'
 
 export default ActivityScreen
