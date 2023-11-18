@@ -364,6 +364,8 @@ import { style } from '@motionone/dom'
 
 // Assets
 import Meal from '../../../assets/Icons/meal/meal'
+import Exercise from '../../../assets/Icons/exercise/exercise'
+import Medication from '../../../assets/Icons/medication/medication'
 
 export const Card = () => {
   return (
@@ -740,34 +742,41 @@ export function ActivityScreen() {
         >
           <View className="flex items-center justify-center" style={styles.box}>
             <View style={styles.activityCard}>
-              {/* <Image src={Meal}/> */}
-
-              {/* <SolitoImage
-                alt="user-image"
-                src={require('../../../../assets/Icons/meal/meal.tsx')}
-                // style={{ borderRadius: 40, padding: 8 }}
-                // height={50}
-                // width={50}
-              /> */}
               <Meal width={120} height={120} fill="white" color={'white'} />
-              <Text className="text-white">Add Meal</Text>
+              <Text className="mt-4 text-xl font-bold text-white">
+                Add Meal
+              </Text>
             </View>
           </View>
           <View style={styles.box}>
             <View style={styles.activityCard}>
-              <Text className="text-white">Add and activity</Text>
+              <Exercise width={120} height={120} fill="white" color={'white'} />
+              <Text className="mt-4 text-xl font-bold text-white">
+                Add Exercise
+              </Text>
             </View>
           </View>
-          <View style={styles.box} />
-          <View style={styles.box} />
-          <View style={styles.box} />
-          <View style={styles.box} />
-          {/* <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card /> */}
+          <View style={styles.box}>
+            <View style={styles.activityCard}>
+              <Medication
+                width={120}
+                height={120}
+                fill="transparent"
+                color={'white'}
+              />
+              <Text className="mt-4 text-xl font-bold text-white">
+                Add Medication
+              </Text>
+            </View>
+          </View>
+          <View style={styles.box}>
+            <View style={styles.activityCard}>
+              {/* <Meal width={120} height={120} fill="white" color={'white'} /> */}
+              <Text className="mt-4 text-xl font-bold text-white">
+                Coming soon
+              </Text>
+            </View>
+          </View>
         </ScrollView>
 
         {/* This is the right side - Might be menus in the future */}
@@ -789,9 +798,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     borderRadius: 8, // Increase the border radius for a smoother edge
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Add a subtle box shadow
+    boxShadow: '0 4px 8px rgba(255, 255, 255, 0.05)', // Add a subtle box shadow
     color: 'white', // Set text color to white
-    padding: '20px', // Add some padding inside the card
+    padding: 20, // Add some padding inside the card
     boxSizing: 'border-box', // Ensure padding and border are included in the total width and height
     transition: 'background-color 0.3s ease-in-out', // Add a smooth transition for background color changes
     cursor: 'pointer', // Change cursor on hover to indicate interactivity

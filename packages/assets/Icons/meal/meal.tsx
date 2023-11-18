@@ -4,8 +4,8 @@ import * as React from 'react'
 import Svg, { SvgProps, Path } from 'react-native-svg'
 const Meal = (props: SvgProps) => (
   <Svg
-    width="20"
-    height="20"
+    // width="20"
+    // height="20"
     viewBox="0 0 1024 1024"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
