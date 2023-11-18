@@ -1,3 +1,320 @@
+// 'use client'
+// import { useRef } from 'react'
+// import { Platform, Animated, Easing } from 'react-native'
+// import { A, H1, P, Text, TextLink } from 'app/design/typography'
+// import { Row } from 'app/design/layout'
+// import { View, Button, ScrollView } from 'app/design/view'
+
+// import { MotiLink } from 'solito/moti'
+// import { SolitoImage } from 'solito/image'
+// import { TextInput } from 'react-native'
+// import Calendar from '../home/Calendar'
+// import { useEffect, useReducer } from 'react'
+// import {
+//   Image,
+//   StyleSheet,
+//   Pressable,
+//   TouchableWithoutFeedback,
+//   TouchableHighlight,
+//   TouchableOpacity,
+// } from 'react-native'
+// // import { HeroOutline, HeroSolid, HeroSolid20 } from '@nandorojo/heroicons'
+// import ChevronUpDown from '../../../assets/Icons/chevron-up-down/chevron-up-down'
+
+// // import XMenu from './Xmenu'
+// import React, { useState } from 'react'
+
+// import { SafeAreaView } from 'moti'
+// // import { ScrollView } from 'react-native-gesture-handler'
+
+// // import AssetExample from './Asset.jsx'
+
+// // Components
+// // import DistanceCalculator from './DistanceCalculator'
+// import AudioRecorder from '../audioRecorder/AudioRecorder'
+// import GenerateCV from '../extractData/extractData'
+// // import LongPressButton from './components/RecordingButton/RecordingButton'
+// import { NavigationScreen } from '../components/NavigationBar/NavigationBar'
+
+// // Interfaces
+// import { RootState } from '../../store/store'
+
+// // State Management
+// import { useSelector } from 'react-redux'
+
+// import { useRouter } from 'solito/router'
+// import { style } from '@motionone/dom'
+
+// // Assets
+// import Plus from '../../../assets/Icons/plus/plus'
+
+// import { Dimensions } from 'react-native'
+
+// const { width } = Dimensions.get('window')
+
+// export const Card = () => {
+//   return (
+//     <View style={stylex.cardContainer}>
+//       <View style={stylex.imageContainer}>
+//         <Image
+//           source={{
+//             uri: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80',
+//           }}
+//           style={stylex.image}
+//         />
+//       </View>
+//       <View style={stylex.contentContainer}>
+//         <Text style={stylex.category}>startups</Text>
+//         <Text style={stylex.title}>
+//           Lyft launching cross-platform service this week
+//         </Text>
+//         <Text style={stylex.description}>
+//           Like so many organizations these days, Autodesk is a company in
+//           transition. It was until recently a traditional boxed software company
+//           selling licenses. Yet its own business model disruption is only part
+//           of the story.
+//         </Text>
+//         <TouchableOpacity style={stylex.button}>
+//           <Text style={stylex.buttonText}>Learn More</Text>
+//         </TouchableOpacity>
+//       </View>
+//     </View>
+//   )
+// }
+
+// const stylex = StyleSheet.create({
+//   cardContainer: {
+//     flexDirection: 'row',
+//     borderRadius: 10,
+//     backgroundColor: 'white',
+//     shadowColor: 'black',
+//     shadowOffset: { width: 0, height: 2 },
+//     shadowOpacity: 0.2,
+//     shadowRadius: 3,
+//     elevation: 5,
+//     margin: 16,
+//   },
+//   imageContainer: {
+//     width: '40%',
+//     overflow: 'hidden',
+//     borderTopLeftRadius: 20,
+//     borderBottomLeftRadius: 20,
+//   },
+//   image: {
+//     width: '100%',
+//     height: 200,
+//   },
+//   contentContainer: {
+//     flex: 1,
+//     padding: 16,
+//   },
+//   category: {
+//     // fontFamily: 'sans-serif',
+//     fontSize: 16,
+//     fontWeight: 'bold',
+//     color: '#FF69B4', // Pink color
+//   },
+//   title: {
+//     // fontFamily: 'sans-serif',
+//     fontSize: 24,
+//     fontWeight: 'bold',
+//     color: 'black',
+//     marginBottom: 8,
+//   },
+//   description: {
+//     // fontFamily: 'sans-serif',
+//     fontSize: 16,
+//     color: 'gray',
+//     marginBottom: 16,
+//   },
+//   button: {
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//     backgroundColor: 'rgba(255, 105, 180, 0.1)',
+//     borderRadius: 20,
+//     padding: 12,
+//   },
+//   buttonText: {
+//     // fontFamily: 'sans-serif',
+//     fontSize: 14,
+//     fontWeight: 'bold',
+//     color: '#FF69B4',
+//   },
+// })
+
+// export const newCalendar = () => {
+//   return (
+//     <View>
+//       <Text>Hello there</Text>
+//     </View>
+//   )
+// }
+
+// export default newCalendar
+
+// export function ActivityScreen() {
+//   const [mobileCalendar, setMobileCalendar] = useState(350)
+//   const [miniCalendar, setMiniCalendar] = useState(true)
+
+//   let isChildScrolling = false
+
+//   const handleChildScroll = () => {
+//     isChildScrolling = true
+//   }
+
+//   const handleChildTouchStart = () => {
+//     isChildScrolling = false
+//   }
+
+//   const handleParentScroll = () => {
+//     if (!isChildScrolling) {
+//       // Parent scroll behavior
+//     }
+//   }
+
+//   const router = useRouter()
+
+//   // State Management
+//   const activity = useSelector((state: RootState) => state.activities.activity)
+//   const processingActivity = useSelector(
+//     (state: RootState) => state.activities.processingActivity
+//   )
+
+//   const [visible, toggle] = useReducer((s) => !s, true)
+//   const [isHovered, setIsHovered] = useState(false)
+
+//   const [isPressed, setIsPressed] = useState(false)
+
+//   const handlePressIn = () => {
+//     setIsPressed(true)
+//   }
+
+//   const handlePressOut = () => {
+//     setIsPressed(false)
+//   }
+
+//   const buttonStyle = {
+//     backgroundColor: isPressed ? 'blue' : 'red',
+//     padding: 10,
+//     borderRadius: 5,
+//     cursor: 'pointer',
+//   }
+
+//   const handleMouseEnter = () => {
+//     setIsHovered(true)
+//   }
+
+//   const handleMouseLeave = () => {
+//     setIsHovered(false)
+//   }
+
+//   const handleSingOut = () => {
+//     alert('signout')
+//   }
+
+//   const [isExpanded, setIsExpanded] = useState(true)
+
+//   const toggleCalendar = () => {
+//     setIsExpanded(!isExpanded)
+//   }
+
+//   const changeCalendarView = () => {
+//     setMiniCalendar(!miniCalendar)
+//     if (mobileCalendar === 34) {
+//       setMobileCalendar(350)
+//     } else if (mobileCalendar === 350) {
+//       setMobileCalendar(34)
+//     }
+//   }
+
+//   return (
+//     // <View className="flex h-full items-center justify-center bg-red-100">
+//     //   <View style={styles.boxx} className="flex gap-4 bg-red-400 p-4">
+//     //     <View className="flex flex-row gap-4">
+//     //       <View style={styles.box}>
+//     //         <Text>Hello there</Text>
+//     //       </View>
+//     //       <View style={styles.box}>
+//     //         <Text>Hello there</Text>
+//     //       </View>
+//     //       <View style={styles.box}>
+//     //         <Text>Hello there</Text>
+//     //       </View>
+//     //     </View>
+//     //     <View className="flex flex-row gap-4">
+//     //       <View style={styles.box}>
+//     //         <Text>Hello there</Text>
+//     //       </View>
+//     //       <View style={styles.box}>
+//     //         <Text>Hello there</Text>
+//     //       </View>
+//     //       <View style={styles.box}>
+//     //         <Text>Hello there</Text>
+//     //       </View>
+//     //     </View>
+//     //   </View>
+//     // </View>
+
+//     <ScrollView
+//       showsVerticalScrollIndicator={false}
+//       contentContainerStyle={styles.container}
+//       className=" bg-red-300"
+//     >
+//       <View style={styles.container}>
+// <View style={styles.grid}>
+//   <View style={styles.box} />
+//   <View style={styles.box} />
+//   <View style={styles.box} />
+//   <View style={styles.box} />
+//   <View style={styles.box} />
+//   <View style={styles.box}>
+//     <Text>1</Text>
+//   </View>
+// </View>
+//       </View>
+//     </ScrollView>
+//   )
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   grid: {
+//     maxWidth: 1000,
+//     // minHeight: 500,
+//     flexDirection: 'row',
+//     flexWrap: 'wrap',
+//     justifyContent: 'center',
+//     backgroundColor: 'purple',
+//   },
+// box: {
+//   width: 300, // Assuming 20 is the total margin/padding between boxes
+//   height: 300,
+//   margin: 10, // Adjust as needed
+//   backgroundColor: 'blue', // Add your styles or use a component here
+// },
+//   // box: {
+//   //   Width: 100,
+//   //   height: 100,
+//   //   backgroundColor: 'blue',
+//   // },
+//   boxx: {
+//     // maxWidth: 577,
+//   },
+//   calendar: {
+//     display: 'flex',
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     width: 400,
+//     height: 400,
+//     // backgroundColor: 'red',
+//   },
+// })
+
 'use client'
 import { useRef } from 'react'
 import { Platform, Animated, Easing } from 'react-native'
@@ -8,7 +325,7 @@ import { View, Button, ScrollView } from 'app/design/view'
 import { MotiLink } from 'solito/moti'
 import { SolitoImage } from 'solito/image'
 import { TextInput } from 'react-native'
-import Calendar from '../home/Calendar'
+// import Calendar from './Calendar'
 import { useEffect, useReducer } from 'react'
 import {
   Image,
@@ -431,48 +748,32 @@ export function ActivityScreen() {
       </View>
       <View
         style={styles.mainx}
-        className="flex flex-col items-center justify-center md:flex-row lg:flex-row xl:flex-row 2xl:flex-row"
+        className="flex flex-col md:flex-row lg:flex-row xl:flex-row 2xl:flex-row"
       >
-        {/* <View className="flex h-full w-full items-center justify-center gap-x-4 gap-y-4 bg-transparent ">
-          <View className="h-32 w-32 bg-blue-300">
-            <Text>Box 1</Text>
-          </View>
-          <View className="h-32 w-32 bg-blue-300">
-            <Text>Box 1</Text>
-          </View>
-        </View> */}
-        {/* <View style={styles.grid}>
-          <View className="flex flex-row flex-wrap">
-            <View className="h-32 w-32 bg-blue-200">
-              <Text>Hello there!</Text>
-            </View>
-            <View className="h-32 w-32 bg-blue-200">
-              <Text>Hello there!</Text>
-            </View>
-            <View className="h-32 w-32 bg-blue-200">
-              <Text>Hello there!</Text>
-            </View>
-          </View>
-        </View> */}
-        <View className="h-screen">
-          <View className="mx-auto grid h-5/6 w-4/5 grid-cols-2 grid-rows-3 gap-4 md:grid-cols-3 md:grid-rows-2">
-            <View className="col-span-1 row-span-1 bg-pink-100">
-              <Text>01</Text>
-            </View>
-            <View className="bg-orange-100">
-              <Text>02</Text>
-            </View>
-            <View className="bg-amber-100">
-              <Text>03</Text>
-            </View>
-            <View className="bg-violet-100 ">
-              <Text>04</Text>
-            </View>
-            <View className="bg-fuchsia-100  ">
-              <Text>05</Text>
-            </View>
-            <View className="bg-blue-100 ">
-              <Text>06</Text>
+        {/* This might be the feed */}
+        <ScrollView
+          style={styles.center}
+          showsVerticalScrollIndicator={false}
+          className="border-l-2 border-r-2"
+        >
+          <View style={styles.box} />
+          <View style={styles.box} />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </ScrollView>
+
+        {/* This is the right side - Might be menus in the future */}
+        <View
+          style={styles.right}
+          className=" hidden min-[375px]:hidden sm:hidden md:hidden lg:block"
+        >
+          <View style={styles.rightContainer}>
+            <View style={styles.communities} className="p-4">
+              <Text className="text-white">Communities should go here</Text>
             </View>
           </View>
         </View>
@@ -482,10 +783,11 @@ export function ActivityScreen() {
 }
 
 const styles = StyleSheet.create({
-  grid: {
-    minWidth: 800,
-    maxWidth: '100%',
-    backgroundColor: 'red',
+  box: {
+    width: 300, // Assuming 20 is the total margin/padding between boxes
+    height: 300,
+    margin: 10, // Adjust as needed
+    backgroundColor: 'blue', // Add your styles or use a component here
   },
   communities: {
     backgroundColor: 'rgb(26, 30, 38)',
@@ -519,7 +821,6 @@ const styles = StyleSheet.create({
     ...Platform.select({
       ios: {
         height: 'auto',
-        display: 'none',
       },
     }),
   },
@@ -534,19 +835,6 @@ const styles = StyleSheet.create({
     ...Platform.select({
       ios: {
         flexDirection: 'column',
-      },
-    }),
-  },
-  centerBanner: {
-    // overflow: 'scroll',
-    flex: 1,
-    height: '100%',
-    borderColor: 'rgb(49, 51, 53)',
-    // backgroundColor: 'pink',
-
-    ...Platform.select({
-      ios: {
-        height: '100%',
       },
     }),
   },
@@ -575,11 +863,11 @@ const styles = StyleSheet.create({
     width: '100%',
     // height: '100%',
 
-    ...Platform.select({
-      ios: {
-        display: 'none',
-      },
-    }),
+    // ...Platform.select({
+    //   ios: {
+    //     maxHeight: 34,
+    //   },
+    // }),
   },
   right: {
     flex: 1,
