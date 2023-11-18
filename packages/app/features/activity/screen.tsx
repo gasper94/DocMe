@@ -363,7 +363,7 @@ import { useRouter } from 'solito/router'
 import { style } from '@motionone/dom'
 
 // Assets
-import Plus from '../../../assets/Icons/plus/plus'
+import Meal from '../../../assets/Icons/meal/meal'
 
 export const Card = () => {
   return (
@@ -738,8 +738,26 @@ export function ActivityScreen() {
           // className="border-l-2 border-r-2"
           contentContainerStyle={styles.containery}
         >
-          <View style={styles.box} />
-          <View style={styles.box} />
+          <View className="flex items-center justify-center" style={styles.box}>
+            <View style={styles.activityCard}>
+              {/* <Image src={Meal}/> */}
+
+              {/* <SolitoImage
+                alt="user-image"
+                src={require('../../../../assets/Icons/meal/meal.tsx')}
+                // style={{ borderRadius: 40, padding: 8 }}
+                // height={50}
+                // width={50}
+              /> */}
+              <Meal width={120} height={120} fill="white" color={'white'} />
+              <Text className="text-white">Add Meal</Text>
+            </View>
+          </View>
+          <View style={styles.box}>
+            <View style={styles.activityCard}>
+              <Text className="text-white">Add and activity</Text>
+            </View>
+          </View>
           <View style={styles.box} />
           <View style={styles.box} />
           <View style={styles.box} />
@@ -763,6 +781,22 @@ export function ActivityScreen() {
 }
 
 const styles = StyleSheet.create({
+  activityCard: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(26,30,38,1.00)',
+    width: '100%',
+    height: '100%',
+    borderRadius: 8, // Increase the border radius for a smoother edge
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Add a subtle box shadow
+    color: 'white', // Set text color to white
+    padding: '20px', // Add some padding inside the card
+    boxSizing: 'border-box', // Ensure padding and border are included in the total width and height
+    transition: 'background-color 0.3s ease-in-out', // Add a smooth transition for background color changes
+    cursor: 'pointer', // Change cursor on hover to indicate interactivity
+    // You can add more styles as needed
+  },
   containery: {
     padding: 2,
     flexDirection: 'row',
@@ -773,7 +807,7 @@ const styles = StyleSheet.create({
     width: 300, // Assuming 20 is the total margin/padding between boxes
     height: 300,
     margin: 10, // Adjust as needed
-    backgroundColor: 'blue', // Add your styles or use a component here
+    // backgroundColor: 'blue', // Add your styles or use a component here
   },
   communities: {
     backgroundColor: 'rgb(26, 30, 38)',
