@@ -1,12 +1,19 @@
+import { useState } from 'react'
 import { Text } from 'app/design/typography'
 import { TextLink } from 'solito/link'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Button } from 'react-native'
 import { Platform } from 'react-native'
 import { SafeAreaView } from 'moti'
 import { NavigationScreen } from '../components/NavigationBar/NavigationBar'
 import { View } from 'app/design/view'
+import { Image, TouchableOpacity } from 'react-native'
+
+// Image upload
+import { handleGetImage } from '../../cross-platform-features/uploadImage/index'
 
 export function UserDetailScreen() {
+  const [selectedImage, setSelectedImage] = useState(null)
+
   return (
     // <SafeAreaView style={styles.container}>
     // <View style={styles.navigation} className="border-b-2">
@@ -47,12 +54,40 @@ export function UserDetailScreen() {
         className="flex flex-col bg-red-100 md:flex-row lg:flex-row xl:flex-row 2xl:flex-row"
       >
         <Text>Hello there!</Text>
+
+        <TouchableOpacity onPress={handleGetImage}>
+          {selectedImage ? (
+            <Image source={selectedImage} style={styles.image} />
+          ) : (
+            <View style={styles.placeholder}>
+              <Text>Tap to pick an image</Text>
+            </View>
+          )}
+        </TouchableOpacity>
       </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+  },
+  placeholder: {
+    width: 200,
+    height: 200,
+    backgroundColor: '#eee',
+    borderRadius: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   theme: {
     backgroundColor: '#21252E',
   },
