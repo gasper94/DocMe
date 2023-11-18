@@ -750,39 +750,53 @@ export function ActivityScreen() {
         style={styles.mainx}
         className="flex flex-col md:flex-row lg:flex-row xl:flex-row 2xl:flex-row"
       >
+        <View
+          style={styles.right}
+          className=" hidden min-[375px]:hidden sm:hidden md:hidden lg:block"
+        ></View>
         {/* This might be the feed */}
         <ScrollView
           style={styles.center}
           showsVerticalScrollIndicator={false}
           className="border-l-2 border-r-2"
+          contentContainerStyle={styles.containery}
         >
           <View style={styles.box} />
           <View style={styles.box} />
+          <View style={styles.box} />
+          <View style={styles.box} />
+          <View style={styles.box} />
+          <View style={styles.box} />
+          {/* <Card />
           <Card />
           <Card />
           <Card />
           <Card />
-          <Card />
-          <Card />
+          <Card /> */}
         </ScrollView>
 
         {/* This is the right side - Might be menus in the future */}
         <View
           style={styles.right}
           className=" hidden min-[375px]:hidden sm:hidden md:hidden lg:block"
-        >
-          <View style={styles.rightContainer}>
-            <View style={styles.communities} className="p-4">
-              <Text className="text-white">Communities should go here</Text>
-            </View>
-          </View>
-        </View>
+        ></View>
       </View>
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
+  containery: {
+    padding: 2,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    ...Platform.select({
+      web: {
+        backgroundColor: 'red',
+      },
+    }),
+  },
   box: {
     width: 300, // Assuming 20 is the total margin/padding between boxes
     height: 300,
