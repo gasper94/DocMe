@@ -720,30 +720,7 @@ export function ActivityScreen() {
     // </View>
     // </View>
     <SafeAreaView className="relative" style={styles.container}>
-      <View className="absolute bottom-4 right-4 z-50 ">
-        <MotiLink
-          href="/activity/xxx"
-          animate={({ hovered, pressed }) => {
-            'worklet'
-
-            return {
-              scale: pressed ? 0.95 : hovered ? 1.1 : 1,
-              rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
-            }
-          }}
-          transition={{
-            type: 'timing',
-            duration: 150,
-          }}
-          style={undefined}
-          onLayout={undefined}
-        >
-          <View className="flex h-20 w-20 items-center justify-center rounded-full bg-blue-600">
-            <Plus width={42} height={42} fill="white" color={'white'} />
-          </View>
-        </MotiLink>
-      </View>
-      <View style={styles.navigation} className="border-b-2">
+      <View style={styles.navigation} className="border-b-2 ">
         <NavigationScreen />
       </View>
       <View
@@ -758,7 +735,7 @@ export function ActivityScreen() {
         <ScrollView
           style={styles.center}
           showsVerticalScrollIndicator={false}
-          className="border-l-2 border-r-2"
+          // className="border-l-2 border-r-2"
           contentContainerStyle={styles.containery}
         >
           <View style={styles.box} />
@@ -791,11 +768,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    ...Platform.select({
-      web: {
-        backgroundColor: 'red',
-      },
-    }),
   },
   box: {
     width: 300, // Assuming 20 is the total margin/padding between boxes
@@ -835,6 +807,7 @@ const styles = StyleSheet.create({
     ...Platform.select({
       ios: {
         height: 'auto',
+        display: 'none',
       },
     }),
   },
@@ -849,19 +822,25 @@ const styles = StyleSheet.create({
     ...Platform.select({
       ios: {
         flexDirection: 'column',
+        height: '110%',
       },
     }),
   },
   center: {
     overflow: 'scroll',
-    flex: 1,
+    // flex: 1,
     height: '100%',
     borderColor: 'rgb(49, 51, 53)',
     // backgroundColor: 'pink',
+    // width: 1200,
 
     ...Platform.select({
       ios: {
         height: '100%',
+      },
+      web: {
+        // backgroundColor: 'red',
+        width: 500,
       },
     }),
   },
