@@ -369,31 +369,45 @@ import Medication from '../../../assets/Icons/medication/medication'
 
 export const Card = () => {
   return (
-    <View style={stylex.cardContainer}>
-      <View style={stylex.imageContainer}>
-        <Image
-          source={{
-            uri: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80',
-          }}
-          style={stylex.image}
-        />
+    <ScrollView
+      style={styles.center}
+      showsVerticalScrollIndicator={false}
+      // className="border-l-2 border-r-2"
+      contentContainerStyle={styles.containery}
+    >
+      <View className="flex items-center justify-center" style={styles.box}>
+        <View style={styles.activityCard}>
+          <Meal width={120} height={120} fill="white" color={'white'} />
+          <Text className="mt-4 text-xl font-bold text-white">Add Meal</Text>
+        </View>
       </View>
-      <View style={stylex.contentContainer}>
-        <Text style={stylex.category}>startups</Text>
-        <Text style={stylex.title}>
-          Lyft launching cross-platform service this week
-        </Text>
-        <Text style={stylex.description}>
-          Like so many organizations these days, Autodesk is a company in
-          transition. It was until recently a traditional boxed software company
-          selling licenses. Yet its own business model disruption is only part
-          of the story.
-        </Text>
-        <TouchableOpacity style={stylex.button}>
-          <Text style={stylex.buttonText}>Learn More</Text>
-        </TouchableOpacity>
+      <View style={styles.box}>
+        <View style={styles.activityCard}>
+          <Exercise width={120} height={120} fill="white" color={'white'} />
+          <Text className="mt-4 text-xl font-bold text-white">
+            Add Exercise
+          </Text>
+        </View>
       </View>
-    </View>
+      <View style={styles.box}>
+        <View style={styles.activityCard}>
+          <Medication
+            width={120}
+            height={120}
+            fill="transparent"
+            color={'white'}
+          />
+          <Text className="mt-4 text-xl font-bold text-white">
+            Add Medication
+          </Text>
+        </View>
+      </View>
+      <View style={styles.box}>
+        <View style={styles.activityCard}>
+          <Text className="mt-4 text-xl font-bold text-white">Coming soon</Text>
+        </View>
+      </View>
+    </ScrollView>
   )
 }
 
@@ -467,6 +481,14 @@ export const newCalendar = () => {
 }
 
 export default newCalendar
+
+export const addingActivityContent = () => {
+  return (
+    <View>
+      <Text>Hello there!</Text>
+    </View>
+  )
+}
 
 export function ActivityScreen() {
   const [mobileCalendar, setMobileCalendar] = useState(350)
@@ -730,56 +752,33 @@ export function ActivityScreen() {
         className="flex flex-col md:flex-row lg:flex-row xl:flex-row 2xl:flex-row"
       >
         <View
-          style={styles.right}
+          style={styles.left}
           className=" hidden min-[375px]:hidden sm:hidden md:hidden lg:block"
-        ></View>
-        {/* This might be the feed */}
-        <ScrollView
-          style={styles.center}
-          showsVerticalScrollIndicator={false}
-          // className="border-l-2 border-r-2"
-          contentContainerStyle={styles.containery}
         >
-          <View className="flex items-center justify-center" style={styles.box}>
-            <View style={styles.activityCard}>
-              <Meal width={120} height={120} fill="white" color={'white'} />
-              <Text className="mt-4 text-xl font-bold text-white">
-                Add Meal
-              </Text>
-            </View>
-          </View>
-          <View style={styles.box}>
-            <View style={styles.activityCard}>
-              <Exercise width={120} height={120} fill="white" color={'white'} />
-              <Text className="mt-4 text-xl font-bold text-white">
-                Add Exercise
-              </Text>
-            </View>
-          </View>
-          <View style={styles.box}>
-            <View style={styles.activityCard}>
-              <Medication
-                width={120}
-                height={120}
-                fill="transparent"
-                color={'white'}
-              />
-              <Text className="mt-4 text-xl font-bold text-white">
-                Add Medication
-              </Text>
-            </View>
-          </View>
-          <View style={styles.box}>
-            <View style={styles.activityCard}>
-              {/* <Meal width={120} height={120} fill="white" color={'white'} /> */}
-              <Text className="mt-4 text-xl font-bold text-white">
-                Coming soon
-              </Text>
-            </View>
-          </View>
-        </ScrollView>
+          <MotiLink
+            href="/activity-form/xxx"
+            animate={({ hovered, pressed }) => {
+              'worklet'
 
-        {/* This is the right side - Might be menus in the future */}
+              return {
+                scale: pressed ? 0.95 : hovered ? 1.1 : 1,
+                rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
+              }
+            }}
+            transition={{
+              type: 'timing',
+              duration: 150,
+            }}
+            style={undefined}
+            onLayout={undefined}
+          >
+            <Text>Activity form</Text>
+          </MotiLink>
+        </View>
+        {/* This might be the feed */}
+
+        <Card />
+
         <View
           style={styles.right}
           className=" hidden min-[375px]:hidden sm:hidden md:hidden lg:block"

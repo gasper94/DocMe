@@ -6,6 +6,7 @@ import { UserDetailScreen } from '../../features/user/screen'
 import { ActivityScreen } from '../../features/activity/screen'
 import { ActivityFormScreen } from '../../features/form/screen'
 import { SavedActivities } from '../../features/savedActivities/SavedActivities'
+import { ActivityForm } from '../../features/activity-form/screen'
 
 const Stack = createNativeStackNavigator<{
   login: undefined
@@ -14,6 +15,7 @@ const Stack = createNativeStackNavigator<{
   'user-activity': undefined
   'user-form': undefined
   'saved-activities': undefined
+  'activity-form': undefined
 }>()
 
 export function NativeNavigation() {
@@ -51,6 +53,14 @@ export function NativeNavigation() {
         component={ActivityScreen}
         options={{
           title: 'Activity',
+          headerShown: true,
+        }}
+      />
+      <Stack.Screen
+        name="activity-form"
+        component={ActivityForm}
+        options={{
+          title: 'Form',
           headerShown: true,
         }}
       />
