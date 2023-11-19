@@ -375,6 +375,25 @@ export const Card = () => {
       // className="border-l-2 border-r-2"
       contentContainerStyle={styles.containery}
     >
+      <MotiLink
+        href="/formx/xxx"
+        animate={({ hovered, pressed }) => {
+          'worklet'
+
+          return {
+            scale: pressed ? 0.95 : hovered ? 1.1 : 1,
+            rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
+          }
+        }}
+        transition={{
+          type: 'timing',
+          duration: 150,
+        }}
+        style={undefined}
+        onLayout={undefined}
+      >
+        <Text>Activity form</Text>
+      </MotiLink>
       <View className="flex items-center justify-center" style={styles.box}>
         <View style={styles.activityCard}>
           <Meal width={120} height={120} fill="white" color={'white'} />
@@ -754,27 +773,7 @@ export function ActivityScreen() {
         <View
           style={styles.left}
           className=" hidden min-[375px]:hidden sm:hidden md:hidden lg:block"
-        >
-          <MotiLink
-            href="/activity-form/xxx"
-            animate={({ hovered, pressed }) => {
-              'worklet'
-
-              return {
-                scale: pressed ? 0.95 : hovered ? 1.1 : 1,
-                rotateZ: pressed ? '0deg' : hovered ? '-3deg' : '0deg',
-              }
-            }}
-            transition={{
-              type: 'timing',
-              duration: 150,
-            }}
-            style={undefined}
-            onLayout={undefined}
-          >
-            <Text>Activity form</Text>
-          </MotiLink>
-        </View>
+        ></View>
         {/* This might be the feed */}
 
         <Card />

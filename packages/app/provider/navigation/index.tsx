@@ -21,7 +21,7 @@ export function NavigationProvider({
               'user-detail': 'user/:id',
               'user-form': 'form/:id',
               'saved-activities': 'saved-activities/',
-              'activity-form': 'form/:id',
+              'activity-form': 'formx/:id',
             },
           },
         }),

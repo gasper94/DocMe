@@ -15,7 +15,7 @@ const Stack = createNativeStackNavigator<{
   'user-activity': undefined
   'user-form': undefined
   'saved-activities': undefined
-  'activity-form': undefined
+  formx: undefined
 }>()
 
 export function NativeNavigation() {
