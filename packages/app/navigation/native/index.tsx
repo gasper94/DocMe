@@ -6,7 +6,7 @@ import { UserDetailScreen } from '../../features/user/screen'
 import { ActivityScreen } from '../../features/activity/screen'
 import { ActivityFormScreen } from '../../features/form/screen'
 import { SavedActivities } from '../../features/savedActivities/SavedActivities'
-import { ActivityForm } from '../../features/activity-form/screen'
+import { ActivityForm } from '../../features/formx/screen'
 
 const Stack = createNativeStackNavigator<{
   login: undefined

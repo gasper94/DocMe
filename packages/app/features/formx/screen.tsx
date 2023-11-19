@@ -410,31 +410,44 @@ export function ActivityForm() {
         <View
           // className=" min-[320px]:bg-green-500 min-[540px]:bg-red-500 min-[1540px]:bg-purple-500"
           style={{ ...styles.left, maxHeight: mobileCalendar }}
-          className=" lg:max-h-full xl:max-h-full"
+          className="lg:max-h-full xl:max-h-full"
           // border-b-2
-        >
-          <View
-            className="align-center mt-4 h-full min-[1540px]:items-center"
-            // dimensions
-            // className="align-center mt-4 h-full min-[320px]:bg-green-200 min-[540px]:bg-orange-200 min-[720px]:bg-blue-600 min-[1540px]:bg-purple-300"
-          ></View>
-        </View>
+        ></View>
 
         {/* This might be the feed */}
         <ScrollView
           style={styles.center}
           showsVerticalScrollIndicator={false}
-          className="border-l-2 border-r-2"
+          className=""
         >
-          <Text>The form should go here</Text>
-          <Input
-            placeholder={'Enter Calories'}
-            iconName={'icon'}
-            label={'Calories burned'}
-            value={32}
-            error={undefined}
-            password={undefined}
-          />
+          <Text className="px-4 py-2 text-xl text-white">
+            Enter Meal Details
+          </Text>
+          <View className="w-full p-4">
+            <Input
+              placeholder={'Meal name'}
+              iconName={'icon'}
+              label={'Meal Name'}
+              value={undefined}
+              error={undefined}
+              password={undefined}
+            />
+            <Input
+              placeholder={'Enter Calories'}
+              iconName={'icon'}
+              label={'Calories'}
+              value={undefined}
+              error={undefined}
+              password={undefined}
+            />
+
+            <Text className="text-white">
+              - Add type with 4 different options: Breakfast, Lunch, Dinner and
+              Snacks
+            </Text>
+
+            <Text className="text-white">- Section for adding Ingridients</Text>
+          </View>
         </ScrollView>
 
         {/* This is the right side - Might be menus in the future */}
@@ -479,7 +492,7 @@ const styles = StyleSheet.create({
 
     ...Platform.select({
       ios: {
-        height: 'auto',
+        display: 'none',
       },
     }),
   },
@@ -518,15 +531,13 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     // alignItems: 'center',
     // mart
-
-    width: '100%',
     // height: '100%',
 
-    // ...Platform.select({
-    //   ios: {
-    //     maxHeight: 34,
-    //   },
-    // }),
+    ...Platform.select({
+      ios: {
+        display: 'none',
+      },
+    }),
   },
   right: {
     flex: 1,
