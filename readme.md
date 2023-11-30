@@ -17,8 +17,7 @@ DocuMe is a revolutionary cross-platform health application designed to empower 
 https://github.com/gasper94/DocMe/assets/18272791/f4ca087f-26cd-4c94-9c2d-d9690f1826bc
 
 
-![IMG_7268](https://github.com/gasper94/DocuMe/assets/18272791/acafb1b3-aa04-419c-827d-c92de2dd4267)
-![IMG_7267](https://github.com/gasper94/DocuMe/assets/18272791/8c387c94-de4e-490f-bccf-9f1a550b5000)
+![IMG_7268](https://github.com/gasper94/DocuMe/assets/18272791/acafb1b3-aa04-419c-827d-c92de2dd4267) ![IMG_7267](https://github.com/gasper94/DocuMe/assets/18272791/8c387c94-de4e-490f-bccf-9f1a550b5000)
 ![IMG_7269](https://github.com/gasper94/DocuMe/assets/18272791/5a472ebe-6fff-4b85-96b4-02dc6b015fe3)
 ![Screenshot 2023-11-30 102328](https://github.com/gasper94/DocuMe/assets/18272791/c849b0e0-ae21-4725-87c3-614431e00ae7)
 ![Screenshot 2023-11-30 102134](https://github.com/gasper94/DocuMe/assets/18272791/1b371a7d-a347-42f3-9c55-6b0753f482b0)
